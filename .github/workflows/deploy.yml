@@ -25,16 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          # HEMOS QUITADO LA LÍNEA "cache: 'npm'" PARA QUE NO BUSQUE EL LOCKFILE
 
       - name: Install dependencies
-        # CAMBIO CRÍTICO: Usamos 'install' en lugar de 'ci' para que no falle si falta el lockfile
+        # Usamos 'npm install' para generar el lockfile en la nube
         run: npm install
 
       - name: Build
         run: npm run build
         env:
-          # Inyecta la API Key configurada en los Secretos del repositorio
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
 
       - name: Upload artifact
