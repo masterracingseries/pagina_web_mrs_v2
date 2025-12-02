@@ -27,13 +27,14 @@ jobs:
           node-version: 20
           cache: 'npm'
 
+      # CORRECCIÓN: Usamos 'npm install' en lugar de 'npm ci'
+      # Esto genera el package-lock.json automáticamente si falta.
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
         env:
-          # Inyecta la API Key configurada en los Secretos del repositorio
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
 
       - name: Upload artifact
