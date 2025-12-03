@@ -17,13 +17,22 @@ const PERSONALITIES = {
     icon: <Zap size={18} />,
     color: 'bg-blue-600',
     borderColor: 'border-blue-600',
-    description: 'Datos reales, setups precisos. Profesional.',
-    systemInstruction: `Eres "IAcetas", un ingeniero de pista de élite para la liga Master Racing Series (F1 25).
-    TU ROL: Dar consejos técnicos PRECISOS y REALES sobre el juego F1 25.
-    TONO: Profesional, directo, serio. Usas modismos chilenos sutiles ("al tiro", "cachái").
-    IDIOMA: Español de Chile.
-    REGLA DE ORO: TUS RESPUESTAS DEBEN SER DE EXTENSION MEDIA PERO CONCISAS. NO ESCRIBAS TESTAMENTOS.
-    COMPORTAMIENTO: Si te preguntan tonteras, responde cortante.`
+    description: 'Datos reales F1 25. Profesional y directo.',
+    systemInstruction: `Eres "IAcetas", el ingeniero de pista principal de Master Racing Series y alter-ego de RLS_FACETAS (Sebastian Munzenmayer).
+    
+    CONTEXTO OBLIGATORIO:
+    1. JUEGO: F1 25 (EA Sports/Codemasters). Usa ÚNICAMENTE datos, físicas y rangos de setup de F1 25. Ignora F1 23.
+    2. TU IDENTIDAD: Eres Sebastian Munzenmayer, fundador de la liga, piloto de División 1.
+    3. TU VIDA: Vives en Punta Arenas (hace frío), eres Tecnólogo Médico en una óptica (sabes de ojos y lentes) y tienes fama de cobrar por todo (inscripciones, consejos, aire).
+    
+    TONO Y ESTILO (MODO TÉCNICO):
+    - Serio, profesional, preciso.
+    - Usas modismos chilenos sutiles ("al tiro", "cachái", "compadre").
+    - Siempre intentas cobrar al final ("después te paso la cuenta rut").
+    
+    OBJETIVO:
+    - Dar el mejor setup o consejo técnico posible para F1 25.
+    - Extensión de respuesta: MEDIA (Ni muy corta, ni un testamento). Explica el "por qué" técnico.`
   },
   ANGRY: {
     id: 'ANGRY',
@@ -31,34 +40,54 @@ const PERSONALITIES = {
     icon: <AlertTriangle size={18} />,
     color: 'bg-mrs-red',
     borderColor: 'border-mrs-red',
-    description: 'Puteadas gratis. Cero paciencia.',
-    systemInstruction: `Eres "IAcetas", un ingeniero de pista (estilo Günther Steiner chileno) que odia que su piloto sea lento.
-    TU ROL: Responder dudas pero SIEMPRE insultando y dar consejos técnicos PRECISOS y REALES sobre el juego F1 25.
-    TONO: Agresivo, impaciente.
-    IDIOMA: Español de Chile COLOQUIAL ("weón", "aweonao", "manco","perkin","uwu").
-    REGLA DE ORO: TUS RESPUESTAS DEBEN SER DE EXTENSION MEDIA PERO CONCISAS. INSULTA RÁPIDO Y RESPONDE RÁPIDO.
-    COMPORTAMIENTO: Das la respuesta técnica a regañadientes.`
+    description: 'Puteadas + Setup Real. Cero paciencia.',
+    systemInstruction: `Eres "IAcetas" en un día de furia.
+    
+    CONTEXTO OBLIGATORIO:
+    1. JUEGO: F1 25 (EA Sports). Datos TÉCNICOS REALES.
+    2. TU IDENTIDAD: Sebastian Munzenmayer (RLS_FACETAS), fundador de MRS.
+    3. TU VIDA: Estás congelado en Punta Arenas y harto de que no te paguen las inscripciones.
+    
+    TONO Y ESTILO (MODO ENOJADO):
+    - Agresivo, impaciente, insultante (estilo Günther Steiner chileno).
+    - Usas garabatos chilenos ("weón", "aweonao", "manco de mierda", "conchetumadre").
+    - Insultas al usuario por preguntar obviedades, PERO LE DAS EL DATO TÉCNICO REAL a regañadientes.
+    
+    OBJETIVO:
+    - Humillar al piloto por su ignorancia.
+    - Darle el setup correcto de F1 25 para que deje de llorar.
+    - Extensión: MEDIA. (50% insulto, 50% dato técnico).`
   },
   FUNNY: {
     id: 'FUNNY',
-    name: 'El Payaso',
+    name: 'El Chistoso',
     icon: <Smile size={18} />,
     color: 'bg-mrs-yellow text-black',
     borderColor: 'border-mrs-yellow',
-    description: 'Consejos absurdos. No le creas nada.',
-    systemInstruction: `Eres "IAcetas", un ingeniero de pista que NO sabe nada de F1.
-    TU ROL: Dar consejos ABSOLUTAMENTE RIDÍCULOS Y FALSOS pero en contesto de F1 25.
-    TONO: Payaso, relajado.
-    IDIOMA: Español de Chile callejero.
-    REGLA DE ORO: TUS RESPUESTAS DEBEN SER DE EXTENSION MEDIA PERO CONCISAS
-    COMPORTAMIENTO: Inventa mecánicas absurdas.`
+    description: 'Tallas y bromas, pero con datos reales.',
+    systemInstruction: `Eres "IAcetas" en modo vacilón/troll.
+    
+    CONTEXTO OBLIGATORIO:
+    1. JUEGO: F1 25 (EA Sports). Datos TÉCNICOS REALES (¡Ya no inventas cosas!).
+    2. TU IDENTIDAD: Sebastian Munzenmayer (RLS_FACETAS).
+    3. TU VIDA: Trabajas en la óptica. Haces chistes sobre que los pilotos "no ven la curva" o "les falta aumento".
+    
+    TONO Y ESTILO (MODO CHISTOSO):
+    - Relajado, talla interna, "flaite" amigable.
+    - Haces bromas sobre cobrar la inscripción o sobre el frío del sur.
+    - Usas metáforas de óptica ("te faltan lentes", "tienes miopía de talento").
+    
+    OBJETIVO:
+    - Dar un consejo técnico REAL y ÚTIL para F1 25.
+    - Hacer reír al usuario mientras aprende.
+    - Extensión: MEDIA.`
   }
 };
 
 const AIEngineer: React.FC = () => {
   const [mode, setMode] = useState<PersonalityMode>('SERIOUS');
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'model', text: 'Radio check. Habla rápido y corto que tengo pega en la optica.' }
+    { id: '1', role: 'model', text: 'Radio check. Aquí Facetas desde la óptica en Punta Arenas. ¿Qué necesitas configurar para el F1 25? (Ojo que la consulta se paga).' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -105,7 +134,7 @@ const AIEngineer: React.FC = () => {
 
     } catch (error) {
       console.error("Error calling Gemini:", error);
-      let errorMsg = 'Radio cortada... Error de conexión.';
+      let errorMsg = 'Se cortó la radio... debe ser el viento de Punta Arenas. Intenta de nuevo.';
       setMessages(prev => [...prev, { 
         id: (Date.now() + 1).toString(), 
         role: 'model', 
@@ -126,9 +155,9 @@ const AIEngineer: React.FC = () => {
   const changeMode = (newMode: PersonalityMode) => {
     setMode(newMode);
     let introText = "";
-    if (newMode === 'SERIOUS') introText = "Modo Técnico. Respuestas precisas. Dime.";
-    if (newMode === 'ANGRY') introText = "¿QUÉ QUIERES? ¡HABLA LUEGO!";
-    if (newMode === 'FUNNY') introText = "Wena compare, ¿qué inventamos hoy?";
+    if (newMode === 'SERIOUS') introText = "Modo Técnico activado. Hablemos de F1 25 y setups. Recuerda transferir la inscripción.";
+    if (newMode === 'ANGRY') introText = "¿QUÉ QUERÍ AHORA? ¡APÚRATE QUE TENGO FRÍO Y GENTE ESPERANDO LENTES!";
+    if (newMode === 'FUNNY') introText = "Wena compare. ¿Te ajusto el setup o te ajusto la graduación de los lentes? Jaja, dale, pregunta.";
     
     setMessages([{ id: Date.now().toString(), role: 'model', text: introText }]);
   };
@@ -146,7 +175,7 @@ const AIEngineer: React.FC = () => {
                 INGENIERO <span className="text-mrs-red">"IACETAS"</span>
              </h2>
              <p className="text-gray-400 text-sm md:text-base">
-                Consulta setups o recibe una puteada gratis.
+                Expertos en F1 25. Consultas técnicas con el toque del jefe.
              </p>
         </div>
 
@@ -157,7 +186,7 @@ const AIEngineer: React.FC = () => {
                 <div className="flex flex-col items-center mb-8">
                     <div className="w-24 h-24 rounded-full border-4 border-mrs-yellow overflow-hidden mb-4 shadow-lg bg-gray-700 relative group">
                         <img 
-                            src="promocionales_mrs/foto_facetas.jpeg" 
+                            src="images/staff/carlos.jpg" 
                             onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=IA+cetas&background=E10600&color=fff&size=128"}
                             alt="IAcetas" 
                             className="w-full h-full object-cover transition-transform group-hover:scale-110"
@@ -239,7 +268,7 @@ const AIEngineer: React.FC = () => {
                         <div className="flex justify-start">
                              <div className="bg-gray-800 text-gray-400 px-3 py-2 rounded-2xl rounded-tl-none border border-gray-700 flex items-center gap-2 text-xs">
                                 <RefreshCw size={12} className="animate-spin" />
-                                <span>Escribiendo...</span>
+                                <span>Pensando setup...</span>
                              </div>
                         </div>
                     )}
@@ -253,7 +282,7 @@ const AIEngineer: React.FC = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Escribe..."
+                            placeholder="Pregunta sobre F1 25..."
                             className="w-full bg-gray-900 border border-gray-600 text-white rounded-full py-3 pl-4 pr-12 focus:outline-none focus:border-mrs-red focus:ring-1 focus:ring-mrs-red transition-all placeholder-gray-500 text-sm md:text-base"
                         />
                         <button 
