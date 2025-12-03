@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DIVISIONS, TEAMS, CALENDAR } from '../constants';
-import { Trophy, Shield, Loader2, AlertCircle, MapPin, Flag } from 'lucide-react';
-import { GCSDivisionData, GCSDriverStanding, GCSConstructorStanding, RaceEvent } from '../types';
+import { Trophy, Shield, Loader2, AlertCircle, Flag } from 'lucide-react';
+import { GCSDivisionData, RaceEvent } from '../types';
 
 // BASE URL EXACTA DEL HTML PROPORCIONADO
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
@@ -113,7 +113,7 @@ const Standings: React.FC = () => {
                     <button
                         key={div.id}
                         onClick={() => setActiveDivisionId(div.id)}
-                        className={`px-4 py-2 text-sm font-bold uppercase rounded transition-all ${
+                        className={`px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-bold uppercase rounded transition-all ${
                             activeDivisionId === div.id ? 'bg-mrs-black text-white' : 'bg-white text-gray-600 hover:bg-gray-200'
                         }`}
                     >
@@ -126,19 +126,19 @@ const Standings: React.FC = () => {
              <div className="bg-white p-1 rounded-lg shadow flex">
                  <button 
                     onClick={() => setView('DRIVERS')}
-                    className={`flex items-center gap-2 px-6 py-2 rounded-md font-bold uppercase text-sm transition-colors ${
+                    className={`flex items-center gap-2 px-4 md:px-6 py-2 rounded-md font-bold uppercase text-xs md:text-sm transition-colors ${
                         view === 'DRIVERS' ? 'bg-mrs-red text-white' : 'text-gray-500 hover:bg-gray-100'
                     }`}
                  >
-                    <Trophy size={16} /> Drivers
+                    <Trophy size={14} /> Drivers
                  </button>
                  <button 
                     onClick={() => setView('CONSTRUCTORS')}
-                    className={`flex items-center gap-2 px-6 py-2 rounded-md font-bold uppercase text-sm transition-colors ${
+                    className={`flex items-center gap-2 px-4 md:px-6 py-2 rounded-md font-bold uppercase text-xs md:text-sm transition-colors ${
                         view === 'CONSTRUCTORS' ? 'bg-mrs-red text-white' : 'text-gray-500 hover:bg-gray-100'
                     }`}
                  >
-                    <Shield size={16} /> Constructors
+                    <Shield size={14} /> Constructors
                  </button>
              </div>
          </div>
@@ -194,38 +194,39 @@ const Standings: React.FC = () => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.3 }}
-                        className="overflow-x-auto"
+                        className="w-full" // Removed overflow-x-auto to force fit
                     >
-                        <table className="w-full text-left">
+                        {/* Table Layout Fixed prevents columns from expanding uncontrollably */}
+                        <table className="w-full text-left table-fixed">
                             <thead className="bg-mrs-black text-white uppercase text-xs font-bold tracking-wider">
                                 <tr>
-                                    <th className="px-6 py-4 w-16 text-center">Pos</th>
-                                    <th className="px-6 py-4">{view === 'DRIVERS' ? 'Piloto' : 'Equipo'}</th>
-                                    {view === 'DRIVERS' && <th className="px-6 py-4 hidden sm:table-cell">Equipo</th>}
-                                    <th className="px-6 py-4 text-center font-display text-lg">Puntos</th>
+                                    {/* Ajuste ancho columnas para mobile */}
+                                    <th className="px-2 md:px-6 py-4 w-10 md:w-20 text-center">Pos</th>
+                                    <th className="px-2 md:px-6 py-4 w-auto">{view === 'DRIVERS' ? 'Piloto' : 'Equipo'}</th>
+                                    {view === 'DRIVERS' && <th className="px-6 py-4 hidden sm:table-cell w-1/3">Equipo</th>}
+                                    <th className="px-2 md:px-6 py-4 w-16 md:w-32 text-center font-display text-lg">Pts</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {view === 'DRIVERS' ? (
                                     data?.pilotos && data.pilotos.length > 0 ? (
                                         data.pilotos.map((driver, index) => {
-                                            // JSON keys: posicion, equipo, id (name), puntos, status
                                             const style = resolveTeamStyle(driver.equipo);
                                             const displayPos = driver.posicion || index + 1;
 
                                             return (
                                                 <tr key={`${driver.id}-${index}`} className="hover:bg-gray-50 transition-colors group">
-                                                    <td className="px-6 py-4 text-center font-display text-xl italic text-gray-400 group-hover:text-mrs-red transition-colors">
+                                                    <td className="px-2 md:px-6 py-3 md:py-4 text-center font-display text-lg md:text-xl italic text-gray-400 group-hover:text-mrs-red transition-colors">
                                                         {displayPos}
                                                     </td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className="w-1 h-8 rounded-full" style={{ backgroundColor: style.color }}></div>
-                                                            <div>
-                                                                <div className="font-bold text-mrs-black text-lg leading-none uppercase">{driver.id}</div>
-                                                                <div className="text-xs text-gray-500 sm:hidden uppercase mt-1">{driver.equipo}</div>
+                                                    <td className="px-2 md:px-6 py-3 md:py-4 overflow-hidden">
+                                                        <div className="flex items-center gap-2 md:gap-3">
+                                                            <div className="w-1 h-6 md:h-8 rounded-full flex-shrink-0" style={{ backgroundColor: style.color }}></div>
+                                                            <div className="min-w-0"> {/* min-w-0 needed for truncate to work */}
+                                                                <div className="font-bold text-mrs-black text-sm md:text-lg leading-none uppercase truncate">{driver.id}</div>
+                                                                <div className="text-[10px] md:text-xs text-gray-500 sm:hidden uppercase mt-1 truncate">{driver.equipo}</div>
                                                                 {driver.status && (
-                                                                    <span className="text-[10px] bg-gray-200 px-1.5 py-0.5 rounded uppercase tracking-wider mt-1 inline-block text-gray-600">
+                                                                    <span className="text-[9px] bg-gray-200 px-1.5 py-0.5 rounded uppercase tracking-wider mt-1 inline-block text-gray-600">
                                                                         {driver.status}
                                                                     </span>
                                                                 )}
@@ -238,9 +239,9 @@ const Standings: React.FC = () => {
                                                             {driver.equipo}
                                                         </span>
                                                     </td>
-                                                    <td className="px-6 py-4 text-center">
-                                                        <span className="inline-block px-3 py-1 bg-gray-100 rounded font-display text-xl font-bold text-mrs-black border-l-4" style={{ borderLeftColor: style.color }}>
-                                                            {driver.puntos} <span className="text-xs text-gray-400 ml-1 font-sans">PTS</span>
+                                                    <td className="px-2 md:px-6 py-3 md:py-4 text-center">
+                                                        <span className="inline-block px-2 py-1 bg-gray-100 rounded font-display text-lg md:text-xl font-bold text-mrs-black border-l-2 md:border-l-4" style={{ borderLeftColor: style.color }}>
+                                                            {driver.puntos}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -257,24 +258,24 @@ const Standings: React.FC = () => {
 
                                             return (
                                                 <tr key={`${con.equipo}-${index}`} className="hover:bg-gray-50 transition-colors">
-                                                    <td className="px-6 py-4 text-center font-display text-xl italic text-gray-400">
+                                                    <td className="px-2 md:px-6 py-3 md:py-4 text-center font-display text-lg md:text-xl italic text-gray-400">
                                                         {displayPos}
                                                     </td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-4">
+                                                    <td className="px-2 md:px-6 py-3 md:py-4">
+                                                        <div className="flex items-center gap-2 md:gap-4">
                                                             {style.logoUrl ? (
-                                                                <img src={style.logoUrl} alt={con.equipo} className="h-8 w-auto object-contain" />
+                                                                <img src={style.logoUrl} alt={con.equipo} className="h-6 md:h-8 w-auto object-contain" />
                                                             ) : (
-                                                                <div className="h-8 w-8 rounded bg-gray-200"></div>
+                                                                <div className="h-6 md:h-8 w-6 md:w-8 rounded bg-gray-200"></div>
                                                             )}
-                                                            <span className="font-bold text-xl italic uppercase text-mrs-black">{con.equipo}</span>
+                                                            <span className="font-bold text-sm md:text-xl italic uppercase text-mrs-black truncate">{con.equipo}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 text-center">
+                                                    <td className="px-2 md:px-6 py-3 md:py-4 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                             <div className="h-2 w-2 rounded-full" style={{ backgroundColor: style.color }}></div>
-                                                             <span className="font-display text-xl font-bold text-mrs-black">
-                                                                {con.puntos} <span className="text-xs text-gray-400 ml-1 font-sans">PTS</span>
+                                                             <div className="hidden md:block h-2 w-2 rounded-full" style={{ backgroundColor: style.color }}></div>
+                                                             <span className="font-display text-lg md:text-xl font-bold text-mrs-black">
+                                                                {con.puntos}
                                                              </span>
                                                         </div>
                                                     </td>
