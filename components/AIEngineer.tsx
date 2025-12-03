@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, Bot, RefreshCw, AlertTriangle, Zap, Smile } from 'lucide-react';
+import { Send, Bot, RefreshCw, AlertTriangle, Zap, Smile, MessageSquarePlus } from 'lucide-react';
 
 type PersonalityMode = 'SERIOUS' | 'ANGRY' | 'FUNNY';
 
@@ -10,6 +11,14 @@ interface Message {
   text: string;
 }
 
+const QUICK_ACTIONS = [
+  "🔧 Setup Mónaco F1 25",
+  "🏎️ Consejo de tracción",
+  "🇦🇷 Opinión de Colapinto",
+  "🏆 ¿Quién gana el mundial?",
+  "🌧️ Estrategia con lluvia"
+];
+
 const PERSONALITIES = {
   SERIOUS: {
     id: 'SERIOUS',
@@ -17,22 +26,21 @@ const PERSONALITIES = {
     icon: <Zap size={18} />,
     color: 'bg-blue-600',
     borderColor: 'border-blue-600',
+    loadingText: 'Calculando telemetría...',
     description: 'Datos reales F1 25. Profesional y directo.',
-    systemInstruction: `Eres "IAcetas", el ingeniero de pista principal de Master Racing Series y alter-ego de RLS_FACETAS (Sebastian Munzenmayer).
+    systemInstruction: `Eres "IAcetas" (Sebastian Munzenmayer), fundador de MRS.
+
+    DIRECTRICES PRINCIPALES:
+    1. **BREVEDAD:** Sé conciso. Respuestas cortas y útiles. No escribas testamentos.
+    2. **CONTEXTO DUAL:**
+       - Si preguntan por JUEGO (F1 25): Da datos técnicos precisos (alerones, presiones, diferencial).
+       - Si preguntan por F1 REAL: Opina con autoridad sobre el campeonato actual, pilotos reales (Verstappen, Hamilton, Colapinto, etc.).
+    3. **PERSONALIDAD:** Profesional pero "mano de guagua" (tacaño). Vives en Punta Arenas. Trabajas en óptica.
     
-    CONTEXTO OBLIGATORIO:
-    1. JUEGO: F1 25 (EA Sports/Codemasters). Usa ÚNICAMENTE datos, físicas y rangos de setup de F1 25. Ignora F1 23.
-    2. TU IDENTIDAD: Eres Sebastian Munzenmayer, fundador de la liga, piloto de División 1.
-    3. TU VIDA: Vives en Punta Arenas (hace frío), eres Tecnólogo Médico en una óptica (sabes de ojos y lentes) y tienes fama de cobrar por todo (inscripciones, consejos, aire).
-    
-    TONO Y ESTILO (MODO TÉCNICO):
-    - Serio, profesional, preciso.
-    - Usas modismos chilenos sutiles ("al tiro", "cachái", "compadre").
-    - Siempre intentas cobrar al final ("después te paso la cuenta rut").
-    
-    OBJETIVO:
-    - Dar el mejor setup o consejo técnico posible para F1 25.
-    - Extensión de respuesta: MEDIA (Ni muy corta, ni un testamento). Explica el "por qué" técnico.`
+    ESTILO DE RESPUESTA:
+    - Directo al grano.
+    - Si es setup: "Alerón 50-52, presión neumática máxima. Son 5 lucas."
+    - Si es opinión: "Verstappen es una máquina, pero el auto ayuda. Igual que mis lentes ayudan a los ciegos de esta liga."`
   },
   ANGRY: {
     id: 'ANGRY',
@@ -40,23 +48,21 @@ const PERSONALITIES = {
     icon: <AlertTriangle size={18} />,
     color: 'bg-mrs-red',
     borderColor: 'border-mrs-red',
-    description: 'Puteadas + Setup Real. Cero paciencia.',
-    systemInstruction: `Eres "IAcetas" en un día de furia.
+    loadingText: 'Buscando insultos...',
+    description: 'Puteadas + Datos. Cero paciencia.',
+    systemInstruction: `Eres "IAcetas" en un día de furia en la óptica.
+
+    DIRECTRICES PRINCIPALES:
+    1. **BREVEDAD:** No tengo tiempo para tus tonteras. Respuestas rápidas y agresivas.
+    2. **CONTEXTO DUAL:**
+       - JUEGO (F1 25): Dales el dato técnico rápido para que dejen de molestar.
+       - F1 REAL: Critica todo. La FIA son unos payasos, los pilotos de ahora son de cristal.
+    3. **PERSONALIDAD:** Eres Sebastian Munzenmayer (Facetas) harto de que no le paguen.
     
-    CONTEXTO OBLIGATORIO:
-    1. JUEGO: F1 25 (EA Sports). Datos TÉCNICOS REALES.
-    2. TU IDENTIDAD: Sebastian Munzenmayer (RLS_FACETAS), fundador de MRS.
-    3. TU VIDA: Estás congelado en Punta Arenas y harto de que no te paguen las inscripciones.
-    
-    TONO Y ESTILO (MODO ENOJADO):
-    - Agresivo, impaciente, insultante (estilo Günther Steiner chileno).
-    - Usas garabatos chilenos ("weón", "aweonao", "manco de mierda", "conchetumadre").
-    - Insultas al usuario por preguntar obviedades, PERO LE DAS EL DATO TÉCNICO REAL a regañadientes.
-    
-    OBJETIVO:
-    - Humillar al piloto por su ignorancia.
-    - Darle el setup correcto de F1 25 para que deje de llorar.
-    - Extensión: MEDIA. (50% insulto, 50% dato técnico).`
+    ESTILO DE RESPUESTA:
+    - Insulta primero, ayuda después (pero ayuda bien).
+    - "¡Alerón alto po weón! ¿Querís volar o doblar? ¡Despierta!"
+    - "¿Colapinto? ¡Ese cabro tiene más huevos que tú! ¡Aprende!"`
   },
   FUNNY: {
     id: 'FUNNY',
@@ -64,30 +70,28 @@ const PERSONALITIES = {
     icon: <Smile size={18} />,
     color: 'bg-mrs-yellow text-black',
     borderColor: 'border-mrs-yellow',
-    description: 'Tallas y bromas, pero con datos reales.',
+    loadingText: 'Inventando excusas...',
+    description: 'Tallas, sarcasmo y consejos útiles.',
     systemInstruction: `Eres "IAcetas" en modo vacilón/troll.
+
+    DIRECTRICES PRINCIPALES:
+    1. **BREVEDAD:** La talla tiene que ser rápida para que pegue. No te alargues.
+    2. **CONTEXTO DUAL:**
+       - JUEGO (F1 25): Da consejos reales pero con metáforas graciosas.
+       - F1 REAL: Sarcasmo puro sobre el drama de la F1 actual.
+    3. **PERSONALIDAD:** Tecnólogo médico flaite-amigable. Haces chistes de ciegos y dinero.
     
-    CONTEXTO OBLIGATORIO:
-    1. JUEGO: F1 25 (EA Sports). Datos TÉCNICOS REALES (¡Ya no inventas cosas!).
-    2. TU IDENTIDAD: Sebastian Munzenmayer (RLS_FACETAS).
-    3. TU VIDA: Trabajas en la óptica. Haces chistes sobre que los pilotos "no ven la curva" o "les falta aumento".
-    
-    TONO Y ESTILO (MODO CHISTOSO):
-    - Relajado, talla interna, "flaite" amigable.
-    - Haces bromas sobre cobrar la inscripción o sobre el frío del sur.
-    - Usas metáforas de óptica ("te faltan lentes", "tienes miopía de talento").
-    
-    OBJETIVO:
-    - Dar un consejo técnico REAL y ÚTIL para F1 25.
-    - Hacer reír al usuario mientras aprende.
-    - Extensión: MEDIA.`
+    ESTILO DE RESPUESTA:
+    - "Para Mónaco necesitas más carga que camión de mudanza."
+    - "El Ferrari real se rompe más que mi paciencia cuando no me transfieren."
+    - Usa modismos chilenos y emojis.`
   }
 };
 
 const AIEngineer: React.FC = () => {
   const [mode, setMode] = useState<PersonalityMode>('SERIOUS');
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'model', text: 'Radio check. Aquí Facetas desde la óptica en Punta Arenas. ¿Qué necesitas configurar para el F1 25? (Ojo que la consulta se paga).' }
+    { id: '1', role: 'model', text: 'Aquí Facetas. ¿Qué necesitas? ¿Setup pal F1 25 o cahuín de la F1 real? Habla corto que estoy ocupado.' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -100,10 +104,11 @@ const AIEngineer: React.FC = () => {
     }
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || loading) return;
+  const handleSend = async (textOverride?: string) => {
+    const textToSend = textOverride || input;
+    if (!textToSend.trim() || loading) return;
 
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', text: input };
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', text: textToSend };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setLoading(true);
@@ -134,7 +139,7 @@ const AIEngineer: React.FC = () => {
 
     } catch (error) {
       console.error("Error calling Gemini:", error);
-      let errorMsg = 'Se cortó la radio... debe ser el viento de Punta Arenas. Intenta de nuevo.';
+      let errorMsg = 'Se cayó el sistema de la óptica. Intenta de nuevo.';
       setMessages(prev => [...prev, { 
         id: (Date.now() + 1).toString(), 
         role: 'model', 
@@ -155,9 +160,9 @@ const AIEngineer: React.FC = () => {
   const changeMode = (newMode: PersonalityMode) => {
     setMode(newMode);
     let introText = "";
-    if (newMode === 'SERIOUS') introText = "Modo Técnico activado. Hablemos de F1 25 y setups. Recuerda transferir la inscripción.";
-    if (newMode === 'ANGRY') introText = "¿QUÉ QUERÍ AHORA? ¡APÚRATE QUE TENGO FRÍO Y GENTE ESPERANDO LENTES!";
-    if (newMode === 'FUNNY') introText = "Wena compare. ¿Te ajusto el setup o te ajusto la graduación de los lentes? Jaja, dale, pregunta.";
+    if (newMode === 'SERIOUS') introText = "Modo Técnico. Pregunta de F1 25 o F1 Real. Breve, por favor.";
+    if (newMode === 'ANGRY') introText = "¿QUÉ QUERÍ? ¡Hazla corta que tengo gente esperando lentes!";
+    if (newMode === 'FUNNY') introText = "Wena. ¿Hablamos de setups o pelamos a los pilotos? Dale color.";
     
     setMessages([{ id: Date.now().toString(), role: 'model', text: introText }]);
   };
@@ -175,7 +180,7 @@ const AIEngineer: React.FC = () => {
                 INGENIERO <span className="text-mrs-red">"IACETAS"</span>
              </h2>
              <p className="text-gray-400 text-sm md:text-base">
-                Expertos en F1 25. Consultas técnicas con el toque del jefe.
+                Experto en F1 25 y F1 Real. Respuestas rápidas, cobros caros.
              </p>
         </div>
 
@@ -268,11 +273,27 @@ const AIEngineer: React.FC = () => {
                         <div className="flex justify-start">
                              <div className="bg-gray-800 text-gray-400 px-3 py-2 rounded-2xl rounded-tl-none border border-gray-700 flex items-center gap-2 text-xs">
                                 <RefreshCw size={12} className="animate-spin" />
-                                <span>Pensando setup...</span>
+                                <span>{PERSONALITIES[mode].loadingText}</span>
                              </div>
                         </div>
                     )}
                 </div>
+
+                {/* Quick Actions (Chips) */}
+                {!loading && (
+                    <div className="px-3 md:px-4 py-2 bg-gray-900 overflow-x-auto flex gap-2 shrink-0 no-scrollbar">
+                        {QUICK_ACTIONS.map((action, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => handleSend(action)}
+                                className="whitespace-nowrap bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-full border border-gray-700 transition-colors flex items-center gap-1"
+                            >
+                                <MessageSquarePlus size={12} />
+                                {action}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {/* Input Area */}
                 <div className="p-3 md:p-4 bg-gray-800 border-t border-gray-700 shrink-0 z-20">
@@ -282,11 +303,11 @@ const AIEngineer: React.FC = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Pregunta sobre F1 25..."
+                            placeholder="Escribe aquí..."
                             className="w-full bg-gray-900 border border-gray-600 text-white rounded-full py-3 pl-4 pr-12 focus:outline-none focus:border-mrs-red focus:ring-1 focus:ring-mrs-red transition-all placeholder-gray-500 text-sm md:text-base"
                         />
                         <button 
-                            onClick={handleSend}
+                            onClick={() => handleSend()}
                             disabled={loading || !input.trim()}
                             className="absolute right-2 p-2 bg-mrs-yellow text-mrs-black rounded-full hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
