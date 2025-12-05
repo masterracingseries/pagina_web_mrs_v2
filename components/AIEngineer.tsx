@@ -2,6 +2,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Send, Bot, RefreshCw, AlertTriangle, Zap, Smile, MessageSquarePlus } from 'lucide-react';
+import { GCSDivisionData } from '../types';
+
+// URL BASE DE DATOS (Misma que en Standings.tsx)
+const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
 
 type PersonalityMode = 'SERIOUS' | 'ANGRY' | 'FUNNY';
 
@@ -15,7 +19,7 @@ const QUICK_ACTIONS = [
   "🔧 Setup Australia F1 25",
   "🏎️ Consejo de tracción",
   "🇦🇷 Opinión de Colapinto",
-  "🏆 ¿Quién gana el mundial?",
+  "🏆 ¿Quién va ganando la Div 1?",
   "🌧️ Estrategia con lluvia"
 ];
 
@@ -136,6 +140,7 @@ const AIEngineer: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [standingsContext, setStandingsContext] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom
@@ -144,6 +149,40 @@ const AIEngineer: React.FC = () => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // FETCH STANDINGS ON MOUNT TO FEED THE AI CONTEXT
+  useEffect(() => {
+    const fetchAllStandings = async () => {
+        let contextString = "RESUMEN ACTUAL DEL CAMPEONATO MRS (MASTER RACING SERIES):\n";
+        
+        for (let i = 1; i <= 4; i++) {
+            try {
+                const response = await fetch(`${GCS_BASE_URL}/division_${i}.json?cachebust=${Date.now()}`);
+                if (response.ok) {
+                    const data: GCSDivisionData = await response.json();
+                    contextString += `\n[DIVISIÓN ${i}] - Último GP: ${data.ultimo_gp || 'N/A'}\n`;
+                    
+                    // Top 5 Pilotos
+                    const topDrivers = data.pilotos.slice(0, 5).map(d => 
+                        `${d.posicion}. ${d.id} (${d.equipo}) - ${d.puntos}pts`
+                    ).join(', ');
+                    contextString += `Top Pilotos: ${topDrivers}\n`;
+
+                    // Top 3 Constructores
+                    const topConstructors = data.constructores.slice(0, 3).map(c => 
+                        `${c.posicion}. ${c.equipo} - ${c.puntos}pts`
+                    ).join(', ');
+                    contextString += `Top Constructores: ${topConstructors}\n`;
+                }
+            } catch (e) {
+                console.warn(`Error loading Div ${i} for AI context`);
+            }
+        }
+        setStandingsContext(contextString);
+    };
+
+    fetchAllStandings();
+  }, []);
 
   const handleSend = async (textOverride?: string) => {
     const textToSend = textOverride || input;
@@ -158,6 +197,15 @@ const AIEngineer: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const currentPersona = PERSONALITIES[mode];
 
+      // COMBINE BASE INSTRUCTION WITH DYNAMIC STANDINGS CONTEXT
+      const finalSystemInstruction = `${currentPersona.systemInstruction}
+      
+      --------------------------------------------------
+      DATOS REALES DEL CAMPEONATO MRS (Usa esto si te preguntan por pilotos o equipos de la liga):
+      ${standingsContext}
+      --------------------------------------------------
+      `;
+
       const history = messages.slice(-6).map(m => ({
         role: m.role,
         parts: [{ text: m.text }],
@@ -166,7 +214,7 @@ const AIEngineer: React.FC = () => {
       const chat = ai.chats.create({
         model: "gemini-2.5-flash",
         config: {
-            systemInstruction: currentPersona.systemInstruction,
+            systemInstruction: finalSystemInstruction,
             // HABILITA LA BÚSQUEDA EN GOOGLE PARA DATOS ACTUALIZADOS
             tools: [{ googleSearch: {} }] 
         },
