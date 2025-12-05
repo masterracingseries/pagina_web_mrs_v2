@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Send, Bot, RefreshCw, AlertTriangle, Zap, Smile, MessageSquarePlus } from 'lucide-react';
