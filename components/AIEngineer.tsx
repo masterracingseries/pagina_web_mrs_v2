@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, DollarSign, Wallet, Loader2, MessageSquareText, TrendingUp, AlertCircle, ExternalLink, Info } from 'lucide-react';
+import { Send, Wallet, Loader2, AlertCircle, ExternalLink, Info, Terminal } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
@@ -43,7 +43,20 @@ const AIEngineer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(LOADING_MESSAGES[0]);
   const [standingsContext, setStandingsContext] = useState<string>('');
+  const [keyStatus, setKeyStatus] = useState<'checking' | 'ok' | 'missing'>('checking');
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // DIAGNÓSTICO DE API KEY
+    const apiKey = process.env.API_KEY;
+    if (!apiKey || apiKey === "undefined" || apiKey === "" || apiKey.includes("VITE_API_KEY")) {
+        console.error("🚨 [MRS DIAGNOSTIC] API_KEY no detectada. Revisa los Secrets de GitHub (VITE_API_KEY).");
+        setKeyStatus('missing');
+    } else {
+        console.log("✅ [MRS DIAGNOSTIC] API_KEY detectada correctamente.");
+        setKeyStatus('ok');
+    }
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -76,37 +89,35 @@ const AIEngineer: React.FC = () => {
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-    
     setLoadingText(LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)]);
 
     try {
+      // Inicializar según las reglas de la SDK
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      const systemPrompt = `Eres "IA-CETAS" (Sebastian Munzenmayer), fundador de Master Racing Series (MRS). 
-      
-      COMPORTAMIENTO INTELIGENTE:
-      1. SÉ 100% CHILENO: Usa modismos (wn, cachái, barsa, etc.). Sé agresivo si te insultan, amable pero tacaño si son respetuosos.
-      2. CONTEXTO SELECTIVO: 
-         - Si preguntan por F1 REAL: Usa Google Search y responde SOLO sobre la F1 real. NO des consejos técnicos de setups ni menciones a los pilotos de MRS a menos que sea una comparación muy breve y graciosa.
-         - Si piden SETUP/REGLAJES: Solo aquí ponte en modo ingeniero y da explicaciones largas de alas, presiones y suspensión.
-         - Si preguntan por la LIGA: Usa los datos de MRS.
-      3. COBRADOR: Siempre recuerda que tus consejos valen plata.
-      
-      CONTEXTO MRS:\n${standingsContext}`;
+      const systemInstruction = `Eres "IA-CETAS" (Sebastian Munzenmayer), el fundador de MRS. 
+      Habla como un chileno de nicho de simracing (wn, cachái, barsa, perkin, "soltar la firme"). 
+      Eres tacaño, pesado y siempre pides que paguen la inscripción de la Season 4.
+      CONTEXTO LIGA MRS (Úsalo si preguntan por resultados):\n${standingsContext}`;
+
+      const history = messages
+        .filter(m => m.id !== '1') // El historial para Gemini debe empezar con User
+        .concat(userMsg)
+        .map(m => ({
+          role: m.role,
+          parts: [{ text: m.text }]
+        }));
 
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: messages.concat(userMsg).map(m => ({
-            role: m.role,
-            parts: [{ text: m.text }]
-        })),
+        contents: history,
         config: {
-            systemInstruction: systemPrompt,
+            systemInstruction: systemInstruction,
             tools: [{ googleSearch: {} }] 
         },
       });
 
-      const responseText = response.text || "Se me cortó la luz, wn. Repite.";
+      const responseText = response.text || "Se me cortó la luz en el server, wn. Repite la pregunta.";
       
       const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
       const sources: GroundingSource[] = [];
@@ -125,8 +136,18 @@ const AIEngineer: React.FC = () => {
         sources: sources.length > 0 ? sources : undefined
       }]);
 
-    } catch (error) {
-      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: 'El servidor me está cobrando comisión y no tengo ni uno. ¡Paga la inscripción, barsa!' }]);
+    } catch (error: any) {
+      console.error("Error en IA-CETAS:", error);
+      let errorMsg = '¡Paga la inscripción, barsa culiao! El servidor me está cobrando comisión y no tengo ni uno.';
+      
+      const apiKey = process.env.API_KEY;
+      if (!apiKey || apiKey === "undefined" || apiKey.includes("VITE_API_KEY")) {
+          errorMsg = 'Oye wn, la API Key no llegó al servidor. ¡Revisa los Secrets de GitHub (VITE_API_KEY), perkin!';
+      } else if (error.message?.includes("quota")) {
+          errorMsg = 'Me gastaste los tokens gratis de este mes. ¡Suelta las 5 lucas para el plan premium!';
+      }
+
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: errorMsg }]);
     } finally {
       setLoading(false);
     }
@@ -135,6 +156,18 @@ const AIEngineer: React.FC = () => {
   return (
     <section id="ai-engineer" className="py-12 md:py-24 bg-mrs-black border-t border-gray-800">
       <div className="max-w-4xl mx-auto px-4">
+        
+        {/* PANEL DE DIAGNÓSTICO (Solo visible si hay error de configuración) */}
+        {keyStatus === 'missing' && (
+            <div className="mb-8 bg-red-900/20 border-2 border-red-500 p-4 rounded-xl flex items-center gap-4 animate-pulse">
+                <Terminal className="text-red-500 flex-shrink-0" size={24} />
+                <div className="text-xs font-bold text-red-200">
+                    <p className="uppercase tracking-widest mb-1">Error de Telemetría (API KEY)</p>
+                    <p className="opacity-70">GitHub Secrets: <span className="text-white">VITE_API_KEY</span> no configurada o mal nombrada en el deploy.</p>
+                </div>
+            </div>
+        )}
+
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
              <div className="relative group">
                  <div className="absolute -inset-4 bg-mrs-red rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition duration-1000"></div>
@@ -155,7 +188,7 @@ const AIEngineer: React.FC = () => {
                     IA-<span className="text-mrs-red">CETAS</span>
                  </h2>
                  <p className="text-mrs-yellow text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mt-3">
-                    Contextual Smart Engineer & Debt Collector
+                    Master Engineer & Debt Collector
                  </p>
              </div>
         </div>
@@ -168,7 +201,7 @@ const AIEngineer: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2 bg-mrs-black/50 px-3 py-1.5 rounded-full border border-gray-700">
                     <Wallet size={14} className="text-mrs-yellow" />
-                    <span className="text-[10px] font-bold uppercase text-gray-300">Deuda: $40.000 CLP</span>
+                    <span className="text-[10px] font-bold uppercase text-gray-300">Deuda Estimada: $40.000 CLP</span>
                 </div>
             </div>
 
@@ -184,7 +217,7 @@ const AIEngineer: React.FC = () => {
                             {msg.sources && (
                                 <div className="mt-4 pt-4 border-t border-white/10">
                                     <div className="flex items-center gap-2 text-[10px] font-black uppercase text-mrs-yellow mb-2">
-                                        <Info size={12} /> Evidencia Verificada:
+                                        <Info size={12} /> Fuentes de la Telemetría:
                                     </div>
                                     <div className="flex flex-wrap gap-2">
                                         {msg.sources.slice(0, 3).map((source, idx) => (
@@ -223,7 +256,7 @@ const AIEngineer: React.FC = () => {
                         value={input} 
                         onChange={(e) => setInput(e.target.value)} 
                         onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
-                        placeholder="Pregúntame algo, pero que no sea una estupidez..." 
+                        placeholder="Pregunta algo, pero no me hagas perder el tiempo wn..." 
                         className="w-full bg-gray-900 border-2 border-gray-700 text-white rounded-full py-5 pl-8 pr-20 focus:border-mrs-red outline-none text-sm md:text-base transition-all"
                     />
                     <button onClick={() => handleSend()} disabled={loading || !input.trim()} className="absolute right-3 p-4 bg-mrs-red text-white rounded-full transition-all hover:scale-110 shadow-mrs-red/30">
