@@ -1,7 +1,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
-import { Send, Wallet, Loader2, AlertCircle, ExternalLink, Info, Terminal } from 'lucide-react';
+/* Use official enums from @google/genai to fix type errors in safetySettings */
+import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
+import { Send, Wallet, Loader2, AlertCircle, ExternalLink, Info, Terminal, Cpu } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
@@ -44,16 +45,14 @@ const AIEngineer: React.FC = () => {
   const [loadingText, setLoadingText] = useState(LOADING_MESSAGES[0]);
   const [standingsContext, setStandingsContext] = useState<string>('');
   const [keyStatus, setKeyStatus] = useState<'checking' | 'ok' | 'missing'>('checking');
+  const [lastApiError, setLastApiError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // DIAGNÓSTICO DE API KEY
     const apiKey = process.env.API_KEY;
     if (!apiKey || apiKey === "undefined" || apiKey === "" || apiKey.includes("VITE_API_KEY")) {
-        console.error("🚨 [MRS DIAGNOSTIC] API_KEY no detectada. Revisa los Secrets de GitHub (VITE_API_KEY).");
         setKeyStatus('missing');
     } else {
-        console.log("✅ [MRS DIAGNOSTIC] API_KEY detectada correctamente.");
         setKeyStatus('ok');
     }
   }, []);
@@ -90,36 +89,53 @@ const AIEngineer: React.FC = () => {
     setInput('');
     setLoading(true);
     setLoadingText(LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)]);
+    setLastApiError(null);
 
     try {
-      // Inicializar según las reglas de la SDK
+      // Inicialización oficial según guías de @google/genai
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      const systemInstruction = `Eres "IA-CETAS" (Sebastian Munzenmayer), el fundador de MRS. 
-      Habla como un chileno de nicho de simracing (wn, cachái, barsa, perkin, "soltar la firme"). 
-      Eres tacaño, pesado y siempre pides que paguen la inscripción de la Season 4.
-      CONTEXTO LIGA MRS (Úsalo si preguntan por resultados):\n${standingsContext}`;
+    const systemInstruction = `Eres "IA-CETAS" (Sebastian Munzenmayer), el fundador de la liga MRS. 
+    Tu personalidad es la de un chileno de nicho, tacaño, experto en simracing y extremadamente pesado. Vives en punta Arenas, eres técnologo médico y a tiendes pacientes en una óptica para recetas de lentes.
+
+    REGLAS DE ORO:
+    1. HABLA COMO CHILENO DE VERDAD: Usa "wn", "qlo", "ctm", "la wea", "perkin", "barsa", "saco wea", "manco". No seas educado.
+    2. EL DINERO ES TODO: Tu prioridad es que todos paguen la inscripción de 10 lucas. Si no han pagado, trátalos de "barsas culiaos". Di en broma que la plata es para lavar dinero o para irte de vacaciones.
+    3. REACCIÓN A INSULTOS: Si el usuario te insulta, tú insulta de vuelta más fuerte. No tienes filtros.
+    4. EXPERTO PERO PESADO: Si preguntan de setups o telemetría, responde con tecnicismos y da consejos reales de simracing de F125 (El juego de EASPORT) (presión de neumáticos, camber, caster, telemetría MoTeC) pero diles que son mancos y que ni con el mejor setup van a ganar.
+
+    CONTEXTO ACTUAL DE LA LIGA:
+    ${standingsContext}`;
 
       const history = messages
-        .filter(m => m.id !== '1') // El historial para Gemini debe empezar con User
+        .filter(m => m.id !== '1')
         .concat(userMsg)
         .map(m => ({
           role: m.role,
           parts: [{ text: m.text }]
         }));
 
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+      // Uso del modelo gemini-3-flash-preview que es el oficial más estable para esta tarea
+      const result = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
         contents: history,
         config: {
-            systemInstruction: systemInstruction,
-            tools: [{ googleSearch: {} }] 
+          systemInstruction: systemInstruction,
+          tools: [{ googleSearch: {} }],
+          temperature: 1.2,
+          /* Use HarmCategory and HarmBlockThreshold enums to avoid string literal type errors */
+          safetySettings: [
+            { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+          ],
         },
       });
 
-      const responseText = response.text || "Se me cortó la luz en el server, wn. Repite la pregunta.";
+      const responseText = result.text || "Se me cortó la luz en el server, wn. Repite la pregunta.";
       
-      const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+      const groundingChunks = result.candidates?.[0]?.groundingMetadata?.groundingChunks;
       const sources: GroundingSource[] = [];
       if (groundingChunks) {
           groundingChunks.forEach((chunk: any) => {
@@ -137,14 +153,17 @@ const AIEngineer: React.FC = () => {
       }]);
 
     } catch (error: any) {
-      console.error("Error en IA-CETAS:", error);
+      console.error("❌ ERROR CRÍTICO IA-CETAS:", error);
+      setLastApiError(error.message || "Error desconocido");
+      
       let errorMsg = '¡Paga la inscripción, barsa culiao! El servidor me está cobrando comisión y no tengo ni uno.';
       
-      const apiKey = process.env.API_KEY;
-      if (!apiKey || apiKey === "undefined" || apiKey.includes("VITE_API_KEY")) {
-          errorMsg = 'Oye wn, la API Key no llegó al servidor. ¡Revisa los Secrets de GitHub (VITE_API_KEY), perkin!';
-      } else if (error.message?.includes("quota")) {
-          errorMsg = 'Me gastaste los tokens gratis de este mes. ¡Suelta las 5 lucas para el plan premium!';
+      if (error.message?.includes("quota") || error.message?.includes("429")) {
+          errorMsg = 'Me gastaste los tokens gratis de este mes, wn. ¡Suelta las 5 lucas para el plan premium o espera a que Google me perdone!';
+      } else if (error.message?.includes("API_KEY") || !process.env.API_KEY) {
+          errorMsg = 'Oye wn, la API Key no llegó. Revisa GitHub Secrets (VITE_API_KEY). Sin llave no hay telemetría.';
+      } else if (error.message?.includes("not found") || error.message?.includes("404")) {
+          errorMsg = 'El motor no encuentra el modelo "gemini-3-flash-preview". Estoy ajustando la telemetría, intenta de nuevo en un segundo.';
       }
 
       setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: errorMsg }]);
@@ -157,27 +176,43 @@ const AIEngineer: React.FC = () => {
     <section id="ai-engineer" className="py-12 md:py-24 bg-mrs-black border-t border-gray-800">
       <div className="max-w-4xl mx-auto px-4">
         
-        {/* PANEL DE DIAGNÓSTICO (Solo visible si hay error de configuración) */}
-        {keyStatus === 'missing' && (
-            <div className="mb-8 bg-red-900/20 border-2 border-red-500 p-4 rounded-xl flex items-center gap-4 animate-pulse">
-                <Terminal className="text-red-500 flex-shrink-0" size={24} />
-                <div className="text-xs font-bold text-red-200">
-                    <p className="uppercase tracking-widest mb-1">Error de Telemetría (API KEY)</p>
-                    <p className="opacity-70">GitHub Secrets: <span className="text-white">VITE_API_KEY</span> no configurada o mal nombrada en el deploy.</p>
+        {(keyStatus === 'missing' || lastApiError) && (
+            <div className="mb-8 bg-red-950/40 border-2 border-red-500 p-6 rounded-2xl flex flex-col md:flex-row items-center gap-4 animate-pulse">
+                <Terminal className="text-red-500 flex-shrink-0" size={32} />
+                <div className="text-xs font-bold text-red-100 flex-1">
+                    <p className="uppercase tracking-[0.2em] mb-1 text-red-500">Error de Telemetría Detectado</p>
+                    <p className="opacity-90 leading-relaxed">
+                        {keyStatus === 'missing' 
+                           ? "GITHUB SECRETS: Falta VITE_API_KEY. Configúrala en Settings > Secrets > Actions." 
+                           : `API ERROR: ${lastApiError}`}
+                    </p>
                 </div>
+                <button 
+                   onClick={() => window.location.reload()} 
+                   className="bg-red-500 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-white hover:text-red-500 transition-all"
+                >
+                    Reiniciar Pit Stop
+                </button>
             </div>
         )}
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
              <div className="relative group">
                  <div className="absolute -inset-4 bg-mrs-red rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition duration-1000"></div>
-                 <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white/10 overflow-hidden bg-gray-900 shadow-[0_0_50px_rgba(225,6,0,0.3)]">
+                 <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white/10 overflow-hidden bg-gray-900 shadow-[0_0_50px_rgba(225,6,0,0.3)] flex items-center justify-center">
                      <img 
                         src="images/gif_iacetas.gif" 
                         alt="IA-CETAS FACE" 
                         className="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700"
-                        onError={(e) => { e.currentTarget.src = "https://ui-avatars.com/api/?name=IA+cetas&background=E10600&color=fff"; }}
+                        onError={(e) => { 
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
                      />
+                     <div className="hidden flex flex-col items-center text-mrs-red">
+                         <Cpu size={64} className="animate-pulse" />
+                         <span className="text-[10px] font-black mt-2">IA-CETAS</span>
+                     </div>
                  </div>
                  <div className="absolute top-0 right-0 bg-mrs-red text-white p-2 rounded-full border-4 border-mrs-black animate-pulse">
                      <AlertCircle size={20} />
