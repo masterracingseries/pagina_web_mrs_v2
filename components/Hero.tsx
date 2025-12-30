@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N5bmRyb21lX2YxX2dpZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zy/3aGZqQvU5Jg2S9v9S9/giphy.gif" 
+          src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTQ5NWcyZjZ6d3k1NWFwdmgxZ3FyanE5ajB0cW9tcjdqNXVnZTR4dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2vnBoOj4kcYwfso3N/giphy.gif" 
           alt="F1 Racing Animation" 
           className="w-full h-full object-cover scale-110 brightness-[0.6]"
           onError={(e) => {
