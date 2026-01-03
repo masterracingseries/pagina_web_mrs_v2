@@ -3,10 +3,7 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
 
 /**
  * 🛠️ SISTEMA DE ACTIVOS (FLUJO MAESTRO)
- * Todas las imágenes deben estar en: public/images/[categoría]/archivo.jpg
- * En el código, la ruta será: ./images/[categoría]/archivo.jpg
  */
-
 export const ASSET_PATHS = {
     LOGOS: './images/logos',
     CHAMPIONS: './images/champions',
@@ -15,7 +12,6 @@ export const ASSET_PATHS = {
     PROMO: './images/promo'
 };
 
-// Helper para generar rutas limpias
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgXKPjuR/preview";
@@ -28,24 +24,9 @@ export const SOCIAL_LINKS = {
 };
 
 export const MEDIA_ITEMS: MediaItem[] = [
-    {
-        id: 'm1',
-        type: 'YOUTUBE',
-        url: 'https://www.youtube.com/embed/u2NJDt2tM5M?si=example', 
-        title: 'Highlights: Round 3 Australia'
-    },
-    {
-        id: 'm2',
-        type: 'IMAGE',
-        url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop',
-        title: 'Photo Finish Bahrain'
-    },
-    {
-        id: 'm4',
-        type: 'YOUTUBE',
-        url: 'https://www.youtube.com/embed/546qf7q0yqI?si=example',
-        title: 'Season 4 Trailer'
-    }
+    { id: 'm1', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/u2NJDt2tM5M?si=example', title: 'Highlights: Round 3 Australia' },
+    { id: 'm2', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', title: 'Photo Finish Bahrain' },
+    { id: 'm4', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/546qf7q0yqI?si=example', title: 'Season 4 Trailer' }
 ];
 
 export const TEAMS: Team[] = [
@@ -75,9 +56,41 @@ export const DIVISIONS: Division[] = [
   { id: 'div4', name: 'División 4 (Rookie)', drivers: generateDrivers('D4') },
 ];
 
+/**
+ * 📅 CALENDARIO OFICIAL SEASON 4
+ * Las fechas isoDate determinan automáticamente si la carrera ya pasó o es la próxima.
+ */
 export const CALENDAR: RaceEvent[] = [
-  { id: 'r1', round: 1, country: 'Bahréin', trackName: 'Sakhir', date: '02 MAR', completed: true, format: 'FEATURE', flagUrl: 'https://flagcdn.com/bh.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Bahrain_Circuit.png' },
-  { id: 'r2', round: 2, country: 'Arabia Saudita', trackName: 'Jeddah', date: '09 MAR', completed: true, format: 'FEATURE', flagUrl: 'https://flagcdn.com/sa.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Saudi_Arabia_Circuit.png' },
+  { 
+    id: 'r1', round: 1, country: 'Bahréin', trackName: 'Sakhir', 
+    date: '02 MAR', isoDate: '2025-03-02', completed: true, format: 'FEATURE', 
+    flagUrl: 'https://flagcdn.com/bh.svg', 
+    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Bahrain_Circuit.png' 
+  },
+  { 
+    id: 'r2', round: 2, country: 'Arabia Saudita', trackName: 'Jeddah', 
+    date: '09 MAR', isoDate: '2025-03-09', completed: true, format: 'FEATURE', 
+    flagUrl: 'https://flagcdn.com/sa.svg', 
+    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Saudi_Arabia_Circuit.png' 
+  },
+  { 
+    id: 'r3', round: 3, country: 'Australia', trackName: 'Albert Park', 
+    date: '16 MAR', isoDate: '2025-03-16', completed: false, format: 'FEATURE', 
+    flagUrl: 'https://flagcdn.com/au.svg', 
+    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Australia_Circuit.png' 
+  },
+  { 
+    id: 'r4', round: 4, country: 'Japón', trackName: 'Suzuka', 
+    date: '23 MAR', isoDate: '2025-03-23', completed: false, format: 'SPRINT', 
+    flagUrl: 'https://flagcdn.com/jp.svg', 
+    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Japan_Circuit.png' 
+  },
+  { 
+    id: 'r5', round: 5, country: 'China', trackName: 'Shanghai', 
+    date: '06 ABR', isoDate: '2025-04-06', completed: false, format: 'FEATURE', 
+    flagUrl: 'https://flagcdn.com/cn.svg', 
+    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/China_Circuit.png' 
+  },
 ];
 
 export const CHAMPIONS: Champion[] = [
