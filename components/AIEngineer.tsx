@@ -201,11 +201,11 @@ const AIEngineer: React.FC = () => {
                  {/* Contenedor del GIF de perfil */}
                  <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white/10 overflow-hidden bg-gray-900 shadow-[0_0_50px_rgba(225,6,0,0.5)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
                      <img 
-                        src="images/gif_iacetas.gif" 
+                        src="/images/gif_iacetas.gif" 
                         alt="IA-CETAS PROFILE" 
                         className="w-full h-full object-cover grayscale-0 brightness-110 contrast-110"
                         onError={(e) => { 
-                            // Si el archivo 'images/gif_iacetas.gif' NO EXISTE, mostramos el icono de CPU
+                            // Si el archivo '/images/gif_iacetas.gif' NO EXISTE, mostramos el icono de CPU
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.nextElementSibling?.classList.remove('hidden');
                         }}
