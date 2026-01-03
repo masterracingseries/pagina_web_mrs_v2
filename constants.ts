@@ -81,10 +81,10 @@ export const CALENDAR: RaceEvent[] = [
 ];
 
 export const CHAMPIONS: Champion[] = [
-  { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: getImg('CHAMPIONS', 's3-div1.jpg') },
-  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: getImg('CHAMPIONS', 's3-div2.jpg') },
-  { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'merc', imageUrl: getImg('CHAMPIONS', 's3-div3.jpg') },
-  { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'mclaren', imageUrl: getImg('CHAMPIONS', 's3-div4.jpg') },
+  { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: getImg('CHAMPIONS', 'campeon_div1_season3_rlsdaruma.png') },
+  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: getImg('CHAMPIONS', '/campeon_div2_season3_rlsprice.png') },
+  { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'merc', imageUrl: getImg('CHAMPIONS', 'campeon_div3_season3_rlsmatiastapia.png') },
+  { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'mclaren', imageUrl: getImg('CHAMPIONS', 'campeon_div4_season3_chikixd.png') },
 ];
 
 export const ADMINS: Admin[] = [
