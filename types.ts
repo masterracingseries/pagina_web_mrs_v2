@@ -28,7 +28,8 @@ export interface RaceEvent {
   country: string;
   trackName: string;
   date: string;
-  completed: boolean;
+  isoDate: string; // Formato YYYY-MM-DD para lógica automática
+  completed: boolean; // Ahora se usará como fallback o flag manual
   flagUrl: string;
   mapUrl: string;
   format: RaceFormat;
