@@ -1,17 +1,19 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CHAMPIONS } from '../constants';
 import { Champion } from '../types';
 import { Trophy, History, Star } from 'lucide-react';
+import SafeImage from './SafeImage';
 
-// Function to render a single card (used in both grid and marquee)
 const ChampionCard: React.FC<{ champ: Champion }> = ({ champ }) => (
   <div className="w-[300px] flex-shrink-0 relative group overflow-hidden rounded-xl border border-gray-800 bg-gray-900 mx-4">
       <div className="aspect-[4/5] overflow-hidden">
-          <img 
+          <SafeImage 
               src={champ.imageUrl} 
               alt={champ.name} 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+              fallbackIcon={<Trophy size={40} className="opacity-20" />}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
       </div>
@@ -32,7 +34,6 @@ const ChampionCard: React.FC<{ champ: Champion }> = ({ champ }) => (
 const Champions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'ALL' | 'S4' | 'S3' | 'S2' | 'S1'>('ALL');
 
-  // Filter champions based on tab
   const filteredChampions = activeTab === 'ALL' 
     ? CHAMPIONS 
     : CHAMPIONS.filter(c => c.season === activeTab);
@@ -47,103 +48,50 @@ const Champions: React.FC = () => {
             <h2 className="text-4xl md:text-6xl font-display uppercase italic mb-2 text-white">
                 Wall of <span className="text-transparent bg-clip-text bg-gradient-to-r from-mrs-yellow to-yellow-600">Champions</span>
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                La gloria eterna de la Master Racing Series. Conoce a las leyendas que han grabado su nombre en la historia.
-            </p>
         </div>
 
-        {/* Season Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-16">
             <button 
                 onClick={() => setActiveTab('ALL')}
-                className={`px-6 py-2 rounded-full font-bold uppercase tracking-wider text-sm transition-all duration-300 border border-gray-700 ${activeTab === 'ALL' ? 'bg-mrs-yellow text-mrs-black scale-105' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+                className={`px-6 py-2 rounded-full font-bold uppercase tracking-wider text-sm transition-all duration-300 border border-gray-700 ${activeTab === 'ALL' ? 'bg-mrs-yellow text-mrs-black' : 'bg-gray-800 text-gray-400'}`}
             >
                 <span className="flex items-center gap-2"><History size={16}/> Hall of Fame</span>
             </button>
-            {['S4', 'S3', 'S2', 'S1'].map(season => (
+            {['S3', 'S2', 'S1'].map(season => (
                  <button 
                     key={season}
                     onClick={() => setActiveTab(season as any)}
-                    className={`px-6 py-2 rounded-full font-bold uppercase tracking-wider text-sm transition-all duration-300 border border-gray-700 ${activeTab === season ? 'bg-mrs-red text-white scale-105' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+                    className={`px-6 py-2 rounded-full font-bold uppercase tracking-wider text-sm transition-all duration-300 border border-gray-700 ${activeTab === season ? 'bg-mrs-red text-white' : 'bg-gray-800 text-gray-400'}`}
                 >
                     Season {season.replace('S', '')}
                 </button>
             ))}
         </div>
         
-        {/* Content Area */}
-        <div className="min-h-[500px] flex flex-col justify-center">
+        <div className="min-h-[500px]">
             {activeTab === 'ALL' ? (
-                 /* Marquee View */
                  <div className="relative w-full overflow-hidden">
-                    <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-mrs-black to-transparent z-10"></div>
-                    <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-mrs-black to-transparent z-10"></div>
-                    
                     <motion.div 
                         className="flex"
                         animate={{ x: ["0%", "-100%"] }}
-                        transition={{ 
-                            repeat: Infinity, 
-                            ease: "linear", 
-                            duration: 40 // Adjust speed here
-                        }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
                     >
-                        {/* Duplicate the array 3 times to create a seamless loop buffer */}
-                        {[...CHAMPIONS, ...CHAMPIONS, ...CHAMPIONS].map((champ, index) => (
-                             <ChampionCard key={`${champ.id}-marquee-${index}`} champ={champ} />
+                        {[...CHAMPIONS, ...CHAMPIONS].map((champ, index) => (
+                             <ChampionCard key={`${champ.id}-${index}`} champ={champ} />
                         ))}
                     </motion.div>
-                    
-                    <div className="text-center mt-8 text-sm text-gray-500 font-bold uppercase tracking-widest animate-pulse">
-                        Deslizando historial completo...
-                    </div>
                  </div>
             ) : (
-                /* Grid View for specific season */
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={activeTab}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
                     >
-                         {filteredChampions.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-                                {filteredChampions.map((champ) => (
-                                     <div key={champ.id} className="w-full max-w-[300px]">
-                                        <div className="w-full relative group overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-2xl hover:shadow-mrs-red/20 transition-shadow duration-300">
-                                            <div className="aspect-[4/5] overflow-hidden relative">
-                                                <img 
-                                                    src={champ.imageUrl} 
-                                                    alt={champ.name} 
-                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                                />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                                                
-                                                {/* Badge */}
-                                                <div className="absolute top-4 right-4 bg-mrs-yellow text-mrs-black font-bold p-2 rounded-full shadow-lg">
-                                                    <Trophy size={20} />
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="p-5 border-t border-gray-800 relative bg-gray-900">
-                                                <h3 className="text-xl font-bold uppercase italic leading-none mb-2 text-white truncate">{champ.name}</h3>
-                                                <div className="flex justify-between items-center">
-                                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{champ.division}</span>
-                                                    <img src={`logos_f1/logo_${champ.teamId === 'rb' ? 'redbull' : champ.teamId === 'merc' ? 'mercedes' : champ.teamId === 'aston' ? 'aston' : champ.teamId}.png`} onError={(e) => e.currentTarget.style.display='none'} alt="Team" className="h-4 opacity-70" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                     </div>
-                                ))}
-                            </div>
-                         ) : (
-                             <div className="text-center py-20 text-gray-500">
-                                 <h3 className="text-2xl font-display italic mb-2">SEASON IN PROGRESS</h3>
-                                 <p>Los campeones de esta temporada aún no han sido coronados.</p>
-                             </div>
-                         )}
+                        {filteredChampions.map((champ) => (
+                             <ChampionCard key={champ.id} champ={champ} />
+                        ))}
                     </motion.div>
                 </AnimatePresence>
             )}
