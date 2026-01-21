@@ -46,17 +46,22 @@ const Navbar: React.FC = () => {
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
-                 onLoad={() => console.log("Logo cargado exitosamente de:", LOGO_URL)}
+                 onLoad={(e) => {
+                   console.log("Logo cargado con éxito desde:", e.currentTarget.src);
+                 }}
                  onError={(e) => {
-                   console.error("ERROR 404: No se encontró el logo en:", LOGO_URL);
-                   console.log("Asegúrate de que el archivo esté en public/images/logos/logo.png");
+                   const attemptedUrl = e.currentTarget.src;
+                   console.error("ERROR: No se pudo cargar el logo en:", attemptedUrl);
                    e.currentTarget.style.display = 'none';
                    // Mostramos la M de respaldo solo si falla el PNG
-                   const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
-                   if (fallback) fallback.classList.remove('hidden');
+                   const container = e.currentTarget.parentElement;
+                   const fallback = container?.querySelector('.logo-fallback');
+                   if (fallback) {
+                     fallback.classList.remove('hidden');
+                   }
                  }}
                />
-               <div className="logo-fallback hidden w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box">
+               <div className="logo-fallback hidden w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box border-2 border-white/50 shadow-[0_0_10px_rgba(255,215,0,0.5)]">
                   <span className="unskew-text">M</span>
                </div>
             </div>
