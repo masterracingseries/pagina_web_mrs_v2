@@ -3,21 +3,26 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
 
 /**
  * 🛠️ SISTEMA DE ACTIVOS (FLUJO MAESTRO)
+ * El uso de './' asegura que las rutas se resuelvan dentro de la subcarpeta del repositorio en GitHub Pages.
  */
 export const ASSET_PATHS = {
-    LOGOS: 'images/logos',
-    CHAMPIONS: 'images/champions',
-    STAFF: 'images/staff',
-    SPONSORS: 'images/sponsors',
-    PROMO: 'images/promo'
+    LOGOS: './images/logos',
+    CHAMPIONS: './images/champions',
+    STAFF: './images/staff',
+    SPONSORS: './images/sponsors',
+    PROMO: './images/promo'
 };
 
-// Usamos ruta relativa explícita para GitHub Pages
-export const LOGO_URL = './images/logos/logo.png';
-
+/**
+ * Función maestra para obtener rutas de imagen. 
+ * Definida arriba para ser usada por todas las constantes del sitio.
+ */
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
-export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgXKPjuR/preview";
+// LOGO: Ahora usa exactamente el mismo método que los Champions
+export const LOGO_URL = getImg('LOGOS', 'logo.png');
+
+export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
 
 export const SOCIAL_LINKS = {
     instagram: "https://www.instagram.com/masterracingseries/",
