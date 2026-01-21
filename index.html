@@ -7,36 +7,9 @@
     <title>Master Racing Series | F1 SimRacing</title>
     <meta name="description" content="Liga de SimRacing F1 profesional - Season 4" />
     <link rel="icon" type="image/png" href="./images/logos/logo.png" />
-    <link rel="stylesheet" href="index.css">
-
-    <!-- MOTOR DE TAILWIND CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              mrs: {
-                yellow: '#FFD700',
-                black: '#101010',
-                red: '#E10600',
-                gray: '#1F1F1F',
-                light: '#F3F3F3'
-              }
-            },
-            fontFamily: {
-              sans: ['"Titillium Web"', 'sans-serif'],
-              display: ['"Racing Sans One"', 'cursive'],
-            },
-            backgroundImage: {
-              'carbon': "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
-              'checkered': "url('https://www.transparenttextures.com/patterns/checkered-pattern.png')"
-            }
-          }
-        }
-      };
-    </script>
+    <!-- Importamos el CSS directamente para que Vite lo procese -->
+    <link rel="stylesheet" href="./index.css">
 
     <script type="importmap">
 {
@@ -54,8 +27,8 @@
 }
 </script>
   </head>
-  <body class="bg-mrs-black text-white overflow-x-hidden h-full">
+  <body class="bg-[#101010] text-white overflow-x-hidden h-full">
     <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
