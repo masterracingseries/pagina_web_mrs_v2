@@ -39,18 +39,26 @@ const Navbar: React.FC = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/95 backdrop-blur-md border-b border-mrs-red/30 py-2 shadow-2xl' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={(e) => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             {/* LOGO OFICIAL MRS */}
-            <div className="w-12 h-12 relative">
+            <div className="w-12 h-12 relative flex items-center justify-center">
                <img 
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
-                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                 className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                 onLoad={() => console.log("Logo cargado exitosamente de:", LOGO_URL)}
                  onError={(e) => {
-                   // Fallback visual silencioso: si falla, solo muestra texto para no romper la estética
+                   console.error("ERROR 404: No se encontró el logo en:", LOGO_URL);
+                   console.log("Asegúrate de que el archivo esté en public/images/logos/logo.png");
                    e.currentTarget.style.display = 'none';
+                   // Mostramos la M de respaldo solo si falla el PNG
+                   const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
+                   if (fallback) fallback.classList.remove('hidden');
                  }}
                />
+               <div className="logo-fallback hidden w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box">
+                  <span className="unskew-text">M</span>
+               </div>
             </div>
             <div className="flex flex-col">
                 <span className="font-display text-2xl tracking-tighter text-white italic leading-none">
