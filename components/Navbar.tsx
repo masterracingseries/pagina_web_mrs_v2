@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Gamepad2 } from 'lucide-react';
 import { LOGO_URL } from '../constants';
+import SafeImage from './SafeImage';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,30 +41,18 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            {/* LOGO OFICIAL MRS */}
+            {/* LOGO MRS - Implementado igual que los Champions */}
             <div className="w-12 h-12 relative flex items-center justify-center">
-               <img 
+               <SafeImage 
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
-                 onLoad={(e) => {
-                   console.log("Logo cargado con éxito desde:", e.currentTarget.src);
-                 }}
-                 onError={(e) => {
-                   const attemptedUrl = e.currentTarget.src;
-                   console.error("ERROR: No se pudo cargar el logo en:", attemptedUrl);
-                   e.currentTarget.style.display = 'none';
-                   // Mostramos la M de respaldo solo si falla el PNG
-                   const container = e.currentTarget.parentElement;
-                   const fallback = container?.querySelector('.logo-fallback');
-                   if (fallback) {
-                     fallback.classList.remove('hidden');
-                   }
-                 }}
+                 fallbackIcon={
+                   <div className="w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box border-2 border-white/50">
+                      <span className="unskew-text">M</span>
+                   </div>
+                 }
                />
-               <div className="logo-fallback hidden w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box border-2 border-white/50 shadow-[0_0_10px_rgba(255,215,0,0.5)]">
-                  <span className="unskew-text">M</span>
-               </div>
             </div>
             <div className="flex flex-col">
                 <span className="font-display text-2xl tracking-tighter text-white italic leading-none">
