@@ -5,15 +5,15 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
  * 🛠️ SISTEMA DE ACTIVOS (FLUJO MAESTRO)
  */
 export const ASSET_PATHS = {
-    LOGOS: './images/logos',
-    CHAMPIONS: './images/champions',
-    STAFF: './images/staff',
-    SPONSORS: './images/sponsors',
-    PROMO: './images/promo'
+    LOGOS: 'images/logos',
+    CHAMPIONS: 'images/champions',
+    STAFF: 'images/staff',
+    SPONSORS: 'images/sponsors',
+    PROMO: 'images/promo'
 };
 
-// Ruta maestra para el logo principal
-export const LOGO_URL = './images/logos/logo.png';
+// Ruta maestra para el logo principal - Sin el punto inicial para mejor compatibilidad
+export const LOGO_URL = 'images/logos/logo.png';
 
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
@@ -59,9 +59,6 @@ export const DIVISIONS: Division[] = [
   { id: 'div4', name: 'División 4 (Rookie)', drivers: generateDrivers('D4') },
 ];
 
-/**
- * 📅 CALENDARIO OFICIAL SEASON 4
- */
 export const CALENDAR: RaceEvent[] = [
   { 
     id: 'r1', round: 1, country: 'Bahréin', trackName: 'Sakhir', 
