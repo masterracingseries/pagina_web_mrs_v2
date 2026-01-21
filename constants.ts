@@ -3,23 +3,22 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
 
 /**
  * 🛠️ SISTEMA DE ACTIVOS (FLUJO MAESTRO)
- * El uso de './' asegura que las rutas se resuelvan dentro de la subcarpeta del repositorio en GitHub Pages.
+ * Referencias directas a la carpeta public/images
  */
 export const ASSET_PATHS = {
-    LOGOS: './images/logos',
-    CHAMPIONS: './images/champions',
-    STAFF: './images/staff',
-    SPONSORS: './images/sponsors',
-    PROMO: './images/promo'
+    LOGOS: 'images/logos',
+    CHAMPIONS: 'images/champions',
+    STAFF: 'images/staff',
+    SPONSORS: 'images/sponsors',
+    PROMO: 'images/promo'
 };
 
 /**
  * Función maestra para obtener rutas de imagen. 
- * Definida arriba para ser usada por todas las constantes del sitio.
  */
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
-// LOGO: Ahora usa exactamente el mismo método que los Champions
+// LOGO: Definido con el mismo método que los campeones
 export const LOGO_URL = getImg('LOGOS', 'logo.png');
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
