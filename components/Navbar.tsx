@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2, Bot } from 'lucide-react';
+import { Menu, X, Gamepad2 } from 'lucide-react';
+import { LOGO_URL } from '../constants';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,13 +16,10 @@ const Navbar: React.FC = () => {
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault(); // Evita que cambie la URL y falle en el preview
+    e.preventDefault();
     setIsOpen(false);
-    
-    // Remove # if present
     const id = targetId.replace('#', '');
     const element = document.getElementById(id);
-    
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -38,30 +36,28 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/90 backdrop-blur-md border-b-2 border-mrs-red py-2' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/95 backdrop-blur-md border-b border-mrs-red/30 py-2 shadow-2xl' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center gap-2">
-            {/* LOGO: public/images/logos/logo.png */}
-            <div className="w-10 h-10 overflow-hidden flex items-center justify-center">
+          <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={(e) => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            {/* LOGO OFICIAL MRS */}
+            <div className="w-12 h-12 relative">
                <img 
-                 src="images/logos/logo.png" 
-                 alt="MRS Logo" 
-                 className="w-full h-full object-contain"
+                 src={LOGO_URL} 
+                 alt="Master Racing Series" 
+                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
                  onError={(e) => {
-                   // Fallback visual si no existe la imagen
+                   // Fallback visual silencioso: si falla, solo muestra texto para no romper la estética
                    e.currentTarget.style.display = 'none';
-                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                  }}
                />
-               {/* Fallback por si no hay imagen */}
-               <div className="hidden w-10 h-10 bg-mrs-yellow skew-box flex items-center justify-center border-2 border-white">
-                 <span className="unskew-text font-display text-mrs-black text-xl">M</span>
-               </div>
             </div>
-            <span className="font-display text-2xl tracking-wider text-white italic">
-              MRS <span className="text-mrs-yellow">RACING</span>
-            </span>
+            <div className="flex flex-col">
+                <span className="font-display text-2xl tracking-tighter text-white italic leading-none">
+                MRS <span className="text-mrs-yellow">RACING</span>
+                </span>
+                <span className="text-[8px] font-black uppercase tracking-[0.4em] text-mrs-red">Official League</span>
+            </div>
           </div>
           
           <div className="hidden lg:block">
@@ -71,18 +67,18 @@ const Navbar: React.FC = () => {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative group px-2 py-2 text-sm font-bold uppercase tracking-widest text-white hover:text-mrs-yellow transition-colors cursor-pointer"
+                  className="relative group px-2 py-2 text-xs font-black uppercase tracking-widest text-white/80 hover:text-white transition-colors cursor-pointer"
                 >
                   {link.name}
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-mrs-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-mrs-red transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 shadow-[0_0_8px_#E10600]"></span>
                 </a>
               ))}
                <a
                   href="#game"
                   onClick={(e) => handleNavClick(e, '#game')}
-                  className="flex items-center gap-2 bg-mrs-red px-4 py-2 text-sm font-bold uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-colors rounded skew-box cursor-pointer"
+                  className="flex items-center gap-2 bg-mrs-red px-5 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded skew-box cursor-pointer shadow-lg shadow-mrs-red/20 active:scale-95"
                 >
-                   <Gamepad2 size={16} className="unskew-text" />
+                   <Gamepad2 size={14} className="unskew-text" />
                    <span className="unskew-text">Paddock</span>
                 </a>
             </div>
@@ -91,9 +87,9 @@ const Navbar: React.FC = () => {
           <div className="-mr-2 flex lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none transition-colors"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -101,32 +97,27 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-mrs-black border-t border-mrs-gray">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="lg:hidden bg-mrs-black/98 backdrop-blur-xl border-t border-gray-800 h-screen overflow-y-auto">
+          <div className="px-4 pt-8 pb-32 space-y-4">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-mrs-yellow hover:bg-gray-900 cursor-pointer"
+                className="block px-4 py-4 rounded-xl text-2xl font-display italic text-white hover:text-mrs-yellow hover:bg-white/5 transition-all"
               >
                 {link.name}
               </a>
             ))}
-             <a
-                href="#game"
-                onClick={(e) => handleNavClick(e, '#game')}
-                className="flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-mrs-red hover:text-white cursor-pointer"
-              >
-                <Gamepad2 size={18} /> MRS Paddock
-              </a>
-              <a
-                href="#ai-engineer"
-                onClick={(e) => handleNavClick(e, '#ai-engineer')}
-                className="flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-mrs-yellow hover:text-white cursor-pointer"
-              >
-                <Bot size={18} /> Ingeniero IA
-              </a>
+             <div className="pt-6 mt-6 border-t border-gray-800">
+                <a
+                    href="#game"
+                    onClick={(e) => handleNavClick(e, '#game')}
+                    className="flex items-center justify-center gap-3 bg-mrs-red w-full py-5 rounded-xl text-xl font-display italic text-white uppercase"
+                >
+                    <Gamepad2 size={24} /> Entrar al Paddock
+                </a>
+             </div>
           </div>
         </div>
       )}
