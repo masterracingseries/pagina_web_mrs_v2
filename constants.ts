@@ -12,8 +12,8 @@ export const ASSET_PATHS = {
     PROMO: 'images/promo'
 };
 
-// Ruta maestra para el logo principal - Sin el punto inicial para mejor compatibilidad
-export const LOGO_URL = 'images/logos/logo.png';
+// Usamos ruta relativa explícita para GitHub Pages
+export const LOGO_URL = './images/logos/logo.png';
 
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
