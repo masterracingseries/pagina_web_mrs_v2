@@ -12,6 +12,9 @@ export const ASSET_PATHS = {
     PROMO: './images/promo'
 };
 
+// Ruta maestra para el logo principal
+export const LOGO_URL = './images/logos/logo.png';
+
 const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgXKPjuR/preview";
@@ -58,7 +61,6 @@ export const DIVISIONS: Division[] = [
 
 /**
  * 📅 CALENDARIO OFICIAL SEASON 4
- * Las fechas isoDate determinan automáticamente si la carrera ya pasó o es la próxima.
  */
 export const CALENDAR: RaceEvent[] = [
   { 
@@ -95,7 +97,7 @@ export const CALENDAR: RaceEvent[] = [
 
 export const CHAMPIONS: Champion[] = [
   { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: getImg('CHAMPIONS', 'campeon_div1_season3_rlsdaruma.png') },
-  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: getImg('CHAMPIONS', '/campeon_div2_season3_rlsprice.png') },
+  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: getImg('CHAMPIONS', 'campeon_div2_season3_rlsprice.png') },
   { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'merc', imageUrl: getImg('CHAMPIONS', 'campeon_div3_season3_rlsmatiastapia.png') },
   { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'mclaren', imageUrl: getImg('CHAMPIONS', 'campeon_div4_season3_chikixd.png') },
 ];
