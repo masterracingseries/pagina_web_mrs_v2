@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mrs-yellow: #FFD700;
+  --mrs-red: #E10600;
+  --mrs-black: #101010;
+  --mrs-gray: #1F1F1F;
+}
+
+@layer base {
+  body {
+    @apply bg-[#101010] text-white overflow-x-hidden h-full;
+  }
+}
+
+/* Custom Scrollbar Global */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--mrs-black); }
+::-webkit-scrollbar-thumb { background: var(--mrs-yellow); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mrs-red); }
+
+/* Componentes de Diseño MRS */
+.skew-box { transform: skewX(-12deg); }
+.unskew-text { transform: skewX(12deg); }
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+
+@layer utilities {
+  .bg-mrs-yellow { background-color: var(--mrs-yellow); }
+  .bg-mrs-red { background-color: var(--mrs-red); }
+  .bg-mrs-black { background-color: var(--mrs-black); }
+  .text-mrs-yellow { color: var(--mrs-yellow); }
+  .text-mrs-red { color: var(--mrs-red); }
+  .border-mrs-yellow { border-color: var(--mrs-yellow); }
+  .border-mrs-red { border-color: var(--mrs-red); }
+  .from-mrs-yellow { --tw-gradient-from: var(--mrs-yellow) var(--tw-gradient-from-position); }
+  .to-mrs-red { --tw-gradient-to: var(--mrs-red) var(--tw-gradient-to-position); }
+}
