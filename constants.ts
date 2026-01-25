@@ -104,8 +104,21 @@ export const CHAMPIONS: Champion[] = [
 ];
 
 export const ADMINS: Admin[] = [
-  { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS.', imageUrl: getImg('STAFF', 'alejandro.jpg') },
-  { id: 'a2', name: 'Beatriz', role: 'CM', description: 'La voz de MRS.', imageUrl: getImg('STAFF', 'beatriz.jpg') },
+  { id: 'a1', 
+    name: 'Sebastian Munzenmayer', 
+    role: 'RLS_FACETAS', 
+    description: 'Relator principal y autoproclamado CEO de la liga. Este veterano del simracing chileno, con nombre de dictador y billetera de cobrador, domina los circuitos desde las heladas tierras de Punta Arenas, donde entrena domando pingüinos entre carreras. Se rumorea que cobra hasta por respirar.', 
+    imageUrl: getImg('STAFF', 'admin_facetas.png') },
+  { id: 'a2', 
+    name: 'Gastón Sepúlveda', 
+    role: 'RLS_IRONHUNTER', 
+    description: 'Dios de la página, las gráficas y stickers oficiales. Como fanático de Ferrari, es un experto en perder carreras en la última vuelta y transformar la desdicha en arte. ¿Cometiste un error en pista? Prepárate, porque te convertirás en su próximo sticker viral.', 
+    imageUrl: getImg('STAFF', 'admin_ironhunter.png') },
+  { id: 'a3', 
+    name: 'Esteban Iriarte', 
+    role: 'RLS_IRIARET', 
+    description: 'Relator sustituto y odontólogo de profesión. Cuando no está arreglando sonrisas, está narrando adelantamientos. Fue a Italia a cumplir el sueño de manejar una Ferrari y volvió con la factura, demostrando que su verdadera especialidad es la extracción... de euros.', 
+    imageUrl: getImg('STAFF', 'admin_iriarte.png') },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
