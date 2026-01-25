@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             {/* LOGO MRS - Implementado igual que los Champions */}
-            <div className="w-12 h-12 relative flex items-center justify-center">
+            <div className="w-24 h-24 relative flex items-center justify-center">
                <SafeImage 
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
