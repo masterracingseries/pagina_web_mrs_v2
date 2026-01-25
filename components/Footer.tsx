@@ -7,9 +7,9 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0 text-center md:text-left">
                 <span className="font-display text-2xl tracking-wider text-white italic block">
-                MRS <span className="text-mrs-yellow">RACING</span> SERIES
+                MASTER <span className="text-mrs-yellow">RACING SERIES</span> 
                 </span>
-                <p className="text-gray-500 text-sm mt-2">© 2024 Master Racing Series. All rights reserved.</p>
+                <p className="text-gray-500 text-sm mt-2">© 2026 Master Racing Series. All rights reserved.</p>
             </div>
             
             <div className="flex flex-col items-center md:items-end">
@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
                     F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX y marcas relacionadas son marcas comerciales de Formula One Licensing B.V.
                 </p>
                 <div className="text-gray-500 text-xs">
-                    Designed for SimRacers.
+                    Designed for RLS_IRONHUNTER @gastonalexis9 on instagram.
                 </div>
             </div>
         </div>
