@@ -37,48 +37,51 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/95 backdrop-blur-md border-b border-mrs-red/30 py-2 shadow-2xl' : 'bg-transparent py-6'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/95 backdrop-blur-md border-b border-mrs-red/30 py-1 md:py-2 shadow-2xl' : 'bg-transparent py-4 md:py-6'}`}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            {/* LOGO MRS - Implementado igual que los Champions */}
-            <div className="w-36 h-36 relative flex items-center justify-center">
+          <div className="flex-shrink-0 flex items-center gap-2 md:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            
+            {/* Logo responsivo según la imagen */}
+            <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 relative flex items-center justify-center transition-all duration-300">
                <SafeImage 
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
-                 className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                 className="max-w-full max-h-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
                  fallbackIcon={
-                   <div className="w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-2xl skew-box border-2 border-white/50">
+                   <div className="w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-xl md:text-3xl skew-box">
                       <span className="unskew-text">M</span>
                    </div>
                  }
                />
             </div>
+
             <div className="flex flex-col">
-                <span className="font-display text-2xl tracking-tighter text-white italic leading-none">
-                MASTER <span className="text-mrs-yellow">RACING SERIES</span>
+                <span className="font-display text-base sm:text-xl md:text-2xl lg:text-3xl tracking-tighter text-white italic leading-none uppercase">
+                  MASTER <span className="text-mrs-yellow">RACING</span> SERIES
                 </span>
-                <span className="text-[8px] font-black uppercase tracking-[0.4em] text-mrs-red">Official League</span>
+                <span className="text-[6px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-mrs-red mt-0.5">Official League</span>
             </div>
           </div>
           
+          {/* Navegación Desktop */}
           <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-6">
+            <div className="ml-6 flex items-baseline space-x-4 xl:space-x-6">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative group px-2 py-2 text-xs font-black uppercase tracking-widest text-white/80 hover:text-white transition-colors cursor-pointer"
+                  className="relative group px-1 py-2 text-[10px] xl:text-xs font-black uppercase tracking-widest text-white/80 hover:text-white transition-colors"
                 >
                   {link.name}
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-mrs-red transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 shadow-[0_0_8px_#E10600]"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-mrs-red transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
                 </a>
               ))}
                <a
                   href="#game"
                   onClick={(e) => handleNavClick(e, '#game')}
-                  className="flex items-center gap-2 bg-mrs-red px-5 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded skew-box cursor-pointer shadow-lg shadow-mrs-red/20 active:scale-95"
+                  className="flex items-center gap-2 bg-mrs-red px-5 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded skew-box shadow-lg shadow-mrs-red/20 active:scale-95"
                 >
                    <Gamepad2 size={14} className="unskew-text" />
                    <span className="unskew-text">Paddock</span>
@@ -86,10 +89,11 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="-mr-2 flex lg:hidden">
+          {/* Botón Menú Móvil */}
+          <div className="flex lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-mrs-yellow transition-colors"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -97,21 +101,21 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Menú Móvil */}
       {isOpen && (
-        <div className="lg:hidden bg-mrs-black/98 backdrop-blur-xl border-t border-gray-800 h-screen overflow-y-auto">
-          <div className="px-4 pt-8 pb-32 space-y-4">
+        <div className="lg:hidden bg-mrs-black/98 backdrop-blur-xl border-t border-gray-800 h-screen fixed inset-x-0 top-[60px] md:top-[80px]">
+          <div className="px-6 py-12 space-y-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block px-4 py-4 rounded-xl text-2xl font-display italic text-white hover:text-mrs-yellow hover:bg-white/5 transition-all"
+                className="block py-4 text-3xl font-display italic text-white hover:text-mrs-yellow border-b border-white/5 transition-all"
               >
                 {link.name}
               </a>
             ))}
-             <div className="pt-6 mt-6 border-t border-gray-800">
+             <div className="pt-8">
                 <a
                     href="#game"
                     onClick={(e) => handleNavClick(e, '#game')}
