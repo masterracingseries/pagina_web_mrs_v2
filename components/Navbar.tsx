@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2 } from 'lucide-react';
-import { LOGO_URL } from '../constants';
+import { Menu, X, Gamepad2, Instagram, Twitch } from 'lucide-react';
+import { LOGO_URL, SOCIAL_LINKS } from '../constants';
 import SafeImage from './SafeImage';
 
 const Navbar: React.FC = () => {
@@ -37,19 +37,25 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-mrs-black/95 backdrop-blur-md border-b border-mrs-red/30 py-1 md:py-2 shadow-2xl' : 'bg-transparent py-4 md:py-6'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-mrs-black/98 border-b border-mrs-red/50 py-2 shadow-2xl' : 'bg-transparent py-4 md:py-8'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center gap-2 md:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            
-            {/* Logo responsivo según la imagen */}
-            <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 relative flex items-center justify-center transition-all duration-300">
+          
+          {/* LOGO PROTAGONISTA - Estilo F1 Official */}
+          <div 
+            className="flex-shrink-0 flex items-center gap-3 md:gap-5 group cursor-pointer relative" 
+            onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+          >
+            <div className={`relative transition-all duration-500 ${scrolled ? 'w-14 h-14 sm:w-16 sm:h-16' : 'w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28'}`}>
+               {/* Resplandor decorativo detrás del logo */}
+               <div className="absolute inset-0 bg-mrs-red/20 rounded-full blur-2xl group-hover:bg-mrs-red/40 transition-all duration-700"></div>
+               
                <SafeImage 
                  src={LOGO_URL} 
                  alt="Master Racing Series" 
-                 className="max-w-full max-h-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_5px_15px_rgba(225,6,0,0.4)] group-hover:scale-110 transition-transform duration-500"
                  fallbackIcon={
-                   <div className="w-full h-full bg-mrs-yellow rounded flex items-center justify-center font-display text-mrs-black text-xl md:text-3xl skew-box">
+                   <div className="w-full h-full bg-mrs-red rounded flex items-center justify-center font-display text-white text-3xl skew-box">
                       <span className="unskew-text">M</span>
                    </div>
                  }
@@ -57,22 +63,22 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="flex flex-col">
-                <span className="font-display text-base sm:text-xl md:text-2xl lg:text-3xl tracking-tighter text-white italic leading-none uppercase">
+                <h1 className={`font-display tracking-tighter text-white italic leading-none uppercase transition-all duration-500 ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-3xl'}`}>
                   MASTER <span className="text-mrs-yellow">RACING</span> SERIES
-                </span>
-                <span className="text-[6px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-mrs-red mt-0.5">Official League</span>
+                </h1>
+                <span className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] text-mrs-red mt-1">Official SimRacing League</span>
             </div>
           </div>
           
           {/* Navegación Desktop */}
           <div className="hidden lg:block">
-            <div className="ml-6 flex items-baseline space-x-4 xl:space-x-6">
+            <div className="ml-6 flex items-center space-x-4 xl:space-x-6">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative group px-1 py-2 text-[10px] xl:text-xs font-black uppercase tracking-widest text-white/80 hover:text-white transition-colors"
+                  className="relative group px-1 py-2 text-[10px] xl:text-xs font-black uppercase tracking-widest text-white/70 hover:text-white transition-colors"
                 >
                   {link.name}
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-mrs-red transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
@@ -81,9 +87,9 @@ const Navbar: React.FC = () => {
                <a
                   href="#game"
                   onClick={(e) => handleNavClick(e, '#game')}
-                  className="flex items-center gap-2 bg-mrs-red px-5 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded skew-box shadow-lg shadow-mrs-red/20 active:scale-95"
+                  className="ml-4 flex items-center gap-2 bg-mrs-red px-6 py-2.5 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded skew-box shadow-lg shadow-mrs-red/20 active:scale-95 border-r-2 border-white/30"
                 >
-                   <Gamepad2 size={14} className="unskew-text" />
+                   <Gamepad2 size={16} className="unskew-text" />
                    <span className="unskew-text">Paddock</span>
                 </a>
             </div>
@@ -93,37 +99,44 @@ const Navbar: React.FC = () => {
           <div className="flex lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-mrs-yellow transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-mrs-yellow transition-colors relative z-50"
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Menú Móvil */}
+      {/* Menú Móvil - FONDO SÓLIDO PARA MÁXIMA LEGIBILIDAD */}
       {isOpen && (
-        <div className="lg:hidden bg-mrs-black/98 backdrop-blur-xl border-t border-gray-800 h-screen fixed inset-x-0 top-[60px] md:top-[80px]">
-          <div className="px-6 py-12 space-y-2">
-            {navLinks.map((link) => (
+        <div className="lg:hidden fixed inset-0 bg-[#0a0a0a] z-40 pt-24 overflow-y-auto">
+          <div className="px-8 space-y-2 pb-20">
+            {navLinks.map((link, idx) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block py-4 text-3xl font-display italic text-white hover:text-mrs-yellow border-b border-white/5 transition-all"
+                className="block py-5 text-4xl font-display italic text-white hover:text-mrs-yellow border-b border-white/5 transition-all flex justify-between items-center group"
               >
-                {link.name}
+                {link.name.toUpperCase()}
+                <span className="text-mrs-red opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </a>
             ))}
-             <div className="pt-8">
-                <a
+            
+            <div className="pt-10 flex flex-col gap-4">
+               <a
                     href="#game"
                     onClick={(e) => handleNavClick(e, '#game')}
-                    className="flex items-center justify-center gap-3 bg-mrs-red w-full py-5 rounded-xl text-xl font-display italic text-white uppercase"
+                    className="flex items-center justify-center gap-3 bg-mrs-red w-full py-6 rounded-xl text-2xl font-display italic text-white uppercase shadow-2xl"
                 >
                     <Gamepad2 size={24} /> Entrar al Paddock
                 </a>
-             </div>
+                
+                <div className="flex justify-center gap-6 mt-6">
+                   <a href={SOCIAL_LINKS.instagram} className="text-white hover:text-mrs-red"><Instagram size={30}/></a>
+                   <a href={SOCIAL_LINKS.twitch} className="text-white hover:text-purple-500"><Twitch size={30}/></a>
+                </div>
+            </div>
           </div>
         </div>
       )}
