@@ -57,7 +57,7 @@ const Champions: React.FC = () => {
             >
                 <span className="flex items-center gap-2"><History size={16}/> Hall of Fame</span>
             </button>
-            {['S3', 'S2', 'S1'].map(season => (
+            {['S3'].map(season => (
                  <button 
                     key={season}
                     onClick={() => setActiveTab(season as any)}
