@@ -14,9 +14,9 @@ export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui";
 
 /**
  * 🛠️ SISTEMA DE ACTIVOS
- * Nota: El usuario actualizará estas rutas en su entorno local/github.
+ * Se utiliza la ruta relativa a 'public' para el despliegue en GitHub Pages.
  */
-export const LOGO_URL = "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=200&auto=format&fit=crop"; // Imagen de placeholder válida
+export const LOGO_URL = "images/logos/logo.png"; 
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
 
