@@ -11,10 +11,10 @@ const Hero: React.FC = () => {
         <img 
           src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGR3NTZmOGo0NnVzNHlpbmk5bmhocWJnd3duZHc2NzZ5ZWpmamxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MabKYsLLZi62RBvsj4/giphy.gif" 
           alt="F1 Season 5" 
-          className="w-full h-full object-cover scale-110"
+          className="w-full h-full object-cover scale-110 grayscale-0 contrast-125 brightness-110"
         />
-        {/* Capa de degradado ajustada para visibilidad del texto sin matar el color del GIF */}
-        <div className="absolute inset-0 bg-gradient-to-b from-mrs-black/40 via-mrs-black/20 to-mrs-black"></div>
+        {/* Degradado mínimo para asegurar legibilidad manteniendo colores vivos */}
+        <div className="absolute inset-0 bg-gradient-to-t from-mrs-black via-transparent to-mrs-black/20"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-40 md:pt-48 text-center md:text-left">
