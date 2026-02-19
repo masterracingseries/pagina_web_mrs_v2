@@ -195,29 +195,24 @@ const AIEngineer: React.FC = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
              <div className="relative group">
-                 {/* Aura de resplandor roja detrás del GIF */}
                  <div className="absolute -inset-4 bg-mrs-red rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000 animate-pulse"></div>
                  
-                 {/* Contenedor del GIF de perfil */}
                  <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white/10 overflow-hidden bg-gray-900 shadow-[0_0_50px_rgba(225,6,0,0.5)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
                      <img 
-                        src="/images/gif_iacetas.gif" 
+                        src="images/logos/gif_iacetas.gif" 
                         alt="IA-CETAS PROFILE" 
                         className="w-full h-full object-cover grayscale-0 brightness-110 contrast-110"
                         onError={(e) => { 
-                            // Si el archivo '/images/gif_iacetas.gif' NO EXISTE, mostramos el icono de CPU
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.nextElementSibling?.classList.remove('hidden');
                         }}
                      />
-                     {/* Respaldo visual (Fallback) si el GIF no carga */}
                      <div className="hidden flex flex-col items-center text-mrs-red">
                          <Cpu size={64} className="animate-pulse" />
                          <span className="text-[10px] font-black mt-2 text-center">FALTA GIF<br/>EN /images</span>
                      </div>
                  </div>
 
-                 {/* Indicador de estado online */}
                  <div className="absolute top-0 right-2 bg-mrs-red text-white p-2 rounded-full border-4 border-mrs-black animate-pulse shadow-lg">
                      <AlertCircle size={20} />
                  </div>
