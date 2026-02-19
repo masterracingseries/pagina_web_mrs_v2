@@ -80,8 +80,10 @@ export const CALENDAR: RaceEvent[] = [
  */
 export const CHAMPIONS: Champion[] = [
   // --- SEASON 4 (PRE-CARGADOS PARA CUANDO SUBAS LAS FOTOS) ---
-  { id: 'c1-s4', name: 'RLS_DARUMA', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season4_rlsdaruma.png" },
-  { id: 'c2-s4', name: 'RLS_PRICE', season: 'S4', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season4_rlsprice.png" },
+  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.png" },
+  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.png" },
+  { id: 'c3-s4', name: 'RLS_FMACHUCA42', season: 'S4', division: 'Division 3', teamId: 'rb', imageUrl: "images/champions/campeon_div2_season4_rlsmachuca.png" },
+  { id: 'c3-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemisaac.png" },
   
   // --- SEASON 3 (ARCHIVOS ACTUALMENTE EN GITHUB) ---
   { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season3_rlsdaruma.png" },
@@ -91,9 +93,9 @@ export const CHAMPIONS: Champion[] = [
 ];
 
 export const ADMINS: Admin[] = [
-  { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS. Encargado de la normativa y dirección de carrera.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a2', name: 'Beatriz', role: 'CM & Logistics', description: 'La voz de MRS. Gestiona redes sociales y coordinación de eventos.', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "images/logos/gif_iacetas.gif" },
+  { id: 'a1', name: 'Sebastian Munzenmayer', role: 'Dictador Supremo', description: 'Dios supremo, se hace lo que el diga o te despide.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a2', name: 'Esteban Iriarte', role: 'Director General', description: 'Hace de todo cuando tiene tiempo (nunca)', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a3', name: 'Gaston Sepulveda', role: 'IA Tech God', description: 'Experto en todo y nada al mismo tiempo.', imageUrl: "images/logos/gif_iacetas.gif" },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
