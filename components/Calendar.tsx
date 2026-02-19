@@ -24,7 +24,7 @@ const Calendar: React.FC = () => {
                 <div className="bg-gray-800 p-6 rounded-2xl border border-white/5 flex flex-col items-center">
                    <CalendarIcon className="text-mrs-red mb-2" size={32} />
                    <span className="text-xs font-black uppercase tracking-widest text-gray-500">Próximamente</span>
-                   <p className="text-white font-bold">12 Rounds Elite</p>
+                   <p className="text-white font-bold">10 Rounds Elite</p>
                 </div>
                 <div className="bg-gray-800 p-6 rounded-2xl border border-white/5 flex flex-col items-center">
                    <Zap className="text-mrs-yellow mb-2" size={32} />
