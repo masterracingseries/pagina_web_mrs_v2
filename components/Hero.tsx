@@ -11,17 +11,18 @@ const Hero: React.FC = () => {
         <img 
           src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGR3NTZmOGo0NnVzNHlpbmk5bmhocWJnd3duZHc2NzZ5ZWpmamxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MabKYsLLZi62RBvsj4/giphy.gif" 
           alt="F1 Season 5" 
-          className="w-full h-full object-cover scale-110 brightness-[0.2] contrast-125 grayscale"
+          className="w-full h-full object-cover scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-mrs-black/20 via-mrs-black/40 to-mrs-black"></div>
+        {/* Capa de degradado ajustada para visibilidad del texto sin matar el color del GIF */}
+        <div className="absolute inset-0 bg-gradient-to-b from-mrs-black/40 via-mrs-black/20 to-mrs-black"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-40 md:pt-48 text-center md:text-left">
         <div className="max-w-4xl mx-auto md:mx-0">
           <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="flex items-center justify-center md:justify-start gap-3 mb-8">
-              <div className="w-1.5 h-8 bg-mrs-yellow"></div>
-              <span className="text-mrs-yellow font-bold tracking-[0.4em] uppercase text-[10px] md:text-sm">Pre-Temporada 2025</span>
+              <div className="w-1.5 h-8 bg-mrs-yellow shadow-[0_0_15px_rgba(255,215,0,0.6)]"></div>
+              <span className="text-mrs-yellow font-bold tracking-[0.4em] uppercase text-[10px] md:text-sm drop-shadow-md">Pre-Temporada 2025</span>
             </div>
 
             <h1 className="text-5xl sm:text-7xl md:text-[10rem] font-display italic text-white leading-[0.85] mb-8 uppercase tracking-tighter drop-shadow-2xl">
@@ -30,7 +31,7 @@ const Hero: React.FC = () => {
             </h1>
           </motion.div>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="text-lg md:text-3xl text-gray-300 mb-12 font-light drop-shadow-lg max-w-2xl leading-tight border-l-4 border-mrs-red pl-6 mx-auto md:mx-0">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="text-lg md:text-3xl text-white mb-12 font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] max-w-2xl leading-tight border-l-4 border-mrs-red pl-6 mx-auto md:mx-0 bg-black/10 backdrop-blur-[2px] py-2">
             Una nueva era comienza. El simulador está listo, ¿lo estás tú? Prepárate para la competencia definitiva.
           </motion.p>
 
@@ -47,7 +48,7 @@ const Hero: React.FC = () => {
             <a 
               href={SOCIAL_LINKS.instagram} 
               target="_blank" 
-              className="flex items-center justify-center gap-3 border border-white/20 bg-white/5 hover:bg-white/10 px-10 py-6 text-white font-black uppercase transition-all rounded backdrop-blur-md"
+              className="flex items-center justify-center gap-3 border border-white/20 bg-black/40 hover:bg-black/60 px-10 py-6 text-white font-black uppercase transition-all rounded backdrop-blur-md"
             >
               <Instagram size={24} />
               <span>Ver Novedades</span>
@@ -56,8 +57,8 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-mrs-yellow/40">
-        <ChevronDown className="w-8 h-8 md:w-10 md:h-10" />
+      <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-mrs-yellow">
+        <ChevronDown className="w-8 h-8 md:w-10 md:h-10 drop-shadow-lg" />
       </motion.div>
     </section>
   );
