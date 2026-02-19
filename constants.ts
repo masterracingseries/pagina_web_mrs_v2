@@ -3,18 +3,13 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
 
 /**
  * 🚩 CONFIGURACIÓN DE TEMPORADA (MODO PRE-SEASON)
- * Cambia IS_SEASON_ACTIVE a true cuando el calendario y los puntos estén definidos.
  */
 export const IS_SEASON_ACTIVE = false; 
 
-/**
- * 📝 ENLACE DE INSCRIPCIÓN (GOOGLE FORMS)
- */
 export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui"; 
 
 /**
- * 🛠️ SISTEMA DE ACTIVOS
- * Se utiliza la ruta relativa a 'public' para el despliegue en GitHub Pages.
+ * 🛠️ RUTAS DE ACTIVOS (Relative to public folder)
  */
 export const LOGO_URL = "images/logos/logo.png"; 
 
@@ -78,18 +73,27 @@ export const CALENDAR: RaceEvent[] = [
   { id: 'r1', round: 1, country: 'TBA', trackName: 'TBA', date: 'COMING SOON', isoDate: '2025-01-01', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/un.svg', mapUrl: '' },
 ];
 
+/**
+ * 🏆 HISTORIAL DE CAMPEONES
+ * Las imágenes de Season 4 se cargarán solas si se suben con el nombre:
+ * 'images/champions/campeon_div[X]_season4_[NOMBRE].png'
+ */
 export const CHAMPIONS: Champion[] = [
-  // Temporada 4
-  { id: 'c1-s4', name: 'RLS_DARUMA', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "https://images.unsplash.com/photo-1533130061792-64b345e4a833?q=80&w=800&auto=format&fit=crop" },
-  { id: 'c2-s4', name: 'RLS_PRICE', season: 'S4', division: 'Division 2', teamId: 'ferrari', imageUrl: "https://images.unsplash.com/photo-1541890289-b86df5bafd81?q=80&w=800&auto=format&fit=crop" },
-  // Temporada 3
-  { id: 'c1-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 1', teamId: 'mclaren', imageUrl: "https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=800&auto=format&fit=crop" },
+  // --- SEASON 4 (PRE-CARGADOS PARA CUANDO SUBAS LAS FOTOS) ---
+  { id: 'c1-s4', name: 'RLS_DARUMA', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season4_rlsdaruma.png" },
+  { id: 'c2-s4', name: 'RLS_PRICE', season: 'S4', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season4_rlsprice.png" },
+  
+  // --- SEASON 3 (ARCHIVOS ACTUALMENTE EN GITHUB) ---
+  { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season3_rlsdaruma.png" },
+  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
+  { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'mclaren', imageUrl: "images/champions/campeon_div3_season3_rlsmatiastapia.png" },
+  { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'aston', imageUrl: "images/champions/campeon_div4_season3_chikixd.png" },
 ];
 
 export const ADMINS: Admin[] = [
   { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS. Encargado de la normativa y dirección de carrera.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
   { id: 'a2', name: 'Beatriz', role: 'CM & Logistics', description: 'La voz de MRS. Gestiona redes sociales y coordinación de eventos.', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "images/logos/gif_iacetas.gif" },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
