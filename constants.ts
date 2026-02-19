@@ -2,24 +2,20 @@
 import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, LeaderboardEntry } from './types';
 
 /**
- * 🛠️ SISTEMA DE ACTIVOS (FLUJO MAESTRO)
- * El prefijo './' es vital para que GitHub Pages no busque en la raíz del dominio.
+ * 🚩 CONFIGURACIÓN DE TEMPORADA (MODO PRE-SEASON)
+ * Cambia IS_SEASON_ACTIVE a true cuando el calendario y los puntos estén definidos.
  */
-export const ASSET_PATHS = {
-    LOGOS: './images/logos',
-    CHAMPIONS: './images/champions',
-    STAFF: './images/staff',
-    SPONSORS: './images/sponsors',
-    PROMO: './images/promo'
-};
+export const IS_SEASON_ACTIVE = false; 
 
 /**
- * Función maestra para obtener rutas de imagen. 
+ * 📝 ENLACE DE INSCRIPCIÓN (GOOGLE FORMS)
  */
-const getImg = (cat: keyof typeof ASSET_PATHS, name: string) => `${ASSET_PATHS[cat]}/${name}`;
+export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui"; 
 
-// LOGO: Ahora con './' explícito a través de ASSET_PATHS
-export const LOGO_URL = getImg('LOGOS', 'logo.png');
+/**
+ * 🛠️ SISTEMA DE ACTIVOS
+ */
+export const LOGO_URL = "https://images.unsplash.com/photo-1547915713-39396348633c?q=80&w=200&auto=format&fit=crop";
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
 
@@ -31,9 +27,9 @@ export const SOCIAL_LINKS = {
 };
 
 export const MEDIA_ITEMS: MediaItem[] = [
-    { id: 'm1', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/u2NJDt2tM5M?si=example', title: 'Highlights: Round 3 Australia' },
-    { id: 'm2', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', title: 'Photo Finish Bahrain' },
-    { id: 'm4', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/546qf7q0yqI?si=example', title: 'Season 4 Trailer' }
+    { id: 'm1', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/u2NJDt2tM5M?si=example', title: 'Highlights: Season 4 Finale' },
+    { id: 'm2', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', title: 'Season 5 Reveal' },
+    { id: 'm4', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/546qf7q0yqI?si=example', title: 'Season 5 Trailer' }
 ];
 
 export const TEAMS: Team[] = [
@@ -49,76 +45,26 @@ export const TEAMS: Team[] = [
   { id: 'haas', name: 'Haas F1 Team', color: '#B6BABD', logoUrl: 'https://media.formula1.com/content/dam/fom-website/teams/2024/haas-logo.png.transform/2col/image.png' },
 ];
 
-const generateDrivers = (divisionPrefix: string): any[] => {
-  return TEAMS.flatMap((team, index) => [
-    { id: `${divisionPrefix}-d${index}-1`, name: `Piloto ${index}A`, teamId: team.id, number: 10 + index, country: 'CL' },
-    { id: `${divisionPrefix}-d${index}-2`, name: `Piloto ${index}B`, teamId: team.id, number: 80 + index, country: 'AR' },
-  ]);
-};
-
 export const DIVISIONS: Division[] = [
-  { id: 'div1', name: 'División 1 (Elite)', drivers: generateDrivers('D1') },
-  { id: 'div2', name: 'División 2 (Pro)', drivers: generateDrivers('D2') },
-  { id: 'div3', name: 'División 3 (Challenger)', drivers: generateDrivers('D3') },
-  { id: 'div4', name: 'División 4 (Rookie)', drivers: generateDrivers('D4') },
+  { id: 'div1', name: 'División 1 (Elite)', drivers: [] },
+  { id: 'div2', name: 'División 2 (Pro)', drivers: [] },
+  { id: 'div3', name: 'División 3 (Challenger)', drivers: [] },
+  { id: 'div4', name: 'División 4 (Rookie)', drivers: [] },
 ];
 
 export const CALENDAR: RaceEvent[] = [
-  { 
-    id: 'r1', round: 1, country: 'Bahréin', trackName: 'Sakhir', 
-    date: '02 MAR', isoDate: '2025-03-02', completed: true, format: 'FEATURE', 
-    flagUrl: 'https://flagcdn.com/bh.svg', 
-    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Bahrain_Circuit.png' 
-  },
-  { 
-    id: 'r2', round: 2, country: 'Arabia Saudita', trackName: 'Jeddah', 
-    date: '09 MAR', isoDate: '2025-03-09', completed: true, format: 'FEATURE', 
-    flagUrl: 'https://flagcdn.com/sa.svg', 
-    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Saudi_Arabia_Circuit.png' 
-  },
-  { 
-    id: 'r3', round: 3, country: 'Australia', trackName: 'Albert Park', 
-    date: '16 MAR', isoDate: '2025-03-16', completed: false, format: 'FEATURE', 
-    flagUrl: 'https://flagcdn.com/au.svg', 
-    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Australia_Circuit.png' 
-  },
-  { 
-    id: 'r4', round: 4, country: 'Japón', trackName: 'Suzuka', 
-    date: '23 MAR', isoDate: '2025-03-23', completed: false, format: 'SPRINT', 
-    flagUrl: 'https://flagcdn.com/jp.svg', 
-    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Japan_Circuit.png' 
-  },
-  { 
-    id: 'r5', round: 5, country: 'China', trackName: 'Shanghai', 
-    date: '06 ABR', isoDate: '2025-04-06', completed: false, format: 'FEATURE', 
-    flagUrl: 'https://flagcdn.com/cn.svg', 
-    mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677245032/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/China_Circuit.png' 
-  },
+  { id: 'r1', round: 1, country: 'TBA', trackName: 'TBA', date: 'COMING SOON', isoDate: '2025-01-01', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/un.svg', mapUrl: '' },
 ];
 
 export const CHAMPIONS: Champion[] = [
-  { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: getImg('CHAMPIONS', 'campeon_div1_season3_rlsdaruma.png') },
-  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: getImg('CHAMPIONS', 'campeon_div2_season3_rlsprice.png') },
-  { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'merc', imageUrl: getImg('CHAMPIONS', 'campeon_div3_season3_rlsmatiastapia.png') },
-  { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'mclaren', imageUrl: getImg('CHAMPIONS', 'campeon_div4_season3_chikixd.png') },
+  { id: 'c1-s4', name: 'RLS_DARUMA', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "https://images.unsplash.com/photo-1533130061792-64b345e4a833?q=80&w=800&auto=format&fit=crop" },
+  { id: 'c2-s4', name: 'RLS_PRICE', season: 'S4', division: 'Division 2', teamId: 'ferrari', imageUrl: "https://images.unsplash.com/photo-1541890289-b86df5bafd81?q=80&w=800&auto=format&fit=crop" },
 ];
 
 export const ADMINS: Admin[] = [
-  { id: 'a1', 
-    name: 'Sebastian Munzenmayer', 
-    role: 'RLS_FACETAS', 
-    description: 'Relator principal y autoproclamado CEO de la liga. Este veterano del simracing chileno, con nombre de dictador y billetera de cobrador, domina los circuitos desde las heladas tierras de Punta Arenas, donde entrena domando pingüinos entre carreras. Se rumorea que cobra hasta por respirar.', 
-    imageUrl: getImg('STAFF', 'admin_facetas.png') },
-  { id: 'a2', 
-    name: 'Gastón Sepúlveda', 
-    role: 'RLS_IRONHUNTER', 
-    description: 'Dios de la página, las gráficas y stickers oficiales. Como fanático de Ferrari, es un experto en perder carreras en la última vuelta y transformar la desdicha en arte. ¿Cometiste un error en pista? Prepárate, porque te convertirás en su próximo sticker viral.', 
-    imageUrl: getImg('STAFF', 'admin_ironhunter.png') },
-  { id: 'a3', 
-    name: 'Esteban Iriarte', 
-    role: 'RLS_IRIARET', 
-    description: 'Relator sustituto y odontólogo de profesión. Cuando no está arreglando sonrisas, está narrando adelantamientos. Fue a Italia a cumplir el sueño de manejar una Ferrari y volvió con la factura, demostrando que su verdadera especialidad es la extracción... de euros.', 
-    imageUrl: getImg('STAFF', 'admin_iriarte.png') },
+  { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS. Encargado de la normativa y dirección de carrera.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a2', name: 'Beatriz', role: 'CM & Logistics', description: 'La voz de MRS. Gestiona redes sociales y coordinación de eventos.', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
