@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGR3NTZmOGo0NnVzNHlpbmk5bmhocWJnd3duZHc2NzZ5ZWpmamxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MabKYsLLZi62RBvsj4/giphy.gif&w=2938&auto=format&fit=crop" 
+          src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGR3NTZmOGo0NnVzNHlpbmk5bmhocWJnd3duZHc2NzZ5ZWpmamxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MabKYsLLZi62RBvsj4/giphy.gif" 
           alt="F1 Season 5" 
           className="w-full h-full object-cover scale-110 brightness-[0.2] contrast-125 grayscale"
         />
