@@ -3,7 +3,6 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Calendar from './components/Calendar';
-import Lineups from './components/Lineups';
 import Standings from './components/Standings';
 import Multimedia from './components/Multimedia';
 import Champions from './components/Champions';
@@ -22,7 +21,6 @@ const App: React.FC = () => {
         <Hero />
         <Calendar />
         <Standings />
-        <Lineups />
         <Multimedia />
         <Rules />
         <Champions />
