@@ -14,8 +14,9 @@ export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui";
 
 /**
  * 🛠️ SISTEMA DE ACTIVOS
+ * Nota: El usuario actualizará estas rutas en su entorno local/github.
  */
-export const LOGO_URL = "https://images.unsplash.com/photo-1547915713-39396348633c?q=80&w=200&auto=format&fit=crop";
+export const LOGO_URL = "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=200&auto=format&fit=crop"; // Imagen de placeholder válida
 
 export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
 
@@ -27,9 +28,30 @@ export const SOCIAL_LINKS = {
 };
 
 export const MEDIA_ITEMS: MediaItem[] = [
-    { id: 'm1', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/u2NJDt2tM5M?si=example', title: 'Highlights: Season 4 Finale' },
-    { id: 'm2', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', title: 'Season 5 Reveal' },
-    { id: 'm4', type: 'YOUTUBE', url: 'https://www.youtube.com/embed/546qf7q0yqI?si=example', title: 'Season 5 Trailer' }
+    { 
+        id: 'm1', 
+        type: 'TWITCH', 
+        url: `https://clips.twitch.tv/embed?clip=EasySmoothAardvarkMau5-BcnYvsXj1vEpwSQL&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`, 
+        title: 'Final de infarto' 
+    },
+    { 
+        id: 'm2', 
+        type: 'YOUTUBE', 
+        url: 'https://www.youtube.com/embed/DYF4Rp3zfKc', 
+        title: 'No me choquen' 
+    },
+    { 
+        id: 'm3', 
+        type: 'YOUTUBE', 
+        url: 'https://www.youtube.com/embed/7uSWra9M634', 
+        title: 'Que mierda hiciste Daruma' 
+    },
+    { 
+        id: 'm4', 
+        type: 'IMAGE', 
+        url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', 
+        title: 'Season 5 Reveal' 
+    }
 ];
 
 export const TEAMS: Team[] = [
@@ -57,8 +79,11 @@ export const CALENDAR: RaceEvent[] = [
 ];
 
 export const CHAMPIONS: Champion[] = [
+  // Temporada 4
   { id: 'c1-s4', name: 'RLS_DARUMA', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "https://images.unsplash.com/photo-1533130061792-64b345e4a833?q=80&w=800&auto=format&fit=crop" },
   { id: 'c2-s4', name: 'RLS_PRICE', season: 'S4', division: 'Division 2', teamId: 'ferrari', imageUrl: "https://images.unsplash.com/photo-1541890289-b86df5bafd81?q=80&w=800&auto=format&fit=crop" },
+  // Temporada 3
+  { id: 'c1-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 1', teamId: 'mclaren', imageUrl: "https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=800&auto=format&fit=crop" },
 ];
 
 export const ADMINS: Admin[] = [
