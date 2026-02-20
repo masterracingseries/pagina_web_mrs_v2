@@ -1,43 +1,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CALENDAR, IS_SEASON_ACTIVE, REGISTRATION_URL } from '../constants';
-import { MapPin, CheckCircle2, Calendar as CalendarIcon, Zap, Construction } from 'lucide-react';
+import { CALENDAR } from '../constants';
+import { MapPin, CheckCircle2 } from 'lucide-react';
 
 const Calendar: React.FC = () => {
-  if (!IS_SEASON_ACTIVE) {
-    return (
-      <section id="calendar" className="py-24 bg-mrs-black relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-carbon opacity-10"></div>
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="bg-gray-900 border-2 border-dashed border-gray-700 rounded-[3rem] p-12 md:p-24 text-center">
-             <div className="inline-flex items-center justify-center w-20 h-20 bg-mrs-yellow text-mrs-black rounded-full mb-8 shadow-2xl animate-pulse">
-                <Construction size={40} />
-             </div>
-             <h2 className="text-4xl md:text-7xl font-display italic text-white uppercase mb-6 tracking-tighter">
-                CALENDARIO <span className="text-mrs-red">PENDIENTE</span>
-             </h2>
-             <p className="text-gray-400 text-lg md:text-2xl max-w-3xl mx-auto font-light leading-relaxed mb-10">
-               Nuestros ingenieros están homologando los circuitos de la <span className="text-white font-bold">Temporada 5</span>. El asfalto está casi listo. Muy pronto revelaremos las fechas oficiales.
-             </p>
-             <div className="flex flex-col md:flex-row gap-6 justify-center">
-                <div className="bg-gray-800 p-6 rounded-2xl border border-white/5 flex flex-col items-center">
-                   <CalendarIcon className="text-mrs-red mb-2" size={32} />
-                   <span className="text-xs font-black uppercase tracking-widest text-gray-500">Próximamente</span>
-                   <p className="text-white font-bold">10 Rounds Elite</p>
-                </div>
-                <div className="bg-gray-800 p-6 rounded-2xl border border-white/5 flex flex-col items-center">
-                   <Zap className="text-mrs-yellow mb-2" size={32} />
-                   <span className="text-xs font-black uppercase tracking-widest text-gray-500">Nuevos Formatos</span>
-                   <p className="text-white font-bold">Sprint & Night Races</p>
-                </div>
-             </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   const today = new Date();
   const nextRaceIndex = CALENDAR.findIndex(race => new Date(race.isoDate) >= today);
 
@@ -62,7 +29,7 @@ const Calendar: React.FC = () => {
                 key={race.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className={`group relative bg-gray-900 border-l-4 p-6 transition-all duration-500 
+                className={`group relative bg-gray-900 border-l-4 p-6 transition-all duration-500 overflow-hidden
                   ${isCompleted ? 'border-gray-700 opacity-60' : isNext ? 'border-mrs-yellow scale-[1.02] shadow-[0_0_30px_rgba(255,215,0,0.1)]' : 'border-mrs-red'}`}
               >
                 <div className="flex justify-between mb-4">
@@ -76,7 +43,18 @@ const Calendar: React.FC = () => {
                    <h3 className={`text-2xl font-bold italic ${isNext ? 'text-mrs-yellow' : 'text-white'}`}>{race.country.toUpperCase()}</h3>
                 </div>
                 <p className="text-gray-400 text-sm mb-4 flex items-center gap-2"><MapPin size={14}/> {race.trackName}</p>
-                <div className="text-white font-bold text-lg">{race.date}</div>
+                <div className="text-white font-bold text-lg mb-4">{race.date}</div>
+                
+                <div className="mt-4 pt-4 border-t border-gray-800">
+                  <div className="relative h-24 w-full mb-3 flex items-center justify-center bg-gray-800/50 rounded-lg p-2">
+                    <img src={race.mapUrl} alt={`Mapa de ${race.trackName}`} className="max-h-full max-w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  {race.info && (
+                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                      {race.info}
+                    </p>
+                  )}
+                </div>
               </motion.div>
             );
           })}
