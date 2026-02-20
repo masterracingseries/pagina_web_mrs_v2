@@ -13,7 +13,7 @@ export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui";
  */
 export const LOGO_URL = "images/logos/logo.png"; 
 
-export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1ID1ZR0QDcjwX2cp49wUe1446AgKPjuR/preview";
+export const LEAGUE_RULES_URL = "https://drive.google.com/file/d/1wPT33tlpuQ2kWoU5LidIgi9K8ncn2B4e/view?usp=sharing";
 
 export const SOCIAL_LINKS = {
     instagram: "https://www.instagram.com/masterracingseries/",
@@ -95,9 +95,30 @@ export const CHAMPIONS: Champion[] = [
 ];
 
 export const ADMINS: Admin[] = [
-  { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS. Encargado de la normativa y dirección de carrera.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a2', name: 'Beatriz', role: 'CM & Logistics', description: 'La voz de MRS. Gestiona redes sociales y coordinación de eventos.', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "images/logos/gif_iacetas.gif" },
+  { 
+    id: 'a1', 
+    name: 'Sebastian Muzenmayer', 
+    alias: 'RLS_FACETAS',
+    role: 'Dictador Supremo', 
+    description: 'Dictador supremo, se hace lo que el diga o te despide.', 
+    imageUrl: "images/logos/gif_iacetas.gif" 
+  },
+  { 
+    id: 'a2', 
+    name: 'Esteban Iriarte', 
+    alias: 'RLS_IRIARTE',
+    role: 'Administrador Multitasking', 
+    description: 'Hace de todo cuanto tiene tiempo (nunca).', 
+    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" 
+  },
+  { 
+    id: 'a3', 
+    name: 'Gaston Sepulveda', 
+    alias: 'RLS_IRONHUNTER',
+    role: 'Fundador & Pilar', 
+    description: 'Sin el nada de esto existe.', 
+    imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop" 
+  },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
