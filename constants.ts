@@ -92,6 +92,10 @@ export const CHAMPIONS: Champion[] = [
   { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
   { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'mclaren', imageUrl: "images/champions/campeon_div3_season3_rlsmatiastapia.png" },
   { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'aston', imageUrl: "images/champions/campeon_div4_season3_chikixd.png" },
+  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'redbull', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.png" },
+  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.png" },
+  { id: 'c3-s4', name: 'RLS_MACHUCA42', season: 'S4', division: 'Division 3', teamId: 'ferrari', imageUrl: "images/champions/campeon_div3_season4_rlsmachuca.png" },
+  { id: 'c4-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div4_season4_nemisaac.png" },
 ];
 
 export const ADMINS: Admin[] = [
@@ -101,7 +105,7 @@ export const ADMINS: Admin[] = [
     alias: 'RLS_FACETAS',
     role: 'Dictador Supremo', 
     description: 'Dictador supremo, se hace lo que el diga o te despide.', 
-    imageUrl: "images/logos/gif_iacetas.gif" 
+    imageUrl: "images/admins/facetas_admin.jpeg" 
   },
   { 
     id: 'a2', 
@@ -109,7 +113,7 @@ export const ADMINS: Admin[] = [
     alias: 'RLS_IRIARTE',
     role: 'Administrador Multitasking', 
     description: 'Hace de todo cuanto tiene tiempo (nunca).', 
-    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" 
+    imageUrl: "images/admins/iriarte_admin.jpeg" 
   },
   { 
     id: 'a3', 
@@ -117,7 +121,7 @@ export const ADMINS: Admin[] = [
     alias: 'RLS_IRONHUNTER',
     role: 'Fundador & Pilar', 
     description: 'Sin el nada de esto existe.', 
-    imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop" 
+    imageUrl: "images/admins/iron_admin.jpeg" 
   },
 ];
 
