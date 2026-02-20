@@ -9,7 +9,7 @@ const MiniGame: React.FC = () => {
   const [activeMode, setActiveMode] = useState<GameMode>('TIME_ATTACK');
 
   return (
-    <section id="game" className="py-20 bg-mrs-black text-white relative select-none border-y border-white/5 overflow-hidden">
+    <section id="minigame" className="py-20 bg-mrs-black text-white relative select-none border-y border-white/5 overflow-hidden">
        {/* Decoración de fondo */}
        <div className="absolute top-0 left-0 w-full h-full bg-carbon opacity-5 pointer-events-none"></div>
        
