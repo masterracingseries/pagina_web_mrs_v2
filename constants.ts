@@ -40,12 +40,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
         type: 'YOUTUBE', 
         url: 'https://www.youtube.com/embed/7uSWra9M634', 
         title: 'Que mierda hiciste Daruma' 
-    },
-    { 
-        id: 'm4', 
-        type: 'IMAGE', 
-        url: 'https://images.unsplash.com/photo-1535079934785-644095386349?q=80&w=2940&auto=format&fit=crop', 
-        title: 'Season 5 Reveal' 
     }
 ];
 
