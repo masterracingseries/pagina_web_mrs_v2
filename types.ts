@@ -28,17 +28,18 @@ export interface RaceEvent {
   country: string;
   trackName: string;
   date: string;
-  isoDate: string; // Formato YYYY-MM-DD para lógica automática
-  completed: boolean; // Ahora se usará como fallback o flag manual
+  isoDate: string; // CRÍTICO: Formato YYYY-MM-DD
+  completed: boolean; 
   flagUrl: string;
   mapUrl: string;
   format: RaceFormat;
+  info?: string;
 }
 
 export interface Champion {
   id: string;
   name: string;
-  season: string; // 'S1', 'S2', 'S3', 'S4'
+  season: string; 
   division: string;
   teamId: string;
   imageUrl: string;
@@ -47,39 +48,24 @@ export interface Champion {
 export interface Admin {
   id: string;
   name: string;
+  alias?: string;
   role: string;
   description: string;
   imageUrl: string;
 }
 
-// --- GCS DATA TYPES (Exact structure from JSON files) ---
-export interface GCSDriverStanding {
-    posicion: number;
-    id: string; // Driver Name
-    equipo: string; // Team Name string (e.g. "Red Bull Racing")
-    puntos: number;
-    status?: string; // e.g. "Reserva"
-}
-
-export interface GCSConstructorStanding {
-    posicion: number;
-    equipo: string;
-    puntos: number;
-}
-
 export interface GCSDivisionData {
-    pilotos: GCSDriverStanding[];
-    constructores: GCSConstructorStanding[];
-    ultimo_gp?: string; // Nombre del último GP disputado (ej: "Gran Premio de los Paises Bajos")
+    pilotos: any[];
+    constructores: any[];
+    ultimo_gp?: string;
 }
-// -------------------------------------------------------
 
 export interface DivisionData {
     id: string;
     name: string;
     standings: {
-        drivers: GCSDriverStanding[];
-        constructors: GCSConstructorStanding[];
+        drivers: any[];
+        constructors: any[];
     }
 }
 
@@ -93,10 +79,9 @@ export interface MediaItem {
     title: string;
 }
 
-// --- GAME TYPES ---
 export interface LeaderboardEntry {
     name: string;
-    time: string; // Formatted "01:23.456"
-    rawTime: number; // ms for sorting
+    time: string;
+    rawTime: number;
     date: string;
 }
