@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Gamepad2, Instagram, Twitch, FilePen } from 'lucide-react';
-import { LOGO_URL, SOCIAL_LINKS, REGISTRATION_URL } from '../constants';
+import { Menu, X, FilePen } from 'lucide-react';
+import { LOGO_URL, REGISTRATION_URL } from '../constants';
 import SafeImage from './SafeImage';
 
 const Navbar: React.FC = () => {
