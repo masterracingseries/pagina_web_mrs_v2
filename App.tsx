@@ -8,6 +8,7 @@ import Multimedia from './components/Multimedia';
 import Champions from './components/Champions';
 import Rules from './components/Rules';
 import About from './components/About';
+import Paddock from './components/Paddock';
 import Footer from './components/Footer';
 import MiniGame from './components/MiniGame';
 import AIEngineer from './components/AIEngineer';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Calendar />
         <Standings />
         <Multimedia />
+        <Paddock />
         <Rules />
         <Champions />
         <MiniGame />
