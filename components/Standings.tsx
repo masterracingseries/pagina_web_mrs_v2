@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { DIVISIONS, TEAMS, IS_SEASON_ACTIVE } from '../constants';
-import { Trophy, Shield, Loader2, AlertCircle, ChevronDown, ChevronUp, Lock } from 'lucide-react';
+import { Trophy, Shield, Loader2, AlertCircle, Lock } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
@@ -13,7 +12,7 @@ const Standings: React.FC = () => {
   const [data, setData] = useState<GCSDivisionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded] = useState(false);
 
   useEffect(() => {
     if (!IS_SEASON_ACTIVE) return;
