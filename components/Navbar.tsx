@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Calendario', href: '#calendar' },
     { name: 'Resultados', href: '#standings' },
-    { name: 'Paddock Zone', href: '#paddock' },
+    { name: 'Paddock Zone', href: '#minigame' },
     { name: 'Media', href: '#media' },
     { name: 'Reglamento', href: '#rules' },
     { name: 'Campeones', href: '#champions' },
