@@ -6,7 +6,7 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
  */
 export const IS_SEASON_ACTIVE = false; 
 
-export const REGISTRATION_URL = "https://forms.gle/tu-link-aqui"; 
+export const REGISTRATION_URL = "https://forms.gle/GXuXpwheGow1fne67"; 
 
 /**
  * 🛠️ RUTAS DE ACTIVOS (Relative to public folder)
