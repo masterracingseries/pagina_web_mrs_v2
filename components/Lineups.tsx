@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DIVISIONS, TEAMS } from '../constants';
-import { Users, Car } from 'lucide-react';
+import { Car } from 'lucide-react';
 
 const Lineups: React.FC = () => {
   const [activeTab, setActiveTab] = useState(DIVISIONS[0].id);
