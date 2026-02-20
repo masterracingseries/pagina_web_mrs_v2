@@ -70,21 +70,23 @@ export const DIVISIONS: Division[] = [
 ];
 
 export const CALENDAR: RaceEvent[] = [
-  { id: 'r1', round: 1, country: 'TBA', trackName: 'TBA', date: 'COMING SOON', isoDate: '2025-01-01', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/un.svg', mapUrl: '' },
+  { id: 'r1', round: 1, country: 'Australia', trackName: 'Albert Park Circuit', date: '8-11 Marzo', isoDate: '2026-03-11', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/au.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Australia.png.transform/2col/image.png', info: 'Circuito semiurbano rápido, conocido por sus curvas de alta velocidad y muros cercanos.' },
+  { id: 'r2', round: 2, country: 'China', trackName: 'Shanghai International Circuit', date: '15-18 Marzo', isoDate: '2026-03-18', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/cn.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/China.png.transform/2col/image.png', info: 'Famoso por su interminable curva 1 y la larguísima recta trasera que favorece los adelantamientos.' },
+  { id: 'r3', round: 3, country: 'Austria', trackName: 'Red Bull Ring', date: '22-25 Marzo', isoDate: '2026-03-25', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/at.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Austria.png.transform/2col/image.png', info: 'Trazado corto pero intenso, con grandes desniveles y fuertes frenadas.' },
+  { id: 'r4', round: 4, country: 'Japón', trackName: 'Suzuka International Racing Course', date: '29 Mar - 1 Abr', isoDate: '2026-04-01', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/jp.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Japan.png.transform/2col/image.png', info: 'Circuito de la vieja escuela en forma de 8, con las icónicas y exigentes "Eses".' },
+  { id: 'r5', round: 5, country: 'Bahrein', trackName: 'Bahrain International Circuit', date: '6-8 y 12 Abril', isoDate: '2026-04-12', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/bh.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Bahrain.png.transform/2col/image.png', info: 'Carrera nocturna en el desierto, muy exigente con los frenos y la tracción.' },
+  { id: 'r6', round: 6, country: 'Arabia Saudita', trackName: 'Jeddah Corniche Circuit', date: '13-19 Abril', isoDate: '2026-04-19', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/sa.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Saudi%20Arabia.png.transform/2col/image.png', info: 'El circuito urbano más rápido del mundo, sin margen de error.' },
+  { id: 'r7', round: 7, country: 'Italia', trackName: 'Autodromo Enzo e Dino Ferrari', date: '20-26 Abril', isoDate: '2026-04-26', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/it.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Emilia%20Romagna.png.transform/2col/image.png', info: 'Trazado histórico, técnico y rápido, donde adelantar es un gran desafío.' },
+  { id: 'r8', round: 8, country: 'Miami', trackName: 'Miami International Autodrome', date: '27 Abr - 3 May', isoDate: '2026-05-03', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/us.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Miami.png.transform/2col/image.png', info: 'Circuito urbano alrededor del Hard Rock Stadium con zonas muy rápidas y un sector técnico.' },
+  { id: 'r9', round: 9, country: 'Azerbaiyán', trackName: 'Baku City Circuit', date: '4-10 Mayo', isoDate: '2026-05-10', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/az.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244987/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Azerbaijan.png.transform/2col/image.png', info: 'Combina la recta más larga del calendario con la estrecha y técnica zona del castillo.' },
+  { id: 'r10', round: 10, country: 'España', trackName: 'Circuit de Barcelona-Catalunya', date: '11-17 Mayo', isoDate: '2026-05-17', completed: false, format: 'FEATURE', flagUrl: 'https://flagcdn.com/es.svg', mapUrl: 'https://media.formula1.com/image/upload/f_auto/q_auto/v1677244986/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Spain.png.transform/2col/image.png', info: 'Circuito muy completo que pone a prueba la aerodinámica de los monoplazas.' },
 ];
 
 /**
  * 🏆 HISTORIAL DE CAMPEONES
- * Las imágenes de Season 4 se cargarán solas si se suben con el nombre:
- * 'images/champions/campeon_div[X]_season4_[NOMBRE].png'
+ * Se muestran únicamente los campeones de la Season 3.
  */
 export const CHAMPIONS: Champion[] = [
-  // --- SEASON 4 (PRE-CARGADOS PARA CUANDO SUBAS LAS FOTOS) ---
-  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.png" },
-  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.png" },
-  { id: 'c3-s4', name: 'RLS_FMACHUCA42', season: 'S4', division: 'Division 3', teamId: 'rb', imageUrl: "images/champions/campeon_div2_season4_rlsmachuca.png" },
-  { id: 'c3-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemisaac.png" },
-  
   // --- SEASON 3 (ARCHIVOS ACTUALMENTE EN GITHUB) ---
   { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season3_rlsdaruma.png" },
   { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
@@ -93,9 +95,9 @@ export const CHAMPIONS: Champion[] = [
 ];
 
 export const ADMINS: Admin[] = [
-  { id: 'a1', name: 'Sebastian Munzenmayer', role: 'Dictador Supremo', description: 'Dios supremo, se hace lo que el diga o te despide.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a2', name: 'Esteban Iriarte', role: 'Director General', description: 'Hace de todo cuando tiene tiempo (nunca)', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
-  { id: 'a3', name: 'Gaston Sepulveda', role: 'IA Tech God', description: 'Experto en todo y nada al mismo tiempo.', imageUrl: "images/logos/gif_iacetas.gif" },
+  { id: 'a1', name: 'Alejandro', role: 'Race Director', description: 'Fundador de MRS. Encargado de la normativa y dirección de carrera.', imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a2', name: 'Beatriz', role: 'CM & Logistics', description: 'La voz de MRS. Gestiona redes sociales y coordinación de eventos.', imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" },
+  { id: 'a3', name: 'Sebastian', role: 'Technical Support', description: 'Experto en telemetría y soporte técnico.', imageUrl: "images/logos/gif_iacetas.gif" },
 ];
 
 export const DIVISION_STANDINGS: DivisionData[] = [];
