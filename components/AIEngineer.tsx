@@ -23,13 +23,12 @@ const QUICK_ACTIONS = [
   "🔧 Setup para Australia",
   "🏎️ ¿Quién ganó el último GP?",
   "🏆 Ver tabla de la MRS",
-  "💰 Cuenta para pagar",
-  "🇦🇷 Noticias de Colapinto"
+  "💰 Cuenta para pagar"
 ];
 
 const LOADING_MESSAGES = [
   "Analizando tu pobreza con telemetría...",
-  "Buscando si depositaste las 5 lucas, barsa...",
+  "Buscando si depositaste las 10 lucas, barsa...",
   "Calculando comisión por asesoría premium...",
   "Viendo si te alcanza el cupo de la cuenta RUT...",
   "Puteando al proveedor de internet (no he pagado)...",
@@ -200,7 +199,7 @@ const AIEngineer: React.FC = () => {
                  
                  <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white/10 overflow-hidden bg-gray-900 shadow-[0_0_50px_rgba(225,6,0,0.5)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
                      <img 
-                        src="images/logos/gif_iacetas.gif" 
+                        src="images/logos/iacetas.gif" 
                         alt="IA-CETAS PROFILE" 
                         className="w-full h-full object-cover grayscale-0 brightness-110 contrast-110"
                         onError={(e) => { 
