@@ -92,10 +92,10 @@ export const CHAMPIONS: Champion[] = [
   { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
   { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'mclaren', imageUrl: "images/champions/campeon_div3_season3_rlsmatiastapia.png" },
   { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'aston', imageUrl: "images/champions/campeon_div4_season3_chikixd.png" },
-  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'redbull', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.png" },
-  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.png" },
-  { id: 'c3-s4', name: 'RLS_MACHUCA42', season: 'S4', division: 'Division 3', teamId: 'ferrari', imageUrl: "images/champions/campeon_div3_season4_rlsmachuca.png" },
-  { id: 'c4-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div4_season4_nemisaac.png" },
+  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'redbull', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.jpeg" },
+  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.jpeg" },
+  { id: 'c3-s4', name: 'RLS_MACHUCA42', season: 'S4', division: 'Division 3', teamId: 'ferrari', imageUrl: "images/champions/campeon_div3_season4_rlsmachuca.jpeg" },
+  { id: 'c4-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div4_season4_nemisaac.jpeg" },
 ];
 
 export const ADMINS: Admin[] = [
