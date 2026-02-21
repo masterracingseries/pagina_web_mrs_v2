@@ -99,6 +99,8 @@ const ReactionTestGame: React.FC = () => {
   };
 
   const getRating = (time: number) => {
+    if (time < 30) return { label: 'SAYAYIN LEVEL', color: 'text-mrs-yellow' };
+    if (time < 50) return { label: 'GOD LEVEL', color: 'text-mrs-yellow' };
     if (time < 100) return { label: 'SENNA LEVEL', color: 'text-mrs-yellow' };
     if (time < 150) return { label: 'SCHUMACHER LEVEL', color: 'text-mrs-yellow' };
     if (time < 200) return { label: 'HAMILTON LEVEL', color: 'text-mrs-yellow' };
