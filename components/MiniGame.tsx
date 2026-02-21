@@ -71,7 +71,7 @@ const ReactionTestGame: React.FC = () => {
         setLightsCount(i);
         if (i === 5) {
           setState('WAITING');
-          const randomWait = Math.floor(Math.random() * 2500) + 1000;
+          const randomWait = Math.floor(Math.random() * 3500) + 1000;
           timeoutRef.current = window.setTimeout(lightsOut, randomWait);
         }
       }, i * 800);
@@ -99,9 +99,15 @@ const ReactionTestGame: React.FC = () => {
   };
 
   const getRating = (time: number) => {
-    if (time < 190) return { label: 'MAX VERSTAPPEN', color: 'text-mrs-yellow' };
-    if (time < 230) return { label: 'PRO PILOT', color: 'text-green-500' };
-    if (time < 300) return { label: 'CASUAL RACER', color: 'text-blue-400' };
+    if (time < 100) return { label: 'SENNA LEVEL', color: 'text-mrs-yellow' };
+    if (time < 150) return { label: 'SCHUMACHER LEVEL', color: 'text-mrs-yellow' };
+    if (time < 200) return { label: 'HAMILTON LEVEL', color: 'text-mrs-yellow' };
+    if (time < 250) return { label: 'VERSTAPPEN LEVEL', color: 'text-green-500' };
+    if (time < 300) return { label: 'LECLERC LEVEL', color: 'text-blue-400' };
+    if (time < 350) return { label: 'HAKKINEN LEVEL', color: 'text-blue-400' };
+    if (time < 400) return { label: 'BOTTAS LEVEL', color: 'text-blue-400' };
+    if (time < 500) return { label: 'COLAPINTO LEVEL', color: 'text-blue-400' };
+    if (time < 600) return { label: 'STROLL LEVEL', color: 'text-blue-400' };
     return { label: 'LATIFI LEVEL', color: 'text-red-500' };
   };
 
