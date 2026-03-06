@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, FileCheck, Instagram, Calendar as CalendarIcon, Play, ExternalLink } from 'lucide-react';
+import { ChevronDown, FileCheck, Instagram, Calendar as CalendarIcon, Play } from 'lucide-react';
 import { SOCIAL_LINKS, REGISTRATION_URL, CALENDAR } from '../constants';
 
 interface NewsItem {
@@ -30,6 +30,12 @@ const Hero: React.FC = () => {
   
   const [activeItemId, setActiveItemId] = useState<string>('video-1');
   const [bgIndex, setBgIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Reset states when changing items
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [activeItemId]);
 
   // Background GIF Rotation
   useEffect(() => {
@@ -43,11 +49,11 @@ const Hero: React.FC = () => {
     {
       id: 'video-1',
       type: 'video',
-      title: 'Anuncio: Cambios en Puntajes',
+      title: '¡Ojo! Cambios en el sistema de puntos',
       subtitle: 'Novedades importantes sobre el sistema de puntos',
       videoUrl: 'https://www.youtube.com/embed/mj0oPyVbKxU',
       badge: 'IMPORTANTE',
-      description: 'Hemos actualizado el sistema de puntuación para la Temporada 5. Mira el video para conocer todos los detalles y cómo afectará a la tabla de posiciones.'
+      description: '¡Atención pilotos! Cambiamos el sistema de puntos para la Season 5. Ahora premiamos más la constancia y no solo al que vuela en una vuelta. Revisen el video para que no les pasen goles después con la tabla general. Este cambio busca que las carreras sean más peleadas de principio a fin, dando puntaje a más pilotos y acortando las diferencias entre los primeros lugares.'
     },
     {
       id: 'banner-1',
@@ -57,34 +63,32 @@ const Hero: React.FC = () => {
       badge: 'UNLOCKED',
       link: REGISTRATION_URL,
       linkText: 'Inscribirse Ahora',
-      description: 'Únete a la parrilla más competitiva del simracing. La Temporada 5 ya está aquí y los cupos son limitados. ¡No te quedes fuera!'
+      description: '¡Ya partimos! Las inscripciones para la Season 5 están abiertas y los cupos vuelan. No se queden abajo de la micro que este año los premios están de miedo. ¡Asegura tu butaca ahora ya! Contamos con nuevos auspiciadores y premios para los tres mejores de cada división. El proceso es simple pero asegúrate de tener tu licencia MRS al día para no quedar fuera de la grilla.'
     },
     {
       id: 'article-1',
       type: 'article',
-      title: 'Hazaña en el Paddock Zone',
+      title: '¡Récord en el Paddock!',
       subtitle: 'NEM_AGATHOR logra el récord absoluto',
       image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1000',
       badge: 'CONCURSO',
-      link: '#minigame',
-      description: 'Increíble desempeño de NEM_AGATHOR logrando un tiempo récord de 1ms en nuestro test de reacción. ¡Inscripción gratis asegurada para el campeón de reflejos!'
+      description: '¡Se pasó! NEM_AGATHOR metió un tiempo de 1ms en el Paddock Zone. El wn tiene reflejos de lince y se ganó la inscripción gratis. ¿Quién se le anima a bajarle el tiempo? Los comisarios revisaron la telemetría tres veces porque no lo podían creer. Superar la barrera de lo humano es la especialidad de este piloto que ya se perfila como el favorito para las largadas de esta temporada.'
     },
     {
       id: 'article-2',
       type: 'article',
-      title: 'IA-Cetas: ¿Genio o Amenaza?',
+      title: 'IA-CETAS: ¿Genio o Villano?',
       subtitle: 'La IA que desata risas y polémicas',
-      image: 'images/logos/iacetas.gif',
+      image: 'images/admins/facetas_admin.jpeg',
       badge: 'SÁTIRA',
-      link: '#ai-engineer',
-      description: 'Conocida por su personalidad "particular" y sus comentarios ácidos, IA-Cetas se ha convertido en el centro de atención. ¿Es un genio de la telemetría o solo quiere tu plata?'
+      description: 'IA-Cetas: ¿Genio de la telemetría o un cacho para la liga? El algoritmo anda más pesado que nunca tirando la talla y cobrando deudas. Cuidado con lo que le preguntan que no tiene pelos en la lengua. Entre insultos y consejos técnicos de dudosa procedencia, IA-Cetas promete ser la compañía constante (y a veces molesta) de todos los pilotos durante esta Season 5.'
     }
   ];
 
   const activeItem = newsItems.find(item => item.id === activeItemId) || newsItems[0];
 
   return (
-    <section className="relative min-h-[650px] lg:h-[80vh] flex flex-col overflow-hidden bg-mrs-black">
+    <section className="relative h-screen flex flex-col overflow-hidden bg-mrs-black pt-16 md:pt-20">
       {/* Background GIF - Rotating */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -123,77 +127,108 @@ const Hero: React.FC = () => {
       )}
 
       {/* Main Dashboard Layout */}
-      <div className="relative z-10 flex-1 flex items-center justify-center p-4 md:p-6 lg:p-10">
-        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-full max-h-[750px]">
+      <div className="relative z-10 flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
           
           {/* Featured Area (Main News) */}
-          <div className="lg:col-span-8 relative group rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-sm flex flex-col min-h-[350px] lg:min-h-0">
+          <div className="lg:col-span-8 relative group rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-sm flex flex-col">
             <AnimatePresence mode="wait">
               <motion.div 
                 key={activeItem.id}
-                initial={{ opacity: 0, scale: 1.02 }}
+                initial={{ opacity: 0, scale: 1.01 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
+                exit={{ opacity: 0, scale: 0.99 }}
                 transition={{ duration: 0.4 }}
-                className="flex-1 relative overflow-hidden"
+                className="flex-1 flex flex-col relative overflow-hidden"
               >
                 {activeItem.type === 'video' ? (
-                  <div className="absolute inset-0 bg-black">
-                    <iframe 
-                      src={`${activeItem.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${activeItem.videoUrl?.split('/').pop()}`}
-                      className="w-full h-full border-0"
-                      allow="autoplay; encrypted-media"
-                      title={activeItem.title}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none"></div>
+                  /* VIDEO LAYOUT: Split (Video Top, Info Bottom) */
+                  <div className="flex-1 flex flex-col overflow-hidden">
+                    <div className="relative w-full aspect-video bg-black shadow-inner">
+                      <iframe 
+                        src={`${activeItem.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${activeItem.videoUrl?.split('/').pop()}`}
+                        className="w-full h-full border-0"
+                        allow="autoplay; encrypted-media"
+                        title={activeItem.title}
+                      />
+                    </div>
+                    <div className="p-4 md:p-5 flex flex-col bg-gradient-to-b from-black/40 to-black/80 border-t border-white/5">
+                      <div className="mb-1">
+                        <span className="inline-block bg-mrs-red text-white text-[8px] font-black px-1.5 py-0.5 rounded mb-1 uppercase tracking-widest">
+                          {activeItem.badge}
+                        </span>
+                        <h2 className="text-lg md:text-2xl lg:text-3xl font-display italic text-white uppercase mb-1 leading-tight drop-shadow-lg">
+                          {activeItem.title}
+                        </h2>
+                      </div>
+                      
+                      <div className="overflow-y-auto custom-scrollbar pr-2 max-h-[100px]">
+                        <p className={`text-xs md:text-sm text-gray-300 font-medium transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
+                          {activeItem.description}
+                        </p>
+                      </div>
+
+                      <div className="mt-2">
+                        <button 
+                          onClick={() => setIsExpanded(!isExpanded)} 
+                          className="inline-flex items-center gap-1.5 text-mrs-yellow font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:text-white transition-colors"
+                        >
+                          {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={12} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ) : activeItem.type === 'banner' ? (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 md:p-8">
-                    <motion.h2 
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      className="text-5xl md:text-7xl lg:text-8xl font-display italic text-white leading-none mb-4 uppercase tracking-tighter"
-                    >
-                      {activeItem.title.split(' ')[0]} <br />
-                      <span className="text-mrs-yellow">{activeItem.title.split(' ')[1]}</span>
-                    </motion.h2>
-                    <p className="text-lg md:text-xl text-gray-300 font-bold mb-6 md:mb-8 max-w-lg">{activeItem.description}</p>
-                    <div className="flex gap-4">
-                      <a href={activeItem.link} className="bg-mrs-red text-white px-6 md:px-8 py-3 md:py-4 font-black uppercase rounded hover:bg-white hover:text-mrs-red transition-all flex items-center gap-2 text-sm md:text-base">
-                        <FileCheck size={20} /> {activeItem.linkText}
-                      </a>
+                  /* BANNER LAYOUT: Centered Overlay */
+                  <div className="flex-1 flex flex-col items-center justify-center text-center p-6 md:p-8 relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-mrs-red/10 via-transparent to-mrs-yellow/5 z-0"></div>
+                    <div className="relative z-10">
+                      <motion.h2 
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="text-5xl md:text-7xl lg:text-8xl font-display italic text-white leading-none mb-4 uppercase tracking-tighter"
+                      >
+                        {activeItem.title.split(' ')[0]} <br />
+                        <span className="text-mrs-yellow">{activeItem.title.split(' ')[1]}</span>
+                      </motion.h2>
+                      <p className="text-lg md:text-xl text-gray-300 font-bold mb-6 md:mb-8 max-w-lg mx-auto">{activeItem.description}</p>
+                      <div className="flex justify-center gap-4">
+                        <a href={activeItem.link} className="bg-mrs-red text-white px-6 md:px-8 py-3 md:py-4 font-black uppercase rounded hover:bg-white hover:text-mrs-red transition-all flex items-center gap-2 text-sm md:text-base shadow-xl">
+                          <FileCheck size={20} /> {activeItem.linkText}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="absolute inset-0">
-                    <img src={activeItem.image} alt={activeItem.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-                  </div>
-                )}
-
-                {/* Info Overlay for Video/Article */}
-                {activeItem.type !== 'banner' && (
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 pointer-events-none">
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-3 uppercase tracking-widest">
-                        {activeItem.badge}
-                      </span>
-                      <h2 className="text-3xl md:text-5xl lg:text-6xl font-display italic text-white uppercase mb-3 leading-tight drop-shadow-lg">
-                        {activeItem.title}
-                      </h2>
-                      <p className="text-base md:text-lg text-gray-300 font-medium max-w-2xl drop-shadow-md line-clamp-2 md:line-clamp-none">
-                        {activeItem.description}
-                      </p>
-                      {activeItem.link && (
-                        <a href={activeItem.link} className="mt-4 inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs md:text-sm tracking-widest hover:text-white transition-colors pointer-events-auto">
-                          Leer más <ExternalLink size={16} />
-                        </a>
-                      )}
-                    </motion.div>
+                  /* ARTICLE LAYOUT: Revert to Full Overlay */
+                  <div className="flex-1 relative h-full">
+                    <img src={activeItem.image} alt={activeItem.title} className="absolute inset-0 w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                    
+                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="max-w-2xl bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/5"
+                      >
+                        <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-3 uppercase tracking-widest">
+                          {activeItem.badge}
+                        </span>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-display italic text-white uppercase mb-3 leading-tight drop-shadow-lg">
+                          {activeItem.title}
+                        </h2>
+                        <div className={`text-base md:text-lg text-gray-300 font-medium drop-shadow-md transition-all duration-300 overflow-y-auto custom-scrollbar ${isExpanded ? 'max-h-[150px] mb-4' : 'line-clamp-2'}`}>
+                          {activeItem.description}
+                        </div>
+                        <button 
+                          onClick={() => setIsExpanded(!isExpanded)} 
+                          className="inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs md:text-sm tracking-widest hover:text-white transition-colors"
+                        >
+                          {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={16} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+                      </motion.div>
+                    </div>
                   </div>
                 )}
               </motion.div>
@@ -251,7 +286,7 @@ const Hero: React.FC = () => {
 
             {/* Social Links Mini-Banner */}
             <div className="mt-auto pt-3 border-t border-white/10 flex items-center justify-between px-2">
-              <span className="text-gray-500 text-[9px] font-bold uppercase tracking-widest">Seguinos</span>
+              <span className="text-gray-500 text-[9px] font-bold uppercase tracking-widest">Siguenos</span>
               <div className="flex gap-3">
                 <a href={SOCIAL_LINKS.instagram} target="_blank" className="text-gray-400 hover:text-white transition-colors">
                   <Instagram size={16} />
