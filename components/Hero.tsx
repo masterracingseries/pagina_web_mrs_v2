@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
       type: 'article',
       title: 'IA-Cetas: ¿Genio o Amenaza?',
       subtitle: 'La IA que desata risas y polémicas',
-      image: 'images/admins/facetas_admin.jpeg',
+      image: 'images/logos/iacetas.gif',
       badge: 'SÁTIRA',
       link: '#ai-engineer',
       description: 'Conocida por su personalidad "particular" y sus comentarios ácidos, IA-Cetas se ha convertido en el centro de atención. ¿Es un genio de la telemetría o solo quiere tu plata?'
