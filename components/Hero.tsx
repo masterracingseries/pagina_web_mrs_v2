@@ -79,7 +79,7 @@ const Hero: React.FC = () => {
       type: 'article',
       title: 'IA-CETAS: ¿Genio o Villano?',
       subtitle: 'La IA que desata risas y polémicas',
-      image: 'images/logos/iacetas_imagen.jpeg',
+      image: 'images/logos/iacetas_imagen.png',
       badge: 'SÁTIRA',
       description: 'IA-Cetas: ¿Genio de la telemetría o un cacho para la liga? El algoritmo anda más pesado que nunca tirando la talla y cobrando deudas. Cuidado con lo que le preguntan que no tiene pelos en la lengua. Entre insultos y consejos técnicos de dudosa procedencia, IA-Cetas promete ser la compañía constante (y a veces molesta) de todos los pilotos durante esta Season 5.'
     }
