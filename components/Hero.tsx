@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, FileCheck, Instagram, Calendar as CalendarIcon, Play } from 'lucide-react';
+import { ChevronDown, FileCheck, Instagram, Calendar as CalendarIcon, Play, Minus, Plus } from 'lucide-react';
 import { SOCIAL_LINKS, REGISTRATION_URL, CALENDAR } from '../constants';
 
 interface NewsItem {
@@ -31,10 +31,12 @@ const Hero: React.FC = () => {
   const [activeItemId, setActiveItemId] = useState<string>('video-1');
   const [bgIndex, setBgIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isInfoVisible, setIsInfoVisible] = useState(true);
 
   // Reset states when changing items
   useEffect(() => {
     setIsExpanded(false);
+    setIsInfoVisible(true);
   }, [activeItemId]);
 
   // Background GIF Rotation
@@ -79,7 +81,7 @@ const Hero: React.FC = () => {
       type: 'article',
       title: 'IA-CETAS: ¿Genio o Villano?',
       subtitle: 'La IA que desata risas y polémicas',
-      image: 'images/logos/iacetas_imagen.png',
+      image: '/images/logos/iacetas_imagen.png',
       badge: 'SÁTIRA',
       description: 'IA-Cetas: ¿Genio de la telemetría o un cacho para la liga? El algoritmo anda más pesado que nunca tirando la talla y cobrando deudas. Cuidado con lo que le preguntan que no tiene pelos en la lengua. Entre insultos y consejos técnicos de dudosa procedencia, IA-Cetas promete ser la compañía constante (y a veces molesta) de todos los pilotos durante esta Season 5.'
     }
@@ -88,7 +90,7 @@ const Hero: React.FC = () => {
   const activeItem = newsItems.find(item => item.id === activeItemId) || newsItems[0];
 
   return (
-    <section className="relative h-screen flex flex-col overflow-hidden bg-mrs-black pt-16 md:pt-20">
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-mrs-black pt-24 md:pt-28">
       {/* Background GIF - Rotating */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -108,30 +110,33 @@ const Hero: React.FC = () => {
 
       {/* Persistent Next Race Bar */}
       {nextRace && (
-        <div className="relative z-30 w-full bg-mrs-red/90 backdrop-blur-md py-2 px-6 flex items-center justify-between border-b border-white/10">
-          <div className="flex items-center gap-4">
-            <span className="bg-white text-mrs-red px-2 py-0.5 text-[10px] font-black uppercase rounded">PRÓXIMA CARRERA</span>
-            <div className="flex items-center gap-2">
-              <img src={nextRace.flagUrl} alt={nextRace.country} className="w-6 h-4 object-cover rounded-sm" />
-              <span className="text-white font-display italic text-sm uppercase tracking-wider">{nextRace.country}</span>
+        <div className="relative z-30 w-full bg-mrs-red/95 backdrop-blur-md py-2.5 md:py-3 px-4 md:px-6 flex items-center justify-between border-b border-white/10 shadow-lg">
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="bg-white text-mrs-red px-1.5 md:px-2.5 py-0.5 md:py-1 text-[8px] md:text-[10px] font-black uppercase rounded shadow-sm whitespace-nowrap">PRÓXIMA CARRERA</span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <img src={nextRace.flagUrl} alt={nextRace.country} className="w-5 h-3.5 md:w-7 md:h-5 object-cover rounded-sm shadow-sm" />
+              <span className="text-white font-display italic text-sm md:text-base uppercase tracking-wider drop-shadow-md truncate max-w-[80px] md:max-w-none">{nextRace.country}</span>
             </div>
           </div>
-          <div className="flex items-center gap-4 text-white/80 text-xs font-bold">
-            <span className="hidden sm:inline">ROUND {nextRace.round}</span>
-            <div className="flex items-center gap-1">
-              <CalendarIcon size={12} className="text-mrs-yellow" />
-              <span>{nextRace.date}</span>
+          <div className="flex items-center gap-3 md:gap-6 text-white/90 text-[10px] md:text-xs font-bold">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="hidden sm:inline opacity-60 uppercase tracking-widest text-[9px] md:text-[10px]">Round</span>
+              <span className="text-mrs-yellow font-black text-xs md:text-sm">{nextRace.round}</span>
+            </div>
+            <div className="flex items-center gap-1.5 md:gap-2 bg-black/20 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-white/5">
+              <CalendarIcon size={12} className="text-mrs-yellow md:w-[14px] md:h-[14px]" />
+              <span className="tracking-tight whitespace-nowrap">{nextRace.date}</span>
             </div>
           </div>
         </div>
       )}
 
       {/* Main Dashboard Layout */}
-      <div className="relative z-10 flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
-        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+      <div className="relative z-10 flex-1 flex items-center justify-center p-4 md:p-8 lg:p-10">
+        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6">
           
           {/* Featured Area (Main News) */}
-          <div className="lg:col-span-8 relative group rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-sm flex flex-col">
+          <div className="lg:col-span-8 relative group rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-sm flex flex-col min-h-[400px] md:min-h-[500px] lg:min-h-0">
             <AnimatePresence mode="wait">
               <motion.div 
                 key={activeItem.id}
@@ -142,9 +147,9 @@ const Hero: React.FC = () => {
                 className="flex-1 flex flex-col relative overflow-hidden"
               >
                 {activeItem.type === 'video' ? (
-                  /* VIDEO LAYOUT: Split (Video Top, Info Bottom) */
-                  <div className="flex-1 flex flex-col overflow-hidden">
-                    <div className="relative w-full aspect-video bg-black shadow-inner">
+                  /* VIDEO LAYOUT: Full Overlay with Toggle */
+                  <div className="flex-1 relative w-full h-full bg-black overflow-hidden min-h-[400px]">
+                    <div className="absolute inset-0 z-0">
                       <iframe 
                         src={`${activeItem.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${activeItem.videoUrl?.split('/').pop()}`}
                         className="w-full h-full border-0"
@@ -152,31 +157,66 @@ const Hero: React.FC = () => {
                         title={activeItem.title}
                       />
                     </div>
-                    <div className="p-4 md:p-5 flex flex-col bg-gradient-to-b from-black/40 to-black/80 border-t border-white/5">
-                      <div className="mb-1">
-                        <span className="inline-block bg-mrs-red text-white text-[8px] font-black px-1.5 py-0.5 rounded mb-1 uppercase tracking-widest">
-                          {activeItem.badge}
-                        </span>
-                        <h2 className="text-lg md:text-2xl lg:text-3xl font-display italic text-white uppercase mb-1 leading-tight drop-shadow-lg">
-                          {activeItem.title}
-                        </h2>
-                      </div>
-                      
-                      <div className="overflow-y-auto custom-scrollbar pr-2 max-h-[100px]">
-                        <p className={`text-xs md:text-sm text-gray-300 font-medium transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
-                          {activeItem.description}
-                        </p>
-                      </div>
-
-                      <div className="mt-2">
-                        <button 
-                          onClick={() => setIsExpanded(!isExpanded)} 
-                          className="inline-flex items-center gap-1.5 text-mrs-yellow font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:text-white transition-colors"
+                    
+                    {/* Info Overlay */}
+                    <AnimatePresence>
+                      {isInfoVisible && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 20 }}
+                          className="absolute bottom-0 left-0 right-0 p-3 md:p-8 z-10"
                         >
-                          {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={12} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                        </button>
-                      </div>
-                    </div>
+                          <div className="bg-black/70 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/10 relative">
+                            {/* Minimize Button */}
+                            <button 
+                              onClick={() => setIsInfoVisible(false)}
+                              className="absolute top-3 right-3 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center bg-white/10 hover:bg-mrs-red text-white rounded-full transition-colors z-20"
+                              title="Minimizar información"
+                            >
+                              <Minus size={16} className="md:w-[18px] md:h-[18px]" />
+                            </button>
+
+                            <div className="mb-1.5 pr-8 md:pr-10">
+                              <span className="inline-block bg-mrs-red text-white text-[8px] md:text-[9px] font-black px-1.5 md:px-2 py-0.5 rounded mb-1.5 md:mb-2 uppercase tracking-widest">
+                                {activeItem.badge}
+                              </span>
+                              <h2 className="text-lg md:text-3xl lg:text-4xl font-display italic text-white uppercase mb-1.5 md:mb-2 leading-tight drop-shadow-lg">
+                                {activeItem.title}
+                              </h2>
+                            </div>
+                            
+                            <div className={`overflow-y-auto custom-scrollbar pr-2 transition-all duration-300 ${isExpanded ? 'max-h-[150px] md:max-h-[200px]' : 'max-h-[60px] md:max-h-[80px]'}`}>
+                              <p className={`text-xs md:text-base text-gray-300 font-medium ${isExpanded ? '' : 'line-clamp-2'}`}>
+                                {activeItem.description}
+                              </p>
+                            </div>
+
+                            <div className="mt-2.5 md:mt-3">
+                              <button 
+                                onClick={() => setIsExpanded(!isExpanded)} 
+                                className="inline-flex items-center gap-1.5 md:gap-2 text-mrs-yellow font-black uppercase text-[9px] md:text-xs tracking-widest hover:text-white transition-colors"
+                              >
+                                {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={12} className={`md:w-[14px] md:h-[14px] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Maximize Button (Visible when info is hidden) */}
+                    {!isInfoVisible && (
+                      <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        onClick={() => setIsInfoVisible(true)}
+                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-mrs-red text-white rounded-full shadow-2xl z-20 hover:scale-110 transition-transform"
+                        title="Mostrar información"
+                      >
+                        <Plus size={24} />
+                      </motion.button>
+                    )}
                   </div>
                 ) : activeItem.type === 'banner' ? (
                   /* BANNER LAYOUT: Centered Overlay */
@@ -236,7 +276,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Sidebar (Other News) */}
-          <div className="lg:col-span-4 flex flex-col gap-3 overflow-y-auto pr-1 custom-scrollbar max-h-[300px] lg:max-h-none">
+          <div className="lg:col-span-4 flex flex-col gap-3 lg:overflow-y-auto pr-1 custom-scrollbar lg:max-h-none pb-10 lg:pb-0">
             <h3 className="text-white/40 font-black text-[10px] uppercase tracking-[0.3em] mb-1 px-2">Más Novedades</h3>
             <div className="flex flex-col gap-3">
               {newsItems.map((item) => (
