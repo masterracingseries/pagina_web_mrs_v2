@@ -4,7 +4,7 @@ import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, Le
 /**
  * 🚩 CONFIGURACIÓN DE TEMPORADA (MODO PRE-SEASON)
  */
-export const IS_SEASON_ACTIVE = false; 
+export const IS_SEASON_ACTIVE = true; 
 
 export const REGISTRATION_URL = "https://forms.gle/GXuXpwheGow1fne67"; 
 
