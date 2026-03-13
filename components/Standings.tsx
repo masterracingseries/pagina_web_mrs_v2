@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { DIVISIONS, TEAMS, IS_SEASON_ACTIVE } from '../constants';
-import { Trophy, Shield, Loader2, AlertCircle, Lock } from 'lucide-react';
+import { Trophy, Shield, Loader2, AlertCircle, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
@@ -12,7 +12,11 @@ const Standings: React.FC = () => {
   const [data, setData] = useState<GCSDivisionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [activeDivisionId, view]);
 
   useEffect(() => {
     if (!IS_SEASON_ACTIVE) return;
@@ -148,6 +152,21 @@ const Standings: React.FC = () => {
                             )}
                         </tbody>
                     </table>
+
+                    {view === 'DRIVERS' && data?.pilotos && data.pilotos.length > 10 && (
+                        <div className="p-4 border-t border-gray-100 flex justify-center">
+                            <button 
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="flex items-center gap-2 px-6 py-2 text-xs font-black uppercase tracking-widest text-mrs-red hover:text-mrs-black transition-colors"
+                            >
+                                {isExpanded ? (
+                                    <>Ver menos <ChevronUp size={14} /></>
+                                ) : (
+                                    <>Ver más pilotos <ChevronDown size={14} /></>
+                                )}
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
          </div>
