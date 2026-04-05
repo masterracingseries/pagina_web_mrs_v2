@@ -80,6 +80,11 @@ const Standings: React.FC = () => {
        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-display italic text-mrs-black mb-3 uppercase">Standings</h2>
+            {data?.ultimo_gp && (
+               <p className="text-gray-500 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] mt-2">
+                  Resultados actualizados hasta: <span className="text-mrs-red">{data.ultimo_gp}</span>
+               </p>
+            )}
          </div>
 
          <div className="flex flex-col gap-6 mb-8">
