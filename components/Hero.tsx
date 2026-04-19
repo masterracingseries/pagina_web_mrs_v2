@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
   const today = new Date();
   const nextRace = CALENDAR.find(race => new Date(race.isoDate) >= today);
   
-  const [activeItemId, setActiveItemId] = useState<string>('video-1');
+  const [activeItemId, setActiveItemId] = useState<string>('video-twitch-1');
   const [bgIndex, setBgIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isInfoVisible, setIsInfoVisible] = useState(true);
@@ -48,6 +48,15 @@ const Hero: React.FC = () => {
   }, []);
 
   const newsItems: NewsItem[] = [
+    {
+      id: 'video-twitch-1',
+      type: 'video',
+      title: '¿Y qué pasó con RLS_JANO? Final épico de MRS División 2',
+      subtitle: 'Caos absoluto en las calles de Jeddah',
+      videoUrl: 'https://clips.twitch.tv/embed?clip=ArtisticThirstyCucumberVoteNay-0P5V0GylzujLmYDG',
+      badge: 'DESTACADO',
+      description: '¡Para no creerlo! La tensión se podía cortar con un cuchillo en la División 2. Luego de 7 DNF en el peligroso circuito de Jeddah, Jano se encontraba en una posición única. Revive este final épico que dejó a toda la comunidad de MRS en shock. ¿Fue estrategia o simplemente el destino de las calles de Arabia?'
+    },
     {
       id: 'video-1',
       type: 'video',
@@ -81,7 +90,7 @@ const Hero: React.FC = () => {
       type: 'article',
       title: 'IA-CETAS: ¿Genio o Villano?',
       subtitle: 'La IA que desata risas y polémicas',
-      image: '/images/logos/iacetas_imagen.png',
+      image: 'images/admins/facetas_admin.jpeg',
       badge: 'SÁTIRA',
       description: 'IA-Cetas: ¿Genio de la telemetría o un cacho para la liga? El algoritmo anda más pesado que nunca tirando la talla y cobrando deudas. Cuidado con lo que le preguntan que no tiene pelos en la lengua. Entre insultos y consejos técnicos de dudosa procedencia, IA-Cetas promete ser la compañía constante (y a veces molesta) de todos los pilotos durante esta Season 5.'
     }
@@ -151,7 +160,10 @@ const Hero: React.FC = () => {
                   <div className="flex-1 relative w-full h-full bg-black overflow-hidden min-h-[400px]">
                     <div className="absolute inset-0 z-0">
                       <iframe 
-                        src={`${activeItem.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${activeItem.videoUrl?.split('/').pop()}`}
+                        src={activeItem.videoUrl?.includes('twitch.tv') 
+                          ? `${activeItem.videoUrl}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}&autoplay=true`
+                          : `${activeItem.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${activeItem.videoUrl?.split('/').pop()}`
+                        }
                         className="w-full h-full border-0"
                         allow="autoplay; encrypted-media"
                         title={activeItem.title}
