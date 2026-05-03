@@ -84,15 +84,6 @@ const Hero: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1000',
       badge: 'CONCURSO',
       description: '¡Se pasó! NEM_AGATHOR metió un tiempo de 1ms en el Paddock Zone. El wn tiene reflejos de lince y se ganó la inscripción gratis. ¿Quién se le anima a bajarle el tiempo? Los comisarios revisaron la telemetría tres veces porque no lo podían creer. Superar la barrera de lo humano es la especialidad de este piloto que ya se perfila como el favorito para las largadas de esta temporada.'
-    },
-    {
-      id: 'article-2',
-      type: 'article',
-      title: 'IA-CETAS: ¿Genio o Villano?',
-      subtitle: 'La IA que desata risas y polémicas',
-      image: 'images/admins/facetas_admin.jpeg',
-      badge: 'SÁTIRA',
-      description: 'IA-Cetas: ¿Genio de la telemetría o un cacho para la liga? El algoritmo anda más pesado que nunca tirando la talla y cobrando deudas. Cuidado con lo que le preguntan que no tiene pelos en la lengua. Entre insultos y consejos técnicos de dudosa procedencia, IA-Cetas promete ser la compañía constante (y a veces molesta) de todos los pilotos durante esta Season 5.'
     }
   ];
 
