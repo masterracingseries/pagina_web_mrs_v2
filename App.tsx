@@ -10,8 +10,6 @@ import Rules from './components/Rules';
 import About from './components/About';
 import Footer from './components/Footer';
 import MiniGame from './components/MiniGame';
-import AIEngineer from './components/AIEngineer';
-import SandboxTools from './components/SandboxTools';
 
 const App: React.FC = () => {
   return (
@@ -25,11 +23,9 @@ const App: React.FC = () => {
         <Rules />
         <Champions />
         <MiniGame />
-        <AIEngineer />
         <About />
       </main>
       <Footer />
-      <SandboxTools />
     </div>
   );
 };
