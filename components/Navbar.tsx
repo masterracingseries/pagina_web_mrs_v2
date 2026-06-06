@@ -25,9 +25,9 @@ const Navbar: React.FC = () => {
     }
   };
 
-  // El calendario solo aparece en el nav cuando la temporada está activa
+  // Calendario y Resultados siempre visibles — muestran panel offseason si temporada inactiva
   const navLinks = [
-    ...(isSeasonActive ? [{ name: 'Calendario', href: '#calendar' }] : []),
+    { name: 'Calendario', href: '#calendar' },
     { name: 'Resultados',   href: '#standings'  },
     { name: 'Paddock Zone', href: '#minigame'   },
     { name: 'Media',        href: '#media'      },

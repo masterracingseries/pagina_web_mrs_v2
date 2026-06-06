@@ -1,12 +1,63 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, CheckCircle2 } from 'lucide-react';
+import { MapPin, CheckCircle2, Flag } from 'lucide-react';
 import { useConfigContext } from '../hooks/ConfigContext';
+
+const OffseasonBanner: React.FC<{ title: string }> = ({ title }) => (
+  <section id="calendar" className="py-20 bg-mrs-black relative overflow-hidden">
+    {/* Fondo decorativo */}
+    <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-mrs-red/10 via-transparent to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-mrs-red/30 to-transparent" />
+    </div>
+
+    <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Ícono */}
+        <div className="flex justify-center mb-8">
+          <div className="w-20 h-20 rounded-full bg-mrs-red/10 border border-mrs-red/30 flex items-center justify-center">
+            <Flag size={36} className="text-mrs-red" />
+          </div>
+        </div>
+
+        {/* Título principal */}
+        <h2 className="text-5xl md:text-7xl font-display italic uppercase text-white leading-none mb-4 tracking-tighter">
+          LA HISTORIA <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-mrs-red to-mrs-yellow">
+            POR ESCRIBIRSE
+          </span>
+        </h2>
+
+        <div className="w-24 h-1 bg-mrs-red mx-auto my-8" />
+
+        <p className="text-gray-400 text-xl md:text-2xl font-light leading-relaxed max-w-2xl mx-auto">
+          Estamos preparando todo para que la próxima temporada sea{' '}
+          <span className="text-white font-semibold">increíble</span>.
+          <br />
+          El calendario se anunciará muy pronto.
+        </p>
+
+        {/* Decoración inferior */}
+        <div className="mt-12 flex items-center justify-center gap-3 text-gray-600">
+          <div className="h-px w-16 bg-gray-700" />
+          <span className="text-xs font-black uppercase tracking-[0.4em]">{title}</span>
+          <div className="h-px w-16 bg-gray-700" />
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
 
 const Calendar: React.FC = () => {
   const { config, loading } = useConfigContext();
-  const calendar       = config.calendario;
-  const isSeasonActive = config.liga.is_season_active;
+  const calendar            = config.calendario;
+  const isSeasonActive      = config.liga.is_season_active;
+  const seasonLabel         = `Season ${config.liga.temporada_actual}`;
 
   const today         = new Date();
   const nextRaceIndex = calendar.findIndex(race => new Date(race.isoDate) >= today);
@@ -21,8 +72,8 @@ const Calendar: React.FC = () => {
     );
   }
 
-  // Si la temporada no está activa, no mostrar el calendario
-  if (!isSeasonActive) return null;
+  // Temporada inactiva → panel de expectativa
+  if (!isSeasonActive) return <OffseasonBanner title={seasonLabel} />;
 
   return (
     <section id="calendar" className="py-20 bg-mrs-black relative">
@@ -48,7 +99,11 @@ const Calendar: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className={`group relative bg-gray-900 border-l-4 p-6 transition-all duration-500 overflow-hidden
-                  ${isCompleted ? 'border-gray-700 opacity-60' : isNext ? 'border-mrs-yellow scale-[1.02] shadow-[0_0_30px_rgba(255,215,0,0.1)]' : 'border-mrs-red'}`}
+                  ${isCompleted
+                    ? 'border-gray-700 opacity-60'
+                    : isNext
+                      ? 'border-mrs-yellow scale-[1.02] shadow-[0_0_30px_rgba(255,215,0,0.1)]'
+                      : 'border-mrs-red'}`}
               >
                 <div className="flex justify-between mb-4">
                   <span className="text-xs font-bold text-gray-400">ROUND {race.round}</span>

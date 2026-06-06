@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { DIVISIONS, TEAMS } from '../constants';
 import { useConfigContext } from '../hooks/ConfigContext';
 import { Trophy, Shield, Loader2, AlertCircle, Lock, ChevronDown, ChevronUp } from 'lucide-react';
@@ -46,28 +47,41 @@ const Standings: React.FC = () => {
 
   if (!isSeasonActive) {
     return (
-      <section id="standings" className="py-20 bg-gray-100 text-mrs-black relative overflow-hidden">
-        <div className="absolute inset-0 bg-checkered opacity-[0.03]"></div>
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <span className="text-mrs-red font-bold tracking-widest text-sm uppercase">Campeonato {seasonLabel}</span>
-            <h2 className="text-4xl md:text-6xl font-display italic text-mrs-black mb-3 uppercase tracking-tighter">STANDINGS</h2>
-          </div>
-          
-          <div className="bg-white rounded-[2.5rem] shadow-2xl p-12 md:p-20 flex flex-col items-center text-center border-b-8 border-mrs-yellow">
-              <div className="w-24 h-24 bg-gray-100 rounded-3xl flex items-center justify-center text-gray-300 mb-8 border-2 border-dashed border-gray-200">
-                  <Lock size={48} />
+      <section id="standings" className="py-20 bg-mrs-black relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-mrs-yellow/10 via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-mrs-yellow/30 to-transparent" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-20 rounded-full bg-mrs-yellow/10 border border-mrs-yellow/30 flex items-center justify-center">
+                <Trophy size={36} className="text-mrs-yellow" />
               </div>
-              <h3 className="text-3xl md:text-5xl font-display italic mb-6">HISTORIA POR ESCRIBIRSE</h3>
-              <p className="text-gray-500 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-8">
-                La tabla de puntuación de la <span className="text-mrs-red font-black">TEMPORADA 5</span> está vacía. Solo los mejores pilotos lograrán grabar su nombre en lo más alto del ranking.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
-                 {[1,2,3,4].map(i => (
-                    <div key={i} className="h-16 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center font-display italic text-gray-200 text-2xl">P{i}</div>
-                 ))}
-              </div>
-          </div>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-display italic uppercase text-white leading-none mb-4 tracking-tighter">
+              LA HISTORIA <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-mrs-yellow to-mrs-red">
+                POR ESCRIBIRSE
+              </span>
+            </h2>
+            <div className="w-24 h-1 bg-mrs-yellow mx-auto my-8" />
+            <p className="text-gray-400 text-xl md:text-2xl font-light leading-relaxed max-w-2xl mx-auto">
+              La tabla de la{' '}
+              <span className="text-white font-semibold">Temporada {config.liga.temporada_actual}</span>{' '}
+              está en blanco. Solo los mejores pilotos grabarán su nombre en lo más alto del ranking.
+            </p>
+            <div className="mt-12 flex items-center justify-center gap-3 text-gray-600">
+              <div className="h-px w-16 bg-gray-700" />
+              <span className="text-xs font-black uppercase tracking-[0.4em]">Campeonato {seasonLabel}</span>
+              <div className="h-px w-16 bg-gray-700" />
+            </div>
+          </motion.div>
         </div>
       </section>
     );
