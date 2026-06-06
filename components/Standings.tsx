@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { DIVISIONS, TEAMS, IS_SEASON_ACTIVE } from '../constants';
+import { DIVISIONS, TEAMS, IS_SEASON_ACTIVE, CURRENT_SEASON_LABEL } from '../constants';
 import { Trophy, Shield, Loader2, AlertCircle, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
+// ⚠️ El bucket mantiene su nombre histórico pero sirve a todas las temporadas.
+// Si cambia el bucket, solo hay que editar esta línea.
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
 
 const Standings: React.FC = () => {
@@ -44,7 +46,7 @@ const Standings: React.FC = () => {
         <div className="absolute inset-0 bg-checkered opacity-[0.03]"></div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <span className="text-mrs-red font-bold tracking-widest text-sm uppercase">Campeonato S5</span>
+            <span className="text-mrs-red font-bold tracking-widest text-sm uppercase">Campeonato {CURRENT_SEASON_LABEL}</span>
             <h2 className="text-4xl md:text-6xl font-display italic text-mrs-black mb-3 uppercase tracking-tighter">STANDINGS</h2>
           </div>
           

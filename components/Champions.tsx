@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CHAMPIONS } from '../constants';
+import { CHAMPIONS, CURRENT_SEASON } from '../constants';
 import { Champion } from '../types';
 import { Trophy, History, Star } from 'lucide-react';
 import SafeImage from './SafeImage';
@@ -32,7 +32,12 @@ const ChampionCard: React.FC<{ champ: Champion }> = ({ champ }) => (
 );
 
 const Champions: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'ALL' | 'S4' | 'S3' | 'S2' | 'S1'>('ALL');
+  // Genera automáticamente los botones de filtro para todas las temporadas hasta la actual.
+  // Al subir CURRENT_SEASON en constants.ts, el botón nuevo aparece solo.
+  const seasonNumbers = Array.from({ length: CURRENT_SEASON - 2 }, (_, i) => CURRENT_SEASON - 1 - i); // [5,4,3] para S6
+  const seasonTabs = seasonNumbers.map(n => `S${n}`) as string[];
+
+  const [activeTab, setActiveTab] = useState<string>('ALL');
 
   const filteredChampions = activeTab === 'ALL' 
     ? CHAMPIONS 
@@ -57,7 +62,7 @@ const Champions: React.FC = () => {
             >
                 <span className="flex items-center gap-2"><History size={16}/> Hall of Fame</span>
             </button>
-            {['S3','S4'].map(season => (
+            {seasonTabs.map(season => (
                  <button 
                     key={season}
                     onClick={() => setActiveTab(season as any)}

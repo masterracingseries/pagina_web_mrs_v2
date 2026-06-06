@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, FileCheck, Instagram, Calendar as CalendarIcon, Play, Minus, Plus } from 'lucide-react';
-import { SOCIAL_LINKS, REGISTRATION_URL, CALENDAR } from '../constants';
+import { SOCIAL_LINKS, REGISTRATION_URL, CALENDAR, CURRENT_SEASON_LABEL, CURRENT_SEASON } from '../constants';
 
 interface NewsItem {
   id: string;
@@ -64,17 +64,17 @@ const Hero: React.FC = () => {
       subtitle: 'Novedades importantes sobre el sistema de puntos',
       videoUrl: 'https://www.youtube.com/embed/mj0oPyVbKxU',
       badge: 'IMPORTANTE',
-      description: '¡Atención pilotos! Cambiamos el sistema de puntos para la Season 5. Ahora premiamos más la constancia y no solo al que vuela en una vuelta. Revisen el video para que no les pasen goles después con la tabla general. Este cambio busca que las carreras sean más peleadas de principio a fin, dando puntaje a más pilotos y acortando las diferencias entre los primeros lugares.'
+      description: `¡Atención pilotos! Revisen el sistema de puntos para la Season ${CURRENT_SEASON}. Asegúrense de tenerlo claro antes de la primera carrera para que no haya sorpresas en la tabla general.`
     },
     {
       id: 'banner-1',
       type: 'banner',
-      title: 'SEASON FIVE',
-      subtitle: 'Inscripciones abiertas',
-      badge: 'UNLOCKED',
+      title: `SEASON ${CURRENT_SEASON_LABEL.replace('S', '')}`,  // "SEASON SIX" → genera "6"
+      subtitle: 'Temporada en curso',
+      badge: 'EN MARCHA',
       link: REGISTRATION_URL,
-      linkText: 'Inscribirse Ahora',
-      description: '¡Ya partimos! Las inscripciones para la Season 5 están abiertas y los cupos vuelan. No se queden abajo de la micro que este año los premios están de miedo. ¡Asegura tu butaca ahora ya! Contamos con nuevos auspiciadores y premios para los tres mejores de cada división. El proceso es simple pero asegúrate de tener tu licencia MRS al día para no quedar fuera de la grilla.'
+      linkText: 'Ver Reglamento',
+      description: `¡La Season ${CURRENT_SEASON} ya arrancó! Cuatro divisiones, decenas de pilotos y un solo campeonato. Sigue los resultados en tiempo real y apoya a tu piloto favorito en cada carrera.`
     },
     {
       id: 'article-1',
@@ -299,7 +299,7 @@ const Hero: React.FC = () => {
                       </div>
                     ) : item.type === 'banner' ? (
                       <div className="w-full h-full flex items-center justify-center bg-mrs-yellow/20">
-                        <span className="text-mrs-yellow font-display italic text-lg md:text-xl">S5</span>
+                        <span className="text-mrs-yellow font-display italic text-lg md:text-xl">{CURRENT_SEASON_LABEL}</span>
                       </div>
                     ) : (
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover" />

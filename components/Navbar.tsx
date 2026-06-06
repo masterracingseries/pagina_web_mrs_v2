@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Menu, X, FilePen } from 'lucide-react';
-import { LOGO_URL, REGISTRATION_URL } from '../constants';
+import { LOGO_URL, REGISTRATION_URL, CURRENT_SEASON_LABEL } from '../constants';
 import SafeImage from './SafeImage';
 
 const Navbar: React.FC = () => {
@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
                 <h1 className="font-display text-lg sm:text-2xl md:text-3xl tracking-tighter text-white italic leading-none uppercase">
                   MASTER <span className="text-mrs-yellow">RACING</span> SERIES
                 </h1>
-                <span className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.4em] text-mrs-red mt-1">Season 5 Preparation</span>
+                <span className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.4em] text-mrs-red mt-1">Season {CURRENT_SEASON_LABEL}</span>
             </div>
           </div>
           
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
               ))}
                <a href={REGISTRATION_URL} target="_blank" className="ml-6 flex items-center gap-2 bg-mrs-red px-6 py-2.5 text-[11px] font-black uppercase tracking-widest text-white hover:bg-white hover:text-mrs-red transition-all rounded shadow-xl border-b-4 border-black/20">
                    <FilePen size={16} />
-                   <span>Inscribirse S5</span>
+                   <span>Inscribirse {CURRENT_SEASON_LABEL}</span>
                 </a>
             </div>
           </div>
@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
               </a>
             ))}
             <a href={REGISTRATION_URL} target="_blank" className="mt-8 flex items-center justify-center gap-3 bg-mrs-red w-full py-5 rounded text-lg font-display italic text-white uppercase">
-                <FilePen size={24} /> Inscribirse Season 5
+                <FilePen size={24} /> Inscribirse Season {CURRENT_SEASON_LABEL}
             </a>
           </div>
         </div>

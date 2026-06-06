@@ -2,11 +2,17 @@
 import { Division, RaceEvent, Team, Champion, Admin, DivisionData, MediaItem, LeaderboardEntry } from './types';
 
 /**
- * 🚩 CONFIGURACIÓN DE TEMPORADA (MODO PRE-SEASON)
+ * 🚩 CONFIGURACIÓN DE TEMPORADA
+ * ─────────────────────────────────────────────────────
+ * ⚠️  ÚNICO LUGAR donde se cambia el número de season.
+ *     Todos los componentes leen desde acá.
+ * ─────────────────────────────────────────────────────
  */
-export const IS_SEASON_ACTIVE = true; 
+export const CURRENT_SEASON = 6;                          // <── cambiar cada temporada
+export const CURRENT_SEASON_LABEL = `S${CURRENT_SEASON}`; // "S6"
+export const IS_SEASON_ACTIVE = true;
 
-export const REGISTRATION_URL = "https://forms.gle/GXuXpwheGow1fne67"; 
+export const REGISTRATION_URL = "https://forms.gle/GXuXpwheGow1fne67";
 
 /**
  * 🛠️ RUTAS DE ACTIVOS (Relative to public folder)
@@ -78,18 +84,29 @@ export const CALENDAR: RaceEvent[] = [
 
 /**
  * 🏆 HISTORIAL DE CAMPEONES
- * Se muestran únicamente los campeones de la Season 3.
+ * ─────────────────────────────────────────────────────
+ * Al terminar cada temporada: agregar los 4 campeones
+ * nuevos con season: 'S6', 'S7', etc.
+ * Imágenes en: /public/images/champions/
+ * ─────────────────────────────────────────────────────
  */
 export const CHAMPIONS: Champion[] = [
-  // --- SEASON 3 (ARCHIVOS ACTUALMENTE EN GITHUB) ---
-  { id: 'c1-s3', name: 'RLS_DARUMA', season: 'S3', division: 'Division 1', teamId: 'rb', imageUrl: "images/champions/campeon_div1_season3_rlsdaruma.png" },
-  { id: 'c2-s3', name: 'RLS_PRICE', season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
+  // --- SEASON 3 ---
+  { id: 'c1-s3', name: 'RLS_DARUMA',      season: 'S3', division: 'Division 1', teamId: 'rb',      imageUrl: "images/champions/campeon_div1_season3_rlsdaruma.png" },
+  { id: 'c2-s3', name: 'RLS_PRICE',       season: 'S3', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season3_rlsprice.png" },
   { id: 'c3-s3', name: 'RLS_MATIASTAPIA', season: 'S3', division: 'Division 3', teamId: 'mclaren', imageUrl: "images/champions/campeon_div3_season3_rlsmatiastapia.png" },
-  { id: 'c4-s3', name: 'CHIKIXD_2', season: 'S3', division: 'Division 4', teamId: 'aston', imageUrl: "images/champions/campeon_div4_season3_chikixd.png" },
-  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'redbull', imageUrl: "images/champions/campeon_div1_season4_jsqvalen.jpeg" },
-  { id: 'c2-s4', name: 'NEM_THAPIA', season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.jpeg" },
-  { id: 'c3-s4', name: 'RLS_MACHUCA42', season: 'S4', division: 'Division 3', teamId: 'ferrari', imageUrl: "images/champions/campeon_div3_season4_rlsmachuca.jpeg" },
-  { id: 'c4-s4', name: 'NEM_ISAAC', season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div4_season4_nemisaac.jpeg" },
+  { id: 'c4-s3', name: 'CHIKIXD_2',       season: 'S3', division: 'Division 4', teamId: 'aston',   imageUrl: "images/champions/campeon_div4_season3_chikixd.png" },
+  // --- SEASON 4 ---
+  { id: 'c1-s4', name: 'JSQ_VALENMAR46', season: 'S4', division: 'Division 1', teamId: 'rb',      imageUrl: "images/champions/campeon_div1_season4_jsqvalen.jpeg" },
+  { id: 'c2-s4', name: 'NEM_THAPIA',     season: 'S4', division: 'Division 2', teamId: 'mclaren', imageUrl: "images/champions/campeon_div2_season4_nemthapia.jpeg" },
+  { id: 'c3-s4', name: 'RLS_MACHUCA42',  season: 'S4', division: 'Division 3', teamId: 'ferrari', imageUrl: "images/champions/campeon_div3_season4_rlsmachuca.jpeg" },
+  { id: 'c4-s4', name: 'NEM_ISAAC',      season: 'S4', division: 'Division 4', teamId: 'mclaren', imageUrl: "images/champions/campeon_div4_season4_nemisaac.jpeg" },
+  // --- SEASON 5 --- ⚠️ Descomentar y completar al finalizar S5
+  // { id: 'c1-s5', name: 'PILOTO_DIV1', season: 'S5', division: 'Division 1', teamId: 'rb',      imageUrl: "images/champions/campeon_div1_season5_xxx.jpeg" },
+  // { id: 'c2-s5', name: 'PILOTO_DIV2', season: 'S5', division: 'Division 2', teamId: 'ferrari', imageUrl: "images/champions/campeon_div2_season5_xxx.jpeg" },
+  // { id: 'c3-s5', name: 'PILOTO_DIV3', season: 'S5', division: 'Division 3', teamId: 'mclaren', imageUrl: "images/champions/campeon_div3_season5_xxx.jpeg" },
+  // { id: 'c4-s5', name: 'PILOTO_DIV4', season: 'S5', division: 'Division 4', teamId: 'aston',   imageUrl: "images/champions/campeon_div4_season5_xxx.jpeg" },
+  // --- SEASON 6 --- ⚠️ Agregar al finalizar S6
 ];
 
 export const ADMINS: Admin[] = [
