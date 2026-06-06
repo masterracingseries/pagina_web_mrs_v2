@@ -5,7 +5,8 @@ import { useConfigContext } from '../hooks/ConfigContext';
 
 const Calendar: React.FC = () => {
   const { config, loading } = useConfigContext();
-  const calendar = config.calendario;
+  const calendar       = config.calendario;
+  const isSeasonActive = config.liga.is_season_active;
 
   const today         = new Date();
   const nextRaceIndex = calendar.findIndex(race => new Date(race.isoDate) >= today);
@@ -19,6 +20,9 @@ const Calendar: React.FC = () => {
       </section>
     );
   }
+
+  // Si la temporada no está activa, no mostrar el calendario
+  if (!isSeasonActive) return null;
 
   return (
     <section id="calendar" className="py-20 bg-mrs-black relative">
@@ -34,9 +38,9 @@ const Calendar: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {calendar.map((race, index) => {
-            const raceDate  = new Date(race.isoDate);
+            const raceDate    = new Date(race.isoDate);
             const isCompleted = raceDate < today;
-            const isNext    = index === nextRaceIndex;
+            const isNext      = index === nextRaceIndex;
 
             return (
               <motion.div

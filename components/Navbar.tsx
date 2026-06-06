@@ -5,33 +5,35 @@ import { useConfigContext } from '../hooks/ConfigContext';
 import SafeImage from './SafeImage';
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { config } = useConfigContext();
-  const registrationUrl = config.liga.registration_url;
-  const logoUrl = config.liga.logo_url || LOGO_URL;
-  const seasonLabel = `S${config.liga.temporada_actual}` || CURRENT_SEASON_LABEL;
+  const [isOpen, setIsOpen]   = useState(false);
+  const { config }            = useConfigContext();
+  const registrationUrl       = config.liga.registration_url;
+  const logoUrl               = config.liga.logo_url || LOGO_URL;
+  const seasonLabel           = `S${config.liga.temporada_actual}` || CURRENT_SEASON_LABEL;
+  const isSeasonActive        = config.liga.is_season_active;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setIsOpen(false);
-    const id = targetId.replace('#', '');
+    const id      = targetId.replace('#', '');
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
-        top: element.getBoundingClientRect().top + window.scrollY - 90,
-        behavior: 'smooth'
+        top      : element.getBoundingClientRect().top + window.scrollY - 90,
+        behavior : 'smooth',
       });
     }
   };
 
+  // El calendario solo aparece en el nav cuando la temporada está activa
   const navLinks = [
-    { name: 'Calendario',   href: '#calendar'  },
-    { name: 'Resultados',   href: '#standings' },
-    { name: 'Paddock Zone', href: '#minigame'  },
-    { name: 'Media',        href: '#media'     },
-    { name: 'Reglamento',   href: '#rules'     },
-    { name: 'Campeones',    href: '#champions' },
-    { name: 'Nosotros',     href: '#about'     },
+    ...(isSeasonActive ? [{ name: 'Calendario', href: '#calendar' }] : []),
+    { name: 'Resultados',   href: '#standings'  },
+    { name: 'Paddock Zone', href: '#minigame'   },
+    { name: 'Media',        href: '#media'      },
+    { name: 'Reglamento',   href: '#rules'      },
+    { name: 'Campeones',    href: '#champions'  },
+    { name: 'Nosotros',     href: '#about'      },
   ];
 
   return (
