@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { DIVISIONS, TEAMS, IS_SEASON_ACTIVE, CURRENT_SEASON_LABEL } from '../constants';
+import { DIVISIONS, TEAMS } from '../constants';
+import { useConfigContext } from '../hooks/ConfigContext';
 import { Trophy, Shield, Loader2, AlertCircle, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { GCSDivisionData } from '../types';
 
@@ -9,6 +10,9 @@ import { GCSDivisionData } from '../types';
 const GCS_BASE_URL = 'https://storage.googleapis.com/mrs-standings-season3';
 
 const Standings: React.FC = () => {
+  const { config } = useConfigContext();
+  const isSeasonActive = config.liga.is_season_active;
+  const seasonLabel = `S${config.liga.temporada_actual}`;
   const [activeDivisionId, setActiveDivisionId] = useState(DIVISIONS[0].id);
   const [view, setView] = useState<'DRIVERS' | 'CONSTRUCTORS'>('DRIVERS');
   const [data, setData] = useState<GCSDivisionData | null>(null);
@@ -21,7 +25,7 @@ const Standings: React.FC = () => {
   }, [activeDivisionId, view]);
 
   useEffect(() => {
-    if (!IS_SEASON_ACTIVE) return;
+    if (!isSeasonActive) return;
     const fetchStandings = async () => {
         setLoading(true);
         setError(null);
@@ -40,13 +44,13 @@ const Standings: React.FC = () => {
     fetchStandings();
   }, [activeDivisionId]);
 
-  if (!IS_SEASON_ACTIVE) {
+  if (!isSeasonActive) {
     return (
       <section id="standings" className="py-20 bg-gray-100 text-mrs-black relative overflow-hidden">
         <div className="absolute inset-0 bg-checkered opacity-[0.03]"></div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <span className="text-mrs-red font-bold tracking-widest text-sm uppercase">Campeonato {CURRENT_SEASON_LABEL}</span>
+            <span className="text-mrs-red font-bold tracking-widest text-sm uppercase">Campeonato {seasonLabel}</span>
             <h2 className="text-4xl md:text-6xl font-display italic text-mrs-black mb-3 uppercase tracking-tighter">STANDINGS</h2>
           </div>
           
