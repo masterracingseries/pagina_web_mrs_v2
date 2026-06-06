@@ -7,10 +7,11 @@ import SafeImage from './SafeImage';
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen]   = useState(false);
   const { config }            = useConfigContext();
-  const registrationUrl       = config.liga.registration_url;
   const logoUrl               = config.liga.logo_url || LOGO_URL;
   const seasonLabel           = `S${config.liga.temporada_actual}` || CURRENT_SEASON_LABEL;
   const isSeasonActive        = config.liga.is_season_active;
+  const showRegistration      = config.liga.show_registration;
+  const registrationUrl       = config.liga.registration_url;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
@@ -72,6 +73,9 @@ const Navbar: React.FC = () => {
                   {link.name}
                 </a>
               ))}
+
+            </div>
+              {showRegistration && (
               <a
                 href={registrationUrl}
                 target="_blank"
@@ -81,7 +85,7 @@ const Navbar: React.FC = () => {
                 <FilePen size={16} />
                 <span>Inscribirse {seasonLabel}</span>
               </a>
-            </div>
+              )}
           </div>
 
           {/* Botón hamburguesa móvil */}
@@ -107,14 +111,17 @@ const Navbar: React.FC = () => {
                 {link.name} <span className="text-mrs-red">→</span>
               </a>
             ))}
-            <a
-              href={registrationUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 flex items-center justify-center gap-3 bg-mrs-red w-full py-5 rounded text-lg font-display italic text-white uppercase"
-            >
-              <FilePen size={24} /> Inscribirse Season {seasonLabel}
-            </a>
+
+            {showRegistration && (
+              <a
+                href={registrationUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-8 flex items-center justify-center gap-3 bg-mrs-red w-full py-5 rounded text-lg font-display italic text-white uppercase"
+              >
+                <FilePen size={24} /> Inscribirse Season {seasonLabel}
+              </a>
+            )}
           </div>
         </div>
       )}
