@@ -33,6 +33,7 @@ const Navbar: React.FC = () => {
     { name: 'Paddock Zone', href: '#minigame'   },
     { name: 'Media',        href: '#media'      },
     { name: 'Reglamento',   href: '#rules'      },
+    { name: 'Denuncias',    href: '#stewards'   },
     { name: 'Campeones',    href: '#champions'  },
     { name: 'Nosotros',     href: '#about'      },
   ];
