@@ -198,30 +198,43 @@ const Hero: React.FC = () => {
                     </div>
 
                   ) : (
-                    <div className="flex-1 relative h-full">
-                      <img src={activeItem.image} alt={activeItem.title} className="absolute inset-0 w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                    // ARTICLE: imagen arriba, texto abajo en móvil
+                    // En desktop: imagen de fondo con texto superpuesto abajo
+                    <div className="flex-1 flex flex-col md:relative h-full">
+
+                      {/* Imagen — ocupa toda la altura en desktop, altura fija en móvil */}
+                      <div className="relative h-48 sm:h-64 md:absolute md:inset-0 md:h-full w-full overflow-hidden">
+                        <img
+                          src={activeItem.image}
+                          alt={activeItem.title}
+                          className="w-full h-full object-cover object-top"
+                        />
+                        {/* Gradiente solo en desktop — sutil, no tapa la imagen */}
+                        <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                      </div>
+
+                      {/* Texto — debajo de la imagen en móvil, superpuesto en desktop */}
+                      <div className="relative md:absolute md:bottom-0 md:left-0 md:right-0 p-4 md:p-8 bg-gray-950 md:bg-transparent">
                         <motion.div
                           initial={{ y: 20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ delay: 0.2 }}
-                          className="max-w-2xl bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/5"
+                          className="max-w-2xl md:bg-black/50 md:backdrop-blur-md md:p-6 md:rounded-2xl md:border md:border-white/5"
                         >
-                          <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-3 uppercase tracking-widest">
+                          <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-2 uppercase tracking-widest">
                             {activeItem.badge}
                           </span>
-                          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display italic text-white uppercase mb-3 leading-tight drop-shadow-lg">
+                          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display italic text-white uppercase mb-2 leading-tight">
                             {activeItem.title}
                           </h2>
-                          <div className={`text-base md:text-lg text-gray-300 font-medium drop-shadow-md transition-all duration-300 overflow-y-auto custom-scrollbar ${isExpanded ? 'max-h-[150px] mb-4' : 'line-clamp-2'}`}>
+                          <div className={`text-sm md:text-base text-gray-300 font-medium transition-all duration-300 overflow-y-auto custom-scrollbar ${isExpanded ? 'max-h-[120px] mb-3' : 'line-clamp-2'}`}>
                             {activeItem.description}
                           </div>
                           <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs md:text-sm tracking-widest hover:text-white transition-colors"
+                            className="inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs tracking-widest hover:text-white transition-colors"
                           >
-                            {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={16} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                            {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={14} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                           </button>
                         </motion.div>
                       </div>
