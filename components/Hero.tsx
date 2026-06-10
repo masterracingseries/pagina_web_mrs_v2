@@ -198,49 +198,68 @@ const Hero: React.FC = () => {
                     </div>
 
                   ) : (
-                    // ARTICLE: imagen arriba, texto abajo en móvil
-                    // En desktop: imagen de fondo con texto superpuesto abajo
-                    <div className="flex-1 flex flex-col md:relative h-full">
-
-                      {/* Imagen — ocupa toda la altura en desktop, altura fija en móvil */}
-                      <div className="relative h-48 sm:h-64 md:absolute md:inset-0 md:h-full w-full overflow-hidden">
+                    // ARTICLE — mismo layout que VIDEO: imagen de fondo, cuadro ancho abajo, minimizable
+                    <div className="flex-1 relative w-full h-full bg-black overflow-hidden min-h-[400px]">
+                      <div className="absolute inset-0 z-0">
                         <img
                           src={activeItem.image}
                           alt={activeItem.title}
                           className="w-full h-full object-cover object-top"
                         />
-                        {/* Gradiente solo en desktop — sutil, no tapa la imagen */}
-                        <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       </div>
 
-                      {/* Texto — debajo de la imagen en móvil, superpuesto en desktop */}
-                      <div className="relative md:absolute md:bottom-0 md:left-0 md:right-0 p-4 md:p-8 bg-gray-950 md:bg-transparent">
-                        <motion.div
-                          initial={{ y: 20, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: 0.2 }}
-                          className="max-w-sm md:bg-black/60 md:backdrop-blur-md md:p-5 md:rounded-xl md:border md:border-white/10"
-                        >
-                          <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-2 uppercase tracking-widest">
-                            {activeItem.badge}
-                          </span>
-                          <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-display italic text-white uppercase mb-2 leading-tight">
-                            {activeItem.title}
-                          </h2>
-                          {/* En móvil siempre visible, en desktop solo al expandir */}
-                          <p className={`text-sm text-gray-300 font-medium leading-relaxed transition-all duration-300
-                            md:overflow-hidden md:transition-all
-                            ${isExpanded ? 'mb-3 max-h-40' : 'mb-3 md:max-h-0 md:mb-0 md:opacity-0'}`}>
-                            {activeItem.description}
-                          </p>
-                          <button
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            className="inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs tracking-widest hover:text-white transition-colors"
+                      <AnimatePresence>
+                        {isInfoVisible && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
+                            className="absolute bottom-0 left-0 right-0 p-3 md:p-8 z-10"
                           >
-                            {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={14} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                          </button>
-                        </motion.div>
-                      </div>
+                            <div className="bg-black/70 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/10 relative">
+                              <button
+                                onClick={() => setIsInfoVisible(false)}
+                                className="absolute top-3 right-3 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center bg-white/10 hover:bg-mrs-red text-white rounded-full transition-colors z-20"
+                              >
+                                <Minus size={16} />
+                              </button>
+                              <div className="mb-1.5 pr-8 md:pr-10">
+                                <span className="inline-block bg-mrs-red text-white text-[8px] md:text-[9px] font-black px-1.5 md:px-2 py-0.5 rounded mb-1.5 md:mb-2 uppercase tracking-widest">
+                                  {activeItem.badge}
+                                </span>
+                                <h2 className="text-lg md:text-3xl lg:text-4xl font-display italic text-white uppercase mb-1.5 md:mb-2 leading-tight drop-shadow-lg">
+                                  {activeItem.title}
+                                </h2>
+                              </div>
+                              <div className={`overflow-y-auto custom-scrollbar pr-2 transition-all duration-300 ${isExpanded ? 'max-h-[150px] md:max-h-[200px]' : 'max-h-[60px] md:max-h-[80px]'}`}>
+                                <p className={`text-xs md:text-base text-gray-300 font-medium ${isExpanded ? '' : 'line-clamp-2'}`}>
+                                  {activeItem.description}
+                                </p>
+                              </div>
+                              <div className="mt-2.5 md:mt-3">
+                                <button
+                                  onClick={() => setIsExpanded(!isExpanded)}
+                                  className="inline-flex items-center gap-1.5 md:gap-2 text-mrs-yellow font-black uppercase text-[9px] md:text-xs tracking-widest hover:text-white transition-colors"
+                                >
+                                  {isExpanded ? 'Ver menos' : 'Leer más'} <ChevronDown size={12} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                </button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {!isInfoVisible && (
+                        <motion.button
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          onClick={() => setIsInfoVisible(true)}
+                          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-mrs-red text-white rounded-full shadow-2xl z-20 hover:scale-110 transition-transform"
+                        >
+                          <Plus size={24} />
+                        </motion.button>
+                      )}
                     </div>
                   )}
                 </motion.div>
