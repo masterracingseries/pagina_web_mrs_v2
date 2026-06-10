@@ -219,17 +219,20 @@ const Hero: React.FC = () => {
                           initial={{ y: 20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ delay: 0.2 }}
-                          className="max-w-2xl md:bg-black/50 md:backdrop-blur-md md:p-6 md:rounded-2xl md:border md:border-white/5"
+                          className="max-w-sm md:bg-black/60 md:backdrop-blur-md md:p-5 md:rounded-xl md:border md:border-white/10"
                         >
                           <span className="inline-block bg-mrs-red text-white text-[10px] font-black px-2 py-1 rounded mb-2 uppercase tracking-widest">
                             {activeItem.badge}
                           </span>
-                          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display italic text-white uppercase mb-2 leading-tight">
+                          <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-display italic text-white uppercase mb-2 leading-tight">
                             {activeItem.title}
                           </h2>
-                          <div className={`text-sm md:text-base text-gray-300 font-medium transition-all duration-300 overflow-y-auto custom-scrollbar ${isExpanded ? 'max-h-[120px] mb-3' : 'line-clamp-2'}`}>
+                          {/* En móvil siempre visible, en desktop solo al expandir */}
+                          <p className={`text-sm text-gray-300 font-medium leading-relaxed transition-all duration-300
+                            md:overflow-hidden md:transition-all
+                            ${isExpanded ? 'mb-3 max-h-40' : 'mb-3 md:max-h-0 md:mb-0 md:opacity-0'}`}>
                             {activeItem.description}
-                          </div>
+                          </p>
                           <button
                             onClick={() => setIsExpanded(!isExpanded)}
                             className="inline-flex items-center gap-2 text-mrs-yellow font-black uppercase text-xs tracking-widest hover:text-white transition-colors"
