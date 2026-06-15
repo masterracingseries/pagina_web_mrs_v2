@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronUp, Loader2, ExternalLink, Flag } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronUp, Loader2, ExternalLink, Flag, FilePen } from 'lucide-react';
 
 const GCS_BASE_URL   = 'https://storage.googleapis.com/mrs-standings-season3';
 const STEWARDS_URL   = `${GCS_BASE_URL}/stewards.json`;
@@ -253,6 +253,27 @@ const Stewards: React.FC = () => {
             Registro público de casos activos y veredictos. Si ves tu alias en un caso abierto,
             tienes derecho a enviar tu defensa antes de que los comisarios emitan su veredicto.
           </p>
+
+          {/* CTA — Haz tu denuncia */}
+          <div className="mt-6 p-4 sm:p-5 bg-gray-900 border border-mrs-red/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 shrink-0 w-8 h-8 rounded-full bg-mrs-red/15 border border-mrs-red/30 flex items-center justify-center">
+                <Flag size={15} className="text-mrs-red" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-sm">¿Presenciaste una infracción en pista?</p>
+                <p className="text-gray-500 text-xs mt-0.5">Envía tu denuncia formal. Los comisarios la revisarán y emitirán un veredicto.</p>
+              </div>
+            </div>
+            <a
+              href="https://forms.gle/FJyHcbeFtr1SHmKo6"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 bg-mrs-red text-white px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest hover:bg-white hover:text-mrs-red transition-all shrink-0 w-full sm:w-auto justify-center shadow-lg shadow-mrs-red/20"
+            >
+              <FilePen size={14} /> Haz tu denuncia aquí
+            </a>
+          </div>
         </div>
 
         {/* Tabs de división — scroll horizontal en móvil */}
