@@ -1,12 +1,15 @@
 
 import React from 'react';
 import { FileText, Download } from 'lucide-react';
-import { LEAGUE_RULES_URL } from '../constants';
+import { useConfigContext } from '../hooks/ConfigContext';
 
 const Rules: React.FC = () => {
-  // Asegurar que el link de Google Drive use /preview para el iframe
-  const previewUrl = LEAGUE_RULES_URL.replace('/view', '/preview').split('?')[0];
-  const downloadUrl = LEAGUE_RULES_URL.replace('/preview', '/view');
+  const { config } = useConfigContext();
+  const rulesUrl   = config.liga.league_rules_url;
+  const season     = config.liga.temporada_actual;
+
+  const previewUrl  = rulesUrl.replace('/view', '/preview').split('?')[0];
+  const downloadUrl = rulesUrl.replace('/preview', '/view');
 
   return (
     <section id="rules" className="py-20 bg-mrs-light text-mrs-black relative">
@@ -27,7 +30,7 @@ const Rules: React.FC = () => {
             <div className="md:w-2/3 p-10 flex flex-col justify-center items-center text-center bg-carbon bg-cover relative">
                  <div className="absolute inset-0 bg-white/95"></div>
                  <div className="relative z-10 w-full">
-                     <h4 className="text-xl font-bold mb-6">Temporada 5</h4>
+                     <h4 className="text-xl font-bold mb-6">Temporada {season}</h4>
                      
                      {/* PDF Preview Container */}
                      <div className="border border-gray-300 rounded bg-gray-50 mb-6 max-w-lg mx-auto w-full aspect-[3/4] md:aspect-video shadow-inner overflow-hidden relative">
@@ -47,7 +50,7 @@ const Rules: React.FC = () => {
                             className="flex items-center gap-2 bg-mrs-red text-white px-6 py-3 rounded font-bold uppercase hover:bg-red-700 transition-colors shadow-lg shadow-red-500/30"
                         >
                             <Download size={18} />
-                            Ver / Descargar PDF S5
+                            Ver / Descargar PDF S{season}
                         </a>
                      </div>
                  </div>
