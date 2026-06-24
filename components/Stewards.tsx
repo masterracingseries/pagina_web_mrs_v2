@@ -233,7 +233,7 @@ const Stewards: React.FC = () => {
   );
 
   const casosResueltos = data.casos.filter(c =>
-    c.estado.toUpperCase() === 'RESUELTO' &&
+    (c.estado.toUpperCase() === 'RESUELTO' || c.estado.toUpperCase() === 'ANULADA') &&
     (divActiva === 'TODAS' || c.division === divActiva)
   );
 
