@@ -150,14 +150,12 @@ const CardVeredicto: React.FC<{ caso: Caso }> = ({ caso }) => {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <BadgeEstado estado={caso.estado} />
           {caso.sancion_seg > 0 && (
             <span className="text-amber-400 text-xs font-bold">+{caso.sancion_seg}s</span>
           )}
           {caso.sancion_pl > 0 && (
             <span className="text-red-400 text-xs font-bold">-{caso.sancion_pl}PL</span>
-          )}
-          {(!caso.sancion_seg && !caso.sancion_pl) && (
-            <span className="text-green-500 text-xs font-bold hidden sm:inline">Sin sanción</span>
           )}
           {expanded
             ? <ChevronUp size={16} className="text-gray-500" />
