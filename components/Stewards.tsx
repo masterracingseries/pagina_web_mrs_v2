@@ -14,8 +14,8 @@ interface Caso {
   alias_denunciado : string;
   vuelta           : string;
   descripcion      : string;
-  sancion_seg      : number;
-  sancion_pl       : number;
+  sancion_seg      : string | number;
+  sancion_pl       : string | number;
   veredicto_texto  : string;
   estado           : string;
   timestamp        : string;
@@ -151,11 +151,11 @@ const CardVeredicto: React.FC<{ caso: Caso }> = ({ caso }) => {
 
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <BadgeEstado estado={caso.estado} />
-          {caso.sancion_seg > 0 && (
-            <span className="text-amber-400 text-xs font-bold">+{caso.sancion_seg}s</span>
+          {caso.sancion_seg && String(caso.sancion_seg) !== '0' && (
+            <span className="text-amber-400 text-xs font-bold">+{caso.sancion_seg}</span>
           )}
-          {caso.sancion_pl > 0 && (
-            <span className="text-red-400 text-xs font-bold">-{caso.sancion_pl}PL</span>
+          {caso.sancion_pl && String(caso.sancion_pl) !== '0' && (
+            <span className="text-red-400 text-xs font-bold">-{caso.sancion_pl}</span>
           )}
           {expanded
             ? <ChevronUp size={16} className="text-gray-500" />
