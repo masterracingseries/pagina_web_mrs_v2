@@ -306,12 +306,12 @@ const Stewards: React.FC = () => {
           </div>
 
           {casosAbiertos.length === 0 ? (
-            <div className="text-center py-8 sm:py-10 bg-gray-900/50 rounded-xl border border-gray-800">
+            <div key={`abiertos-empty-${divActiva}`} className="text-center py-8 sm:py-10 bg-gray-900/50 rounded-xl border border-gray-800">
               <CheckCircle2 size={28} className="mx-auto mb-2 text-green-500/40" />
               <p className="text-gray-600 text-sm">Sin casos abiertos en este momento</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div key={`abiertos-${divActiva}`} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {casosAbiertos.map(caso => (
                 <CasoAbierto key={caso.caso_id} caso={caso} />
               ))}
@@ -334,12 +334,12 @@ const Stewards: React.FC = () => {
           </div>
 
           {casosResueltos.length === 0 ? (
-            <div className="text-center py-8 sm:py-10 bg-gray-900/50 rounded-xl border border-gray-800">
+            <div key={`resueltos-empty-${divActiva}`} className="text-center py-8 sm:py-10 bg-gray-900/50 rounded-xl border border-gray-800">
               <Clock size={28} className="mx-auto mb-2 text-gray-700" />
               <p className="text-gray-600 text-sm">Sin veredictos aún esta temporada</p>
             </div>
           ) : (
-            <div className="space-y-2 sm:space-y-3">
+            <div key={`resueltos-${divActiva}`} className="space-y-2 sm:space-y-3">
               {casosResueltos.map(caso => (
                 <CardVeredicto key={caso.caso_id} caso={caso} />
               ))}
