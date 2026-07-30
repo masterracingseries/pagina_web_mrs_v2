@@ -197,6 +197,7 @@ const Stewards: React.FC = () => {
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState(false);
   const [divActiva, setDivActiva] = useState<string>('TODAS');
+  const [historialExpandido, setHistorialExpandido] = useState(false);
 
   useEffect(() => {
     fetch(`${STEWARDS_URL}?t=${Date.now()}`)
@@ -279,7 +280,7 @@ const Stewards: React.FC = () => {
           {divisiones.map(div => (
             <button
               key={div}
-              onClick={() => setDivActiva(div)}
+              onClick={() => { setDivActiva(div); setHistorialExpandido(false); }}
               className={`px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all border whitespace-nowrap ${
                 divActiva === div
                   ? 'bg-mrs-red text-white border-mrs-red'
@@ -339,10 +340,26 @@ const Stewards: React.FC = () => {
               <p className="text-gray-600 text-sm">Sin veredictos aún esta temporada</p>
             </div>
           ) : (
-            <div key={`resueltos-${divActiva}`} className="space-y-2 sm:space-y-3">
-              {casosResueltos.map(caso => (
-                <CardVeredicto key={caso.caso_id} caso={caso} />
-              ))}
+            <div key={`resueltos-${divActiva}`}>
+              <div className="space-y-2 sm:space-y-3">
+                {(historialExpandido ? casosResueltos : casosResueltos.slice(0, 5)).map(caso => (
+                  <CardVeredicto key={caso.caso_id} caso={caso} />
+                ))}
+              </div>
+              {casosResueltos.length > 5 && (
+                <div className="pt-4 flex justify-center">
+                  <button
+                    onClick={() => setHistorialExpandido(!historialExpandido)}
+                    className="flex items-center gap-2 px-6 py-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors"
+                  >
+                    {historialExpandido ? (
+                      <>Ver menos <ChevronUp size={14} /></>
+                    ) : (
+                      <>Ver más veredictos ({casosResueltos.length - 5} más) <ChevronDown size={14} /></>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
