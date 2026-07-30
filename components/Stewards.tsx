@@ -342,11 +342,11 @@ const Stewards: React.FC = () => {
           ) : (
             <div key={`resueltos-${divActiva}`}>
               <div className="space-y-2 sm:space-y-3">
-                {(historialExpandido ? casosResueltos : casosResueltos.slice(0, 5)).map(caso => (
+                {(historialExpandido ? casosResueltos : casosResueltos.slice(0, 10)).map(caso => (
                   <CardVeredicto key={caso.caso_id} caso={caso} />
                 ))}
               </div>
-              {casosResueltos.length > 5 && (
+              {casosResueltos.length > 10 && (
                 <div className="pt-4 flex justify-center">
                   <button
                     onClick={() => setHistorialExpandido(!historialExpandido)}
@@ -355,7 +355,7 @@ const Stewards: React.FC = () => {
                     {historialExpandido ? (
                       <>Ver menos <ChevronUp size={14} /></>
                     ) : (
-                      <>Ver más veredictos ({casosResueltos.length - 5} más) <ChevronDown size={14} /></>
+                      <>Ver más veredictos ({casosResueltos.length - 10} más) <ChevronDown size={14} /></>
                     )}
                   </button>
                 </div>
