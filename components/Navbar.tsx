@@ -30,7 +30,6 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Calendario', href: '#calendar' },
     { name: 'Resultados',   href: '#standings'  },
-    { name: 'Preliminares', href: '#preliminary' },
     { name: 'Paddock Zone', href: '#minigame'   },
     { name: 'Media',        href: '#media'      },
     { name: 'Reglamento',   href: '#rules'      },
