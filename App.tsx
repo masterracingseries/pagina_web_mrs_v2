@@ -8,6 +8,7 @@ import Multimedia from './components/Multimedia';
 import Champions from './components/Champions';
 import Rules from './components/Rules';
 import Stewards from './components/Stewards';
+import PreliminaryResults from './components/PreliminaryResults';
 import About from './components/About';
 import Footer from './components/Footer';
 import MiniGame from './components/MiniGame';
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Hero />
           <Calendar />
           <Standings />
+          <PreliminaryResults />
           <Multimedia />
           <Rules />
           <Stewards />
