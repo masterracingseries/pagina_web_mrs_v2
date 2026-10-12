@@ -11,6 +11,7 @@ interface Caso {
   caso_id          : string;
   division         : string;
   carrera_id       : string;
+  alias_denunciante: string;
   alias_denunciado : string;
   vuelta           : string;
   descripcion      : string;
@@ -69,6 +70,11 @@ const CasoAbierto: React.FC<{ caso: Caso }> = ({ caso }) => {
         <div className="mb-3">
           <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-1">Piloto citado</p>
           <p className="text-white font-bold text-base sm:text-lg">{caso.alias_denunciado}</p>
+          {caso.alias_denunciante && (
+            <p className="text-xs text-gray-500 mt-1">
+              Denunciado por: <span className="text-gray-300 font-semibold">{caso.alias_denunciante}</span>
+            </p>
+          )}
         </div>
 
         {/* Vuelta — siempre visible */}
@@ -146,6 +152,9 @@ const CardVeredicto: React.FC<{ caso: Caso }> = ({ caso }) => {
             <span className="text-xs text-gray-500 hidden sm:inline truncate max-w-[140px]">{caso.carrera_id}</span>
           </div>
           <p className="text-white font-bold text-sm sm:text-base">{caso.alias_denunciado}</p>
+          {caso.alias_denunciante && (
+            <p className="text-gray-500 text-[11px] mt-0.5">por: <span className="text-gray-400">{caso.alias_denunciante}</span></p>
+          )}
           <p className="text-gray-600 text-xs mt-0.5 sm:hidden">{caso.division} · {caso.carrera_id}</p>
         </div>
 
